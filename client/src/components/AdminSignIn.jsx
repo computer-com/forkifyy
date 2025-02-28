@@ -43,7 +43,7 @@ const AdminSignIn = () => {
     setErrors(validationErrors);
     
     if (Object.keys(validationErrors).length === 0) {
-      navigate('/admin/dashboard'); // Adjust this route as needed
+      navigate('/adminhome'); // Adjust this route as needed
     }
   };
 

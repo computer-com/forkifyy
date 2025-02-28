@@ -4,6 +4,7 @@ const Restaurant = require('../models/Restaurant');
 const { auth, isAdmin } = require('../middleware/auth');
 const router = express.Router();
 
+// Configure multer for image upload
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/');
@@ -15,9 +16,68 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get('/:id', async (req, res) => {
+// Create a new restaurant (admin only)
+router.post('/', auth, isAdmin, upload.array('images'), async (req, res) => {
     try {
-        const restaurant = await Restaurant.findById(req.params.id);
+        const restaurantData = {
+            ...req.body,
+            images: req.files?.map(file => ({
+                url: `/uploads/${file.filename}`,
+                alt: req.body.name,
+                isPrimary: false
+            })) || []
+        };
+        
+        // Set the first image as primary if exists
+        if (restaurantData.images.length > 0) {
+            restaurantData.images[0].isPrimary = true;
+        }
+
+        // Create URL-friendly slug from name
+        restaurantData.slug = req.body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+        const restaurant = new Restaurant(restaurantData);
+        await restaurant.save();
+        res.status(201).send(restaurant);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+// Get all restaurants
+router.get('/', async (req, res) => {
+    try {
+        const { cuisine, city, search } = req.query;
+        const query = { isActive: true };
+
+        if (cuisine) {
+            query.cuisine = cuisine;
+        }
+        if (city) {
+            query['address.city'] = city;
+        }
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { cuisine: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        const restaurants = await Restaurant.find(query)
+            .select('name slug cuisine images address rating');
+        res.send(restaurants);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+// Get restaurant by slug
+router.get('/:slug', async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findOne({ 
+            slug: req.params.slug,
+            isActive: true 
+        });
         if (!restaurant) {
             return res.status(404).send();
         }
@@ -27,10 +87,15 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Update restaurant details (admin only)
-router.patch('/:id', auth, isAdmin, async (req, res) => {
+// Update restaurant (admin only)
+router.patch('/:id', auth, isAdmin, upload.array('images'), async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['name', 'description', 'address', 'contactNumber', 'email', 'openingHours'];
+    const allowedUpdates = [
+        'name', 'description', 'address', 'contactNumber', 
+        'email', 'openingHours', 'cuisine', 'features', 
+        'paymentMethods', 'isActive'
+    ];
+    
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -44,6 +109,17 @@ router.patch('/:id', auth, isAdmin, async (req, res) => {
         }
 
         updates.forEach(update => restaurant[update] = req.body[update]);
+        
+        // Handle new images if uploaded
+        if (req.files && req.files.length > 0) {
+            const newImages = req.files.map(file => ({
+                url: `/uploads/${file.filename}`,
+                alt: restaurant.name,
+                isPrimary: false
+            }));
+            restaurant.images = [...restaurant.images, ...newImages];
+        }
+
         await restaurant.save();
         res.send(restaurant);
     } catch (error) {
@@ -51,7 +127,23 @@ router.patch('/:id', auth, isAdmin, async (req, res) => {
     }
 });
 
-// Add/Update menu item (admin only)
+// Add/Update menu category (admin only)
+router.post('/:id/categories', auth, isAdmin, async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findById(req.params.id);
+        if (!restaurant) {
+            return res.status(404).send();
+        }
+
+        restaurant.menuCategories.push(req.body);
+        await restaurant.save();
+        res.status(201).send(restaurant);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+// Add menu item (admin only)
 router.post('/:id/menu', auth, isAdmin, upload.single('image'), async (req, res) => {
     try {
         const restaurant = await Restaurant.findById(req.params.id);
@@ -61,10 +153,11 @@ router.post('/:id/menu', auth, isAdmin, upload.single('image'), async (req, res)
 
         const menuItem = {
             ...req.body,
+            price: parseFloat(req.body.price),
             image: req.file ? `/uploads/${req.file.filename}` : undefined
         };
 
-        restaurant.menu.push(menuItem);
+        restaurant.menuItems.push(menuItem);
         await restaurant.save();
         res.status(201).send(restaurant);
     } catch (error) {
@@ -80,13 +173,17 @@ router.patch('/:id/menu/:itemId', auth, isAdmin, upload.single('image'), async (
             return res.status(404).send();
         }
 
-        const menuItem = restaurant.menu.id(req.params.itemId);
+        const menuItem = restaurant.menuItems.id(req.params.itemId);
         if (!menuItem) {
             return res.status(404).send();
         }
 
-        Object.keys(req.body).forEach(update => {
-            menuItem[update] = req.body[update];
+        Object.keys(req.body).forEach(key => {
+            if (key === 'price') {
+                menuItem[key] = parseFloat(req.body[key]);
+            } else {
+                menuItem[key] = req.body[key];
+            }
         });
 
         if (req.file) {
@@ -108,7 +205,51 @@ router.delete('/:id/menu/:itemId', auth, isAdmin, async (req, res) => {
             return res.status(404).send();
         }
 
-        restaurant.menu.pull(req.params.itemId);
+        restaurant.menuItems.pull(req.params.itemId);
+        await restaurant.save();
+        res.send(restaurant);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+// Set primary image (admin only)
+router.patch('/:id/images/:imageIndex/primary', auth, isAdmin, async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findById(req.params.id);
+        if (!restaurant) {
+            return res.status(404).send();
+        }
+
+        // Reset all images to non-primary
+        restaurant.images.forEach(img => img.isPrimary = false);
+        
+        // Set the selected image as primary
+        const imageIndex = parseInt(req.params.imageIndex);
+        if (restaurant.images[imageIndex]) {
+            restaurant.images[imageIndex].isPrimary = true;
+        }
+
+        await restaurant.save();
+        res.send(restaurant);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+// Delete image (admin only)
+router.delete('/:id/images/:imageIndex', auth, isAdmin, async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findById(req.params.id);
+        if (!restaurant) {
+            return res.status(404).send();
+        }
+
+        const imageIndex = parseInt(req.params.imageIndex);
+        if (restaurant.images[imageIndex]) {
+            restaurant.images.splice(imageIndex, 1);
+        }
+
         await restaurant.save();
         res.send(restaurant);
     } catch (error) {
