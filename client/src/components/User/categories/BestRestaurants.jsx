@@ -1,28 +1,41 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../../../assets/css/style.css";
 import RestaurantImage1 from "../../../assets/images/Restaurant_Image_1.png";
 import RestaurantImage2 from "../../../assets/images/Restaurant_Image_1.png";
 
 const BestRestaurants = () => {
+  const navigate = useNavigate();
+  
   const restaurants = [
     {
+      id: "sardar-ji",
       name: "Sardar Ji - Kitchener",
       description: "Authentic Indian cuisine with a modern twist.",
       image: RestaurantImage1,
     },
     {
+      id: "italian-table",
       name: "The Italian Table",
       description: "Traditional Italian food with a cozy ambiance.",
       image: RestaurantImage2,
     },
   ];
 
+  const handleViewMenu = (restaurantId) => {
+    navigate(`/menu?restaurant=${restaurantId}`);
+  };
+
+  const handleReservation = () => {
+    navigate('/make-reservation');
+  };
+
   return (
     <div className="category-page">
       <h1 className="page-title">Best Restaurants</h1>
       <div className="restaurant-list">
-        {restaurants.map((restaurant, index) => (
-          <div className="restaurant-card" key={index}>
+        {restaurants.map((restaurant) => (
+          <div className="restaurant-card" key={restaurant.id}>
             <img src={restaurant.image} alt={restaurant.name} />
             <div className="restaurant-info">
               <h3>{restaurant.name}</h3>
@@ -30,15 +43,13 @@ const BestRestaurants = () => {
               <div className="card-buttons">
                 <button
                   className="reservation-btn"
-                  onClick={() =>
-                    (window.location.href = "/make-reservation")
-                  }
+                  onClick={() => handleReservation()}
                 >
                   Make Reservation
                 </button>
                 <button
                   className="menu-btn"
-                  onClick={() => (window.location.href = "/view-menu")}
+                  onClick={() => handleViewMenu(restaurant.id)}
                 >
                   View Menu
                 </button>

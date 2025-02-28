@@ -1,6 +1,4 @@
 import React from "react";
-//Importing the useNavigate hook from react-router-dom
-import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/userhome.css";
 import logo from "../../assets/images/Forkify_Logo.png";
@@ -21,14 +19,10 @@ const UserHome = () => {
     navigate(`/menu?restaurant=${restaurantId}`);
   };
 
-  //Search functionality 
-  const restaurantSectionRef = useRef(null); //Reference to the restaurant section
-  const [searchTerm, setSearchTerm] = useState(""); //State for the search term
-
-  const handleExploreClick = () => {
-    restaurantSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  const navigateToRestaurant = (restaurantId) => {
+    navigate(`/restaurant/${restaurantId}`);
   };
-  
+
   const categories = [
     {
       name: "Best Restaurants",
@@ -161,13 +155,7 @@ const UserHome = () => {
           <span className="logo-text">ForkiFy</span>
         </div>
         <h1 className="site-title">Discover Great Food</h1>
-        {/* User icon commented out for now*/}
-        {/* <div className="user-icon">M</div> */}
-        {/*Adding a search bar to the banner*/}
-        <div className="header-search">
-          <input type="text" placeholder="Search for cafes, dining, or cuisine..." className="search-bar" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-          <button className="search-btn">Search</button>
-        </div>
+        <div className="user-icon">M</div>
       </div>
 
       {/* Banner Section */}
@@ -176,64 +164,54 @@ const UserHome = () => {
         <div className="banner-content">
           <h2>Find Your Perfect Dining Experience</h2>
           <p>Explore the best restaurants in your area</p>
-          {/*Adding a explore button to the banner*/}
-          <button className="explore-btn" onClick={handleExploreClick}>Explore</button>
         </div>
       </div>
 
       {/* Categories Section */}
       <div className="categories-container">
-        {searchTerm ? (
-          <div className="category-section">
-            <h2 className="search-results-title">Search Results</h2>
-            <div className="search-results-container">
+        {categories.map((category, index) => (
+          <div className="category-section" key={index}>
+            <div className="category-header">
+              <h2>{category.name}</h2>
+              <button
+                className="view-all-btn"
+                onClick={() => navigateToCategory(category.link)}
+              >
+                View All →
+              </button>
+            </div>
             <div className="restaurant-list">
-              {categories.flatMap(category =>
-                category.restaurants.filter((restaurant) =>
-                  restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  restaurant.description.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-              ).map((restaurant, idx) => (
-                <div className="restaurant-card" key={idx}>
+              {category.restaurants.map((restaurant, idx) => (
+                <div 
+                  className="restaurant-card" 
+                  key={idx}
+                  onClick={() => navigateToRestaurant(restaurant.id)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src={restaurant.image} alt={restaurant.name} />
                   <div className="restaurant-info">
                     <h3>{restaurant.name}</h3>
                     <p>{restaurant.description}</p>
-                    <div className="card-buttons">
-                      <button className="reservation-btn" onClick={() => (window.location.href = "/make-reservation")}>Make Reservation</button>
-                      <button className="view-menu-btn" onClick={() => navigateToMenu(restaurant.id)}>View Menu</button>
+                    <div className="card-buttons" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        className="reservation-btn"
+                        onClick={() => navigate("/make-reservation")}
+                      >
+                        Make Reservation
+                      </button>
+                      <button
+                        className="view-menu-btn"
+                        onClick={() => navigateToMenu(restaurant.id)}
+                      >
+                        View Menu
+                      </button>
                     </div>
                   </div>
                 </div>
               ))}
-              </div>
             </div>
           </div>
-        ) : (
-          categories.map((category, index) => (
-            <div className="category-section" key={index}>
-              <div className="category-header">
-                <h2>{category.name}</h2>
-                <button className="view-all-btn" onClick={() => navigateToCategory(category.link)}>View All →</button>
-              </div>
-              <div className="restaurant-list">
-                {category.restaurants.map((restaurant, idx) => (
-                  <div className="restaurant-card" key={idx}>
-                    <img src={restaurant.image} alt={restaurant.name} />
-                    <div className="restaurant-info">
-                      <h3>{restaurant.name}</h3>
-                      <p>{restaurant.description}</p>
-                      <div className="card-buttons">
-                        <button className="reservation-btn" onClick={() => (window.location.href = "/make-reservation")}>Make Reservation</button>
-                        <button className="view-menu-btn" onClick={() => navigateToMenu(restaurant.id)}>View Menu</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))
-        )}
+        ))}
       </div>
     </div>
   );
