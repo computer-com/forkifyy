@@ -5,7 +5,6 @@ const path = require('path');
 require('dotenv').config();
 const bodyParser = require("body-parser");
 
-
 const app = express();
 const PORT = process.env.PORT || 5123;
 
@@ -14,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
-
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -25,23 +23,18 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const restaurantRoutes = require('./routes/restaurantRoutes');
-<<<<<<< Updated upstream
-=======
 const reservationRoutes = require('./routes/reservationRoutes');
 const staffRoutes = require("./routes/staffRoutes");
-const inventoryRoutes = require("./routes/inventoryRoutes")
+const inventoryRoutes = require("./routes/inventoryRoutes");
 const statisticsRoutes = require("./routes/statisticsRoutes");
 const salesRoutes = require("./routes/salesRoutes");
 const ledgerRoutes = require("./routes/ledgerRoutes");
 const recentActivityRoutes = require("./routes/recentActivityRoutes");
 const dashboardStatsRoutes = require("./routes/dashboardStatsRoutes");
->>>>>>> Stashed changes
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/restaurants', restaurantRoutes);
-<<<<<<< Updated upstream
-=======
 app.use('/api/reservations', reservationRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/inventory", inventoryRoutes);
@@ -50,6 +43,5 @@ app.use("/api/sales", salesRoutes);
 app.use("/api/ledger", ledgerRoutes);
 app.use("/api/recent-activity", recentActivityRoutes);
 app.use("/api/stats", dashboardStatsRoutes);
->>>>>>> Stashed changes
 
-app.listen(PORT, () => console.log(`Server running on port https://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

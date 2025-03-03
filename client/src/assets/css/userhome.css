@@ -25,10 +25,7 @@ body, html {
     border-bottom: 2px solid #FF8303;
 
   }
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
   /*Search bar*/
   .header-search {
     display: flex;
@@ -53,11 +50,6 @@ body, html {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(255, 131, 3, 0.3);
   }
-<<<<<<< Updated upstream
-
-=======
-  
->>>>>>> Stashed changes
   .logo-container {
     display: flex;
     align-items: center;
@@ -75,10 +67,7 @@ body, html {
     color: #FF8303;
     font-weight: bold;
   }
-<<<<<<< Updated upstream
-=======
-  
->>>>>>> Stashed changes
+
   /*Changing the site title a little bit*/
   .site-title {
     font-size: 24px;
