@@ -21,6 +21,27 @@ body {
   box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
+/*Login and Carousel effect Added by Viren on 2nd March*/
+.login-container{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #121212
+}
+
+.admin-container{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #121212
+}
+
 .UserHome {
   width: 100%;
   display: flex;
@@ -49,6 +70,9 @@ body {
   text-align: center;
   width: 100%;
   max-width: 600px;
+  /*Made changes for carousel effect on selection box*/
+  flex: 1;
+  max-width: 500px;
 }
 
 .selection-box h2 {
@@ -223,6 +247,8 @@ p{
   color: #fff;
   background-color: #1B1212;
   padding-bottom: 20px;
+  /*Added code on 2nd march*/
+  width: 100vw;
 }
 
 .top-bar {
@@ -403,6 +429,8 @@ p{
   font-size: 12px;
   margin-top: 4px;
   display: block;
+  /*Added code on 2nd March*/
+  text-align: center;
 }
 
 form button {
@@ -420,6 +448,22 @@ form button {
 
 form button:hover {
   background-color: #e67502;
+}
+
+/*Carousel styling*/
+.carousel-container{
+  flex: 1;
+  max-width: 1200px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-container img {
+  width: 800px;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 /* Media Queries */
@@ -459,5 +503,13 @@ form button:hover {
   }
   .input-wrapper{
     margin-bottom: 10px;
+  }
+  /*Added for carousel responsiveness*/
+  .login-container{ 
+    flex-direction: column;
+  }
+  .carousel-container {
+    max-width: 100%;
+    height: auto;
   }
 }
