@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import "../assets/css/style.css";
+import "bootstrap/dist/css/bootstrap.min.css"; 
+import { Carousel } from "react-bootstrap"; 
 import googleLogo from "../assets/images/google.png";
 import appleLogo from "../assets/images/apple.png";
+import Signup1 from "../assets/images/Signup1.jpg";
+import Signup2 from "../assets/images/Signup2.jpg";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -36,7 +40,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="container">
+    <div className="login-container">
       <div className="selection-box">
         <h2>Sign In</h2>
 
@@ -121,6 +125,17 @@ const SignIn = () => {
             </p>
           </div>
         </form>
+      </div>
+      {/* Right Section: Carousel */}
+      <div className="carousel-container">
+        <Carousel>
+          <Carousel.Item>
+            <img className="d-block w-100" src={Signup1} alt="First slide" />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img className="d-block w-100" src={Signup2} alt="Second slide" />
+          </Carousel.Item>
+        </Carousel>
       </div>
     </div>
   );

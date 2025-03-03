@@ -22,7 +22,34 @@ body, html {
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 2px solid #FF8303;
+
   }
+
+  /*Search bar*/
+  .header-search {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    margin-left: auto;
+    margin-right: 120px;
+  }
+  .header-search .search-btn{
+    background-color: #FF8303;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: 0.3s;
+  }
+  .header-search .search-btn:hover{
+    background-color: #e67300;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 131, 3, 0.3);
+  }
+
   
   .logo-container {
     display: flex;
@@ -41,6 +68,7 @@ body, html {
     font-weight: bold;
   }
   
+  /*Changing the site title a little bit*/
   .site-title {
     font-size: 24px;
     color: #fff;
@@ -91,8 +119,112 @@ body, html {
     text-align: center;
     color: #fff;
     z-index: 2;
+    max-width: 40%;
   }
   
+  .banner-content h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .banner-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  /*Search bar css*/
+  /*Adding Explore button to the banner*/
+  .explore-btn {
+    background-color: #FF8303;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  .explore-btn:hover {
+    background-color: #e67300;
+  }
+
+  /*Adding search bar to the top bar*/
+  .search-bar {
+    width: 200px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    outline: none;
+    text-align: left;
+  }
+  .search-btn {
+    background: #ff8000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: 0.3s;
+  }
+  .search-btn:hover {
+    background: #ff9900;
+  }
+  .banner-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .banner-content p {
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+
+  }
+  /*Search bar css*/
+  /*Adding Explore button to the banner*/
+  .explore-btn {
+    background-color: #FF8303;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  .explore-btn:hover {
+    background-color: #e67300;
+  }
+
+  /*Adding search bar to the top bar*/
+  .search-bar {
+    width: 200px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    outline: none;
+    text-align: left;
+  }
+  .search-btn {
+    background: #ff8000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: 0.3s;
+  }
+  .search-btn:hover {
+    background: #ff9900;
+  }
   .banner-content h2 {
     font-size: 36px;
     font-weight: 700;

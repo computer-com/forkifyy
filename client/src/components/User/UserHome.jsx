@@ -19,10 +19,14 @@ const UserHome = () => {
     navigate(`/menu?restaurant=${restaurantId}`);
   };
 
-  const navigateToRestaurant = (restaurantId) => {
-    navigate(`/restaurant/${restaurantId}`);
-  };
+  //Search functionality 
+  const restaurantSectionRef = useRef(null); //Reference to the restaurant section
+  const [searchTerm, setSearchTerm] = useState(""); //State for the search term
 
+  const handleExploreClick = () => {
+    restaurantSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  
   const categories = [
     {
       name: "Best Restaurants",

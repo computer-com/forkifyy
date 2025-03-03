@@ -1,52 +1,34 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import '../../assets/css/AdminHome.css';
+import React, { useState, useEffect } from "react";
+import "../../assets/css/adminhome.css";
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/Forkify_Logo.png";
+import axios from "axios";
 
 const AdminHome = () => {
-  const location = useLocation();
-  const [currentTime] = useState(new Date().toLocaleTimeString());
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    revenue: 0,
+    customers: 0,
+    reservations: 0
+  });
 
-  const stats = {
-    totalOrders: 156,
-    revenue: '$8,459',
-    customers: 89,
-    reservations: 34
-  };
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
 
-  const recentActivity = [
-    {
-      id: 1,
-      type: 'order',
-      title: 'New order #1234',
-      time: '5 minutes ago',
-      icon: 'fas fa-shopping-cart'
-    },
-    {
-      id: 2,
-      type: 'reservation',
-      title: 'Table #7 reserved',
-      time: '15 minutes ago',
-      icon: 'fas fa-calendar-check'
-    },
-    {
-      id: 3,
-      type: 'inventory',
-      title: 'Low stock alert: Wine',
-      time: '1 hour ago',
-      icon: 'fas fa-exclamation-triangle'
-    },
-    {
-      id: 4,
-      type: 'staff',
-      title: 'New shift schedule posted',
-      time: '2 hours ago',
-      icon: 'fas fa-user-clock'
-    }
-  ];
+  // Fetch Dashboard Statistics
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/stats") // Make sure backend has this endpoint
+      .then(response => {
+        setStats(response.data);
+      })
+      .catch(error => console.error("Error fetching statistics:", error));
 
-  const isActive = (path) => {
-    return location.pathname === path ? 'active' : '';
-  };
+    axios.get("http://localhost:5000/api/recent-activity") // Fetch recent logs
+      .then(response => {
+        setRecentActivity(response.data);
+      })
+      .catch(error => console.error("Error fetching recent activity:", error));
+  }, []);
 
   return (
     <div className="admin-container">
@@ -56,54 +38,14 @@ const AdminHome = () => {
           <h1>Forkify Admin</h1>
         </div>
         <ul className="nav-menu">
-          <li className="nav-item">
-            <Link to="/admin" className={`nav-link ${isActive('/admin')}`}>
-              <i className="fas fa-home"></i>
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/orders" className={`nav-link ${isActive('/admin/orders')}`}>
-              <i className="fas fa-shopping-cart"></i>
-              <span>Orders</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/inventory" className={`nav-link ${isActive('/admin/inventory')}`}>
-              <i className="fas fa-box"></i>
-              <span>Inventory</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/reservations" className={`nav-link ${isActive('/admin/reservations')}`}>
-              <i className="fas fa-calendar-alt"></i>
-              <span>Reservations</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/staff" className={`nav-link ${isActive('/admin/staff')}`}>
-              <i className="fas fa-users"></i>
-              <span>Staff Management</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/menu" className={`nav-link ${isActive('/admin/menu')}`}>
-              <i className="fas fa-utensils"></i>
-              <span>Menu Management</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/analytics" className={`nav-link ${isActive('/admin/analytics')}`}>
-              <i className="fas fa-chart-bar"></i>
-              <span>Analytics</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/admin/settings" className={`nav-link ${isActive('/admin/settings')}`}>
-              <i className="fas fa-cog"></i>
-              <span>Settings</span>
-            </Link>
-          </li>
+          <li className="nav-item"><Link to="/admin" className="nav-link">Dashboard</Link></li>
+          <li className="nav-item"><Link to="/admin/orders" className="nav-link">Orders</Link></li>
+          <li className="nav-item"><Link to="/admin/inventory" className="nav-link">Inventory</Link></li>
+          <li className="nav-item"><Link to="/admin/reservations" className="nav-link">Reservations</Link></li>
+          <li className="nav-item"><Link to="/admin/staff" className="nav-link">Staff Management</Link></li>
+          <li className="nav-item"><Link to="/admin/menu" className="nav-link">Menu Management</Link></li>
+          <li className="nav-item"><Link to="/admin/stats" className="nav-link">Analytics</Link></li>
+          <li className="nav-item"><Link to="/admin/settings" className="nav-link">Settings</Link></li>
         </ul>
       </nav>
 
@@ -126,70 +68,33 @@ const AdminHome = () => {
 
         {/* Statistics Grid */}
         <div className="stats-grid">
-          <div className="stat-card">
-            <i className="fas fa-shopping-cart"></i>
-            <div className="stat-value">{stats.totalOrders}</div>
-            <div className="stat-label">Total Orders Today</div>
-          </div>
-          <div className="stat-card">
-            <i className="fas fa-dollar-sign"></i>
-            <div className="stat-value">{stats.revenue}</div>
-            <div className="stat-label">Today's Revenue</div>
-          </div>
-          <div className="stat-card">
-            <i className="fas fa-users"></i>
-            <div className="stat-value">{stats.customers}</div>
-            <div className="stat-label">Active Customers</div>
-          </div>
-          <div className="stat-card">
-            <i className="fas fa-calendar-check"></i>
-            <div className="stat-value">{stats.reservations}</div>
-            <div className="stat-label">Today's Reservations</div>
-          </div>
+          <div className="stat-card"><h3>Total Orders</h3><p>{stats.totalOrders}</p></div>
+          <div className="stat-card"><h3>Total Revenue</h3><p>${stats.revenue}</p></div>
+          <div className="stat-card"><h3>Active Customers</h3><p>{stats.customers}</p></div>
+          <div className="stat-card"><h3>Today's Reservations</h3><p>{stats.reservations}</p></div>
         </div>
 
         {/* Quick Actions */}
         <div className="quick-actions">
-          <div className="action-card">
-            <i className="fas fa-plus-circle"></i>
-            <h3>New Order</h3>
-            <p>Create a new customer order</p>
-          </div>
-          <div className="action-card">
-            <i className="fas fa-calendar-plus"></i>
-            <h3>Add Reservation</h3>
-            <p>Book a new table reservation</p>
-          </div>
-          <div className="action-card">
-            <i className="fas fa-user-plus"></i>
-            <h3>Add Staff</h3>
-            <p>Create new staff account</p>
-          </div>
-          <div className="action-card">
-            <i className="fas fa-clipboard-list"></i>
-            <h3>Update Menu</h3>
-            <p>Modify menu items</p>
-          </div>
+          <div className="action-card"><h3>New Order</h3><p>Create a new customer order</p></div>
+          <div className="action-card"><h3>Add Reservation</h3><p>Book a new table reservation</p></div>
+          <div className="action-card"><h3>Add Staff</h3><p>Create new staff account</p></div>
+          <div className="action-card"><h3>Update Menu</h3><p>Modify menu items</p></div>
         </div>
 
         {/* Recent Activity */}
         <div className="recent-activity">
-          <div className="activity-header">
-            <h2>Recent Activity</h2>
-            <span>{currentTime}</span>
-          </div>
-          <ul className="activity-list">
-            {recentActivity.map((activity) => (
-              <li key={activity.id} className="activity-item">
-                <div className="activity-icon">
-                  <i className={activity.icon}></i>
-                </div>
-                <div className="activity-details">
-                  <h3 className="activity-title">{activity.title}</h3>
-                  <span className="activity-time">{activity.time}</span>
-                </div>
-              </li>
-            ))}
+          <h2>Recent Activity</h2>
+          <ul>
+            {recentActivity.length > 0 ? (
+              recentActivity.map(activity => (
+                <li key={activity._id}>
+                  <p>{activity.description} - <span>{new Date(activity.timestamp).toLocaleTimeString()}</span></p>
+                </li>
+              ))
+            ) : (
+              <p>No recent activity available.</p>
+            )}
           </ul>
         </div>
       </main>
