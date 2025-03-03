@@ -5,7 +5,6 @@ const path = require('path');
 require('dotenv').config();
 const bodyParser = require("body-parser");
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -14,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
-
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -27,7 +25,7 @@ const authRoutes = require('./routes/authRoutes');
 const restaurantRoutes = require('./routes/restaurantRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
 const staffRoutes = require("./routes/staffRoutes");
-const inventoryRoutes = require("./routes/inventoryRoutes")
+const inventoryRoutes = require("./routes/inventoryRoutes");
 const statisticsRoutes = require("./routes/statisticsRoutes");
 const salesRoutes = require("./routes/salesRoutes");
 const ledgerRoutes = require("./routes/ledgerRoutes");

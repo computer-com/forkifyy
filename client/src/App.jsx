@@ -4,11 +4,10 @@ import LoginOptions from "./components/LoginOptions";
 import AdminOptions from "./components/AdminOptions";
 import SignIn from "./components/SignIn";
 import Login from "./components/Login";
-/*Added new */
-import ManagerSignIn from "../src/components/ManagerSignIn";
-import OwnerSignIn from "../src/components/OwnerSignIn";
+import AdminSignIn from "./components/AdminSignIn";  
+import ManagerSignIn from "../src/components/ManagerSignIn"; 
+import OwnerSignIn from "../src/components/OwnerSignIn";  
 import UserHome from "./components/User/UserHome";
-/*Added By Viren on 2nd march */
 import AdminHome from "./components/Admin/AdminHome";
 import StaffManagement from "./components/Admin/StaffManagement/StaffManagement";
 import InventoryManagement from "./components/Admin/InventoryManagement";
@@ -29,12 +28,13 @@ const App = () => {
         <Route path="/adminoptions" element={<AdminOptions />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/adminsignin" element={<AdminSignIn />} />
         <Route path="/manager/signin" element={<ManagerSignIn />} />
+        <Route path="/owner/signin" element={<OwnerSignIn />} />
         <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/admin/staff" element={<StaffManagement />} />
         <Route path="/admin/inventory" element={<InventoryManagement />} />
         <Route path="/admin/stats" element={<Statistics />} />
-        <Route path="/owner/signin" element={<OwnerSignIn />} />
         <Route path="/userhome" element={<UserHome />} />
         <Route path="/restaurant/:id" element={<RestaurantHomePage />} />
         <Route path="/restaurant/:id/reservation" element={<TableReservation />} />

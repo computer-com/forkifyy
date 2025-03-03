@@ -17,13 +17,13 @@ const AdminHome = () => {
 
   // Fetch Dashboard Statistics
   useEffect(() => {
-    axios.get("http://localhost:5000/api/stats") // Make sure backend has this endpoint
+    axios.get("http://localhost:5000/api/stats")
       .then(response => {
         setStats(response.data);
       })
       .catch(error => console.error("Error fetching statistics:", error));
 
-    axios.get("http://localhost:5000/api/recent-activity") // Fetch recent logs
+    axios.get("http://localhost:5000/api/recent-activity")
       .then(response => {
         setRecentActivity(response.data);
       })
@@ -32,41 +32,27 @@ const AdminHome = () => {
 
   return (
     <div className="admin-container">
-      {/* Sidebar Navigation */}
       <nav className="sidebar">
         <div className="logo-container">
           <h1>Forkify Admin</h1>
         </div>
         <ul className="nav-menu">
-          <li className="nav-item"><Link to="/admin" className="nav-link">Dashboard</Link></li>
-          <li className="nav-item"><Link to="/admin/orders" className="nav-link">Orders</Link></li>
-          <li className="nav-item"><Link to="/admin/inventory" className="nav-link">Inventory</Link></li>
-          <li className="nav-item"><Link to="/admin/reservations" className="nav-link">Reservations</Link></li>
-          <li className="nav-item"><Link to="/admin/staff" className="nav-link">Staff Management</Link></li>
-          <li className="nav-item"><Link to="/admin/menu" className="nav-link">Menu Management</Link></li>
-          <li className="nav-item"><Link to="/admin/stats" className="nav-link">Analytics</Link></li>
-          <li className="nav-item"><Link to="/admin/settings" className="nav-link">Settings</Link></li>
+          <li><Link to="/admin" className="nav-link">Dashboard</Link></li>
+          <li><Link to="/admin/orders" className="nav-link">Orders</Link></li>
+          <li><Link to="/admin/inventory" className="nav-link">Inventory</Link></li>
+          <li><Link to="/admin/reservations" className="nav-link">Reservations</Link></li>
+          <li><Link to="/admin/staff" className="nav-link">Staff Management</Link></li>
+          <li><Link to="/admin/menu" className="nav-link">Menu Management</Link></li>
+          <li><Link to="/admin/stats" className="nav-link">Analytics</Link></li>
+          <li><Link to="/admin/settings" className="nav-link">Settings</Link></li>
         </ul>
       </nav>
 
-      {/* Main Content */}
       <main className="main-content">
-        {/* Header */}
         <div className="dashboard-header">
-          <div className="header-title">
-            <h1>Dashboard</h1>
-          </div>
-          <div className="header-actions">
-            <button className="btn btn-secondary">
-              <i className="fas fa-bell"></i> Notifications
-            </button>
-            <button className="btn btn-primary">
-              <i className="fas fa-plus"></i> New Order
-            </button>
-          </div>
+          <h1>Dashboard</h1>
         </div>
 
-        {/* Statistics Grid */}
         <div className="stats-grid">
           <div className="stat-card"><h3>Total Orders</h3><p>{stats.totalOrders}</p></div>
           <div className="stat-card"><h3>Total Revenue</h3><p>${stats.revenue}</p></div>
@@ -74,15 +60,6 @@ const AdminHome = () => {
           <div className="stat-card"><h3>Today's Reservations</h3><p>{stats.reservations}</p></div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="quick-actions">
-          <div className="action-card"><h3>New Order</h3><p>Create a new customer order</p></div>
-          <div className="action-card"><h3>Add Reservation</h3><p>Book a new table reservation</p></div>
-          <div className="action-card"><h3>Add Staff</h3><p>Create new staff account</p></div>
-          <div className="action-card"><h3>Update Menu</h3><p>Modify menu items</p></div>
-        </div>
-
-        {/* Recent Activity */}
         <div className="recent-activity">
           <h2>Recent Activity</h2>
           <ul>
