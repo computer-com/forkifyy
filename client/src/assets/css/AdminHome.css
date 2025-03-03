@@ -1,0 +1,687 @@
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #fff;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1B1212;
+  border-right: 2px solid #FF8303;
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+}
+
+.logo-container {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #FF8303;
+  margin-bottom: 20px;
+}
+
+.logo-container h1 {
+  color: #FF8303;
+  font-size: 1.8em;
+  margin: 0;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin: 8px 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 131, 3, 0.1);
+  color: #FF8303;
+}
+
+.nav-link.active {
+  background-color: #FF8303;
+  color: #121212;
+}
+
+.nav-link i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #FF8303;
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: 2em;
+  color: #FF8303;
+}
+
+.header-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: #1B1212;
+  border: 1px solid #FF8303;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-value {
+  font-size: 2em;
+  color: #FF8303;
+  margin: 10px 0;
+}
+
+.stat-label {
+  color: #ccc;
+  font-size: 0.9em;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.action-card {
+  background-color: #1B1212;
+  border: 1px solid #FF8303;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-card:hover {
+  background-color: #FF8303;
+  color: #121212;
+}
+
+.action-card i {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.recent-activity {
+  background-color: #1B1212;
+  border: 1px solid #FF8303;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 131, 3, 0.2);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 131, 3, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.activity-details {
+  flex: 1;
+}
+
+.activity-title {
+  margin: 0;
+  font-size: 1em;
+  color: #fff;
+}
+
+.activity-time {
+  font-size: 0.8em;
+  color: #ccc;
+}
+
+/*Added by viren on 2nd March*/
+/* Global CSS */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #121212;
+  overflow-x: hidden;
+  color: white;
+}
+
+/* Navigation Bar (common)*/
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #1B1212;
+  border-bottom: 2px solid #FF8303;
+}
+
+/*Search bar(comman)*/
+.header-search {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 120px;
+}
+.header-search .search-btn {
+  background-color: #FF8303;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+.header-search .search-btn:hover {
+  background-color: #e67300;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 131, 3, 0.3);
+}
+/*Logo and Title (common)*/
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  height: 80px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 24px;
+  color: #FF8303;
+  font-weight: bold;
+}
+
+/* Updated site title styling(common)*/
+.site-title {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  margin: 0 auto;
+  white-space: nowrap;
+  text-align: center;
+}
+.site-title:hover {
+  color: #FF8303;
+  transform: scale(1.05);
+  text-shadow: 2px 2px 10px rgba(255, 131, 3, 0.5);
+}
+
+/* === ADMIN HOME PAGE STYLES === */
+.admin-home{
+  text-align: center;
+  padding: 40px;
+  margin-top: 80px; 
+}
+.admin-home h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #FF8303;
+  margin-bottom: 20px;
+}
+/* Dashboard Cards */
+.dashboard-card {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+.dashboard-card:hover {
+  transform: scale(1.05);
+}
+
+.dashboard-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #FF8303;
+}
+
+.dashboard-card p {
+  font-size: 16px;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+/* === STAFF MANAGEMENT PAGE STYLES === */
+.staff-page {
+  text-align: center;
+  padding: 40px;
+  margin-top: 80px;
+}
+
+.staff-page h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #FF8303;
+  margin-bottom: 20px;
+}
+
+/* Staff Management Layout */
+.staff-management-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  max-width: 1400px; /* Increased width for better alignment */
+  margin: auto;
+}
+
+/* Staff Form */
+.staff-form-container {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 350px;
+  margin-right: 20px; /* Creates separation from staff list */
+  margin-left: -50px; /* Move slightly left */
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Staff Form Inputs */
+.staff-form-container input {
+  width: 90%;
+  padding: 12px;
+  margin: 15px 0; /* Increased spacing */
+  border: 1px solid #FF8303;
+  border-radius: 5px;
+  background-color: #121212;
+  color: white;
+}
+
+.staff-form-container input::placeholder {
+  color: #888;
+}
+
+/* Staff List Grid (Matches Inventory Grid) */
+.staff-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 25px; /* More space between items */
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Extend full width */
+  max-width: 1300px; /* Increased width */
+  margin: auto;
+  padding: 20px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 600px;
+}
+
+/* Staff Cards */
+.staff-card {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 320px; /* Increased width */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+.staff-card:hover {
+  transform: scale(1.05);
+}
+
+/* === INVENTORY MANAGEMENT PAGE STYLES === */
+.Inventory-page {
+  text-align: center;
+  padding: 40px;
+  margin-top: 80px; /* Ensure content doesn't get hidden under navbar */
+}
+
+.Inventory-page h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #FF8303;
+  margin-bottom: 20px;
+}
+
+/* Inventory Management Layout */
+.inventory-management-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  max-width: 1400px; /* Increased width for better alignment */
+  margin: auto;
+}
+
+/* Move "Add New Item" Section Slightly to Left */
+.form-container {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 350px;
+  margin-right: 20px; /* Creates separation from inventory */
+  margin-left: -50px; /* Move slightly left */
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Add Spacing Between Input Fields */
+.form-container input {
+  width: 90%;
+  padding: 12px;
+  margin: 15px 0; /* Increased spacing */
+  border: 1px solid #FF8303;
+  border-radius: 5px;
+  background-color: #121212;
+  color: white;
+}
+
+.form-container input::placeholder {
+  color: #888;
+}
+
+/* Make Inventory Grid Wider & More Responsive */
+.inventory-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 25px; /* More space between items */
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Extend full width */
+  max-width: 1300px; /* Increased width */
+  margin: auto;
+  padding: 20px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 600px;
+}
+
+/* Inventory Cards */
+.inventory-card {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 320px; /* Increased width */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+.inventory-card:hover {
+  transform: scale(1.05);
+}
+
+/* === STATISTICS MANAGEMENT PAGE STYLES === */
+.statistics-page {
+  text-align: center;
+  padding: 40px;
+  margin-top: 80px;
+}
+
+/* Stats Overview Cards */
+.stats-overview {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stats-card {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.stats-card h3 {
+  font-size: 20px;
+  color: #FF8303;
+}
+
+.stats-card p {
+  font-size: 18px;
+  color: #ddd;
+  margin-top: 10px;
+}
+
+/* Top Selling Items */
+.top-selling {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 400px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.top-selling h2 {
+  font-size: 22px;
+  color: #FF8303;
+}
+
+.top-selling ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-selling li {
+  font-size: 16px;
+  color: white;
+  margin: 5px 0;
+}
+
+/* Buttons Added by Viren on 2nd March*/
+.dashboard-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #FF8303;
+  color: black;
+  font-weight: bold;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.delete-btn {
+  background-color: #d9534f;
+}
+
+.delete-btn:hover {
+  background-color: #c9302c;
+}
+
+/* Back to Dashboard Button */
+.back-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  bottom: 20px;
+}
+
+.back-btn {
+  padding: 12px 20px;
+  background-color: #FF8303;
+  color: black;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.back-btn:hover {
+  background-color: hsl(30, 98%, 15%);
+}
+.report-btn-container {
+  margin: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #FF8303;
+  color: #121212;
+}
+
+.btn-primary:hover {
+  background-color: #ff9933;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #FF8303;
+  color: #FF8303;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 131, 3, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+    padding: 10px;
+  }
+
+  .main-content {
+    margin-left: 60px;
+  }
+
+  .logo-container h1,
+  .nav-link span {
+    display: none;
+  }
+
+  .nav-link i {
+    margin-right: 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+/* Responsive Design Added by Viren on 2nd March*/
+@media (max-width: 1200px) {
+  .inventory-container, .staff-list {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+@media (max-width: 900px) {
+  .inventory-management-container, .staff-management-container {
+      flex-direction: column;
+      align-items: center;
+  }
+  .form-container, .staff-form-container {
+      margin-left: 0; /* Reset left margin */
+      margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .inventory-container, .staff-list {
+      grid-template-columns: repeat(1, 1fr); /* 1 column on small screens */
+  }
+}

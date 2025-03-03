@@ -25,10 +25,21 @@ const UserHome = () => {
   const restaurantSectionRef = useRef(null); //Reference to the restaurant section
   const [searchTerm, setSearchTerm] = useState(""); //State for the search term
 
+<<<<<<< Updated upstream
   const handleExploreClick = () => {
     restaurantSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   
+=======
+   //Search functionality 
+   const restaurantSectionRef = useRef(null); //Reference to the restaurant section
+   const [searchTerm, setSearchTerm] = useState(""); //State for the search term
+ 
+   const handleExploreClick = () => {
+     restaurantSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+   };
+
+>>>>>>> Stashed changes
   const categories = [
     {
       name: "Best Restaurants",
