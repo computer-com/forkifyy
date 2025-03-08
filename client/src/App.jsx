@@ -16,7 +16,8 @@ import BestRestaurants from "./components/User/categories/BestRestaurants";
 import Cafes from "./components/User/categories/Cafes";
 import DineIn from "./components/User/categories/Dine-In";
 import Menu from "./components/Menu/Menu";
-
+import RestaurantHomePage from "./components/Restaurant/RestaurantHomePage";
+import TableReservation from "./components/User/Reservation/TableReservation";
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 

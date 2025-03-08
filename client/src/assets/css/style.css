@@ -153,6 +153,7 @@ body {
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .input-group label{
@@ -175,18 +176,25 @@ input:focus + label{
 }
 
 .input-wrapper{
+  flex: 1;
   justify-content: space-between;
   flex: 1;
   margin-bottom: 20px;
   text-align: left;
+  position: relative;
+
 }
 
 .input-wrapper label {
-  display: block;
-  margin-bottom: 8px;
+  position: absolute;
+  top: -18px; /* Moves label above the input */
+  left: 10px; /* Adjust spacing from the left */
   font-size: 14px;
+  font-weight: bold;
   color: #FF8303;
-  font-weight: 500;
+  background-color: #121212; /* Match form background */
+  padding: 2px 5px;
+  z-index: 2; /* Ensure label stays above input */
 }
 
 .input-wrapper input,

@@ -1,0 +1,125 @@
+/* === STAFF MANAGEMENT PAGE STYLES === */
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures it takes full height */
+}
+
+.staff-page {
+    text-align: center;
+    padding: 40px;
+    margin-top: 80px;
+  }
+  
+  .staff-page h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #FF8303;
+    margin-bottom: 20px;
+  }
+  
+  /* Staff Management Layout */
+  .staff-management-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 1300px; /* Increased width for better alignment */
+    margin: 0 auto;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 131, 3, 0.3);
+    background-color: #121212;
+  }
+  .main-content {
+    flex: 1; /* Pushes content in between header and footer */
+    padding-top: 100px; 
+    padding-bottom: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+  /* Staff Form */
+  .staff-form-container {
+    background-color: #1B1212;
+    border: 2px solid #FF8303;
+    padding: 20px;
+    width: 350px;
+    margin-right: 20px; /* Creates separation from staff list */
+    margin-left: -50px; 
+    border-radius: 12px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+  
+  /* Staff Form Inputs */
+  .staff-form-container input {
+    width: 90%;
+    padding: 12px;
+    margin: 15px 0; 
+    border: 1px solid #FF8303;
+    border-radius: 5px;
+    background-color: #121212;
+    color: white;
+  }
+  
+  .staff-form-container input::placeholder {
+    color: #888;
+  }
+  
+  /* Staff List Grid */
+  .staff-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 25px; 
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    max-width: 1300px; 
+    margin: auto;
+    padding: 20px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 600px;
+  }
+  
+  /* Staff Cards */
+  .staff-card {
+    background-color: #1B1212;
+    border: 2px solid #FF8303;
+    padding: 20px;
+    width: 320px; 
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .staff-card:hover {
+    transform: scale(1.05);
+  }
+
+  /* Responsive Design Added by Viren on 2nd March*/
+@media (max-width: 1200px) {
+    .staff-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .staff-management-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .staff-form-container {
+        margin-left: 0; /* Reset left margin */
+        margin-right: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .staff-list {
+        grid-template-columns: repeat(1, 1fr); /* 1 column for small screens (ex., Mobile, Tab, etc., ) */
+    }
+  }
+  
