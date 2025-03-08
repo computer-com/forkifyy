@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import jsPDF from "jspdf";  // Library for PDF Generation
-import autoTable from "jspdf-autotable";  // For Table Formatting
-import "../../assets/css/adminhome.css";
+import jsPDF from "jspdf";  
+import autoTable from "jspdf-autotable";  
+import "../../assets/css/AdminCSS/Statistics.css";
 import logo from "../../assets/images/Forkify_Logo.png";
+import Sidebar from "../Admin/Sidebar";  
+import { FiMenu } from "react-icons/fi";  
+import Footer from "./Footer";
+import "../../assets/css/AdminCSS/Footer.css";
 
 const Statistics = () => {
   const [inventory, setInventory] = useState([]);
   const [sales, setSales] = useState([]);
   const [ledger, setLedger] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);  
 
   // Fetch Inventory & Sales Data
   useEffect(() => {
@@ -31,38 +36,39 @@ const Statistics = () => {
   const totalInventoryValue = inventory.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const totalRevenue = sales.reduce((acc, sale) => acc + sale.totalAmount, 0);
 
-  // Top-Selling Items
+  //  Top-Selling Items
   const topSellingItems = [...sales].sort((a, b) => b.quantitySold - a.quantitySold).slice(0, 5);
 
+  //  Generate Business Report as PDF
   const generatePDFReport = () => {
     const doc = new jsPDF();
     doc.text("Business Statistics Report", 20, 10);
-    let finalY = 20; // Starting Y position
+    let finalY = 20; 
 
-    // ✅ Fix autoTable positioning issue
+    // Inventory Table
     autoTable(doc, {
       startY: finalY,
       head: [["Item", "Quantity", "Price", "Total Value"]],
-      body: inventory.map(item => [item.name, item.quantity, `$${item.price}`, `$${item.price * item.quantity}`])
+      body: inventory.map(item => [item.itemName, item.quantity, `$${item.price}`, `$${item.price * item.quantity}`])
     });
 
-    finalY = doc.lastAutoTable.finalY + 10; // ✅ Corrected position
+    finalY = doc.lastAutoTable.finalY + 10; 
 
     doc.text("Total Inventory Value: $" + totalInventoryValue, 20, finalY);
     doc.text("Total Stock Available: " + totalStock, 20, finalY + 10);
 
-    // ✅ Fix autoTable for sales
+    // Sales Table
     autoTable(doc, {
       startY: finalY + 20,
       head: [["Item", "Quantity Sold", "Total Sales"]],
       body: sales.map(sale => [sale.itemName, sale.quantitySold, `$${sale.totalAmount}`])
     });
 
-    finalY = doc.lastAutoTable.finalY + 10; // ✅ Corrected position
+    finalY = doc.lastAutoTable.finalY + 10;
 
     doc.text("Total Revenue: $" + totalRevenue, 20, finalY);
 
-    // ✅ Fix autoTable for ledger
+    // Ledger Table
     autoTable(doc, {
       startY: finalY + 20,
       head: [["Transaction Type", "Item", "Amount", "Date"]],
@@ -73,51 +79,58 @@ const Statistics = () => {
   };
 
   return (
-    <div className="statistics-page">
-      {/* Header */}
+    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+      {/* Sidebar Component */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} handleRefresh={() => window.location.reload()} />  
+
+      {/* Top Bar with Sidebar Toggle & Logo */}
       <div className="top-bar">
-        <div className="logo-container">
-          <img src={logo} alt="logo" className="logo-img" />
-          <span className="logo-text">ForkiFy</span>
+        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <FiMenu size={30} color="#FF8303" />
         </div>
-        <h1 className="site-title">Business Statistics</h1>
+        <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
+          <img src={logo} alt="Forkify Logo" className="logo-img" />
+          <h1 className="logo-text">Forkify Admin</h1>
+        </div>
+        <h1 className="page-title">Business Statistics</h1>
       </div>
 
-      {/* Stats Overview */}
-      <div className="stats-overview">
-        <div className="stats-card">
-          <h3>Total Stock</h3>
-          <p>{totalStock} items</p>
+      <div className="main-content">
+        {/*  Stats Overview Section */}
+        <div className="stats-overview">
+          <div className="stats-card">
+            <h3>Total Stock</h3>
+            <p>{totalStock} items</p>
+          </div>
+          <div className="stats-card">
+            <h3>Total Inventory Value</h3>
+            <p>${totalInventoryValue}</p>
+          </div>
+          <div className="stats-card">
+            <h3>Total Revenue</h3>
+            <p>${totalRevenue}</p>
+          </div>
         </div>
-        <div className="stats-card">
-          <h3>Total Inventory Value</h3>
-          <p>${totalInventoryValue}</p>
-        </div>
-        <div className="stats-card">
-          <h3>Total Revenue</h3>
-          <p>${totalRevenue}</p>
+
+        {/* Top Selling Items Section */}
+        <div className="top-selling">
+          <h2>Top Selling Items</h2>
+          <ul>
+            {topSellingItems.map((item, index) => (
+              <li key={index}>{item.itemName} - Sold: {item.quantitySold}</li>
+            ))}
+          </ul>
         </div>
       </div>
-
-      {/* Top Selling Items */}
-      <div className="top-selling">
-        <h2>Top Selling Items</h2>
-        <ul>
-          {topSellingItems.map((item, index) => (
-            <li key={index}>{item.itemName} - Sold: {item.quantitySold}</li>
-          ))}
-        </ul>
-      </div>
-
       {/* Generate Report Button */}
       <div className="report-btn-container">
-        <button onClick={generatePDFReport} className="dashboard-btn">Generate Report (PDF)</button>
+          <button onClick={generatePDFReport} className="dashboard-btn">Generate Report (PDF)</button>
       </div>
-
       {/* Back to Dashboard */}
       <div className="back-btn-container">
         <Link to="/AdminHome" className="back-btn">Back to Dashboard</Link>
       </div>
+      <Footer />
     </div>
   );
 };

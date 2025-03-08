@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import "../../../assets/css/adminhome.css"; // Ensure styles are consistent
+import { Link, useNavigate } from "react-router-dom"; 
+import "../../../assets/css/AdminCSS/Staff.css";
 import logo from "../../../assets/images/Forkify_Logo.png";
-
-// Sample Initial Data
-const initialStaff = [
-  { id: 1, name: "John Doe", role: "Chef", contact: "123-456-7890" },
-  { id: 2, name: "Jane Smith", role: "Waiter", contact: "987-654-3210" }
-];
+import Sidebar from "../../Admin/Sidebar";
+import Footer from "../Footer";
+import "../../../assets/css/AdminCSS/Footer.css";
+import { FiMenu } from "react-icons/fi"; 
 
 const StaffManagement = () => {
-  const [staff, setStaff] = useState(initialStaff);
+  const navigate = useNavigate();
+  const [staff, setStaff] = useState([]);
   const [newStaff, setNewStaff] = useState({ name: "", role: "", contact: "" });
+  const [sidebarOpen, setSidebarOpen] = useState(false); 
 
-    // Fetch Staff Data from MongoDB when the component loads
-    useEffect(() => {
-      axios
-        .get("http://localhost:5000/api/staff") // Adjusted to match your server port
-        .then((response) => setStaff(response.data))
-        .catch((error) => console.error("Error fetching staff:", error));
-    }, []);
+  // Fetch Staff Data from API
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/staff")
+      .then((response) => setStaff(response.data))
+      .catch((error) => console.error("Error fetching staff:", error));
+  }, []);
 
-   // Delete Staff Member (DELETE Request)
-   const handleDelete = (id) => {
+  // Delete Staff Member
+  const handleDelete = (id) => {
     axios
       .delete(`http://localhost:5000/api/staff/${id}`)
       .then(() => setStaff(staff.filter((member) => member._id !== id)))
@@ -35,14 +35,14 @@ const StaffManagement = () => {
     setNewStaff({ ...newStaff, [e.target.name]: e.target.value });
   };
 
-   // Add New Staff Member (POST Request)
-   const handleAddStaff = () => {
+  // Add New Staff Member
+  const handleAddStaff = () => {
     if (newStaff.name && newStaff.role && newStaff.contact) {
       axios
         .post("http://localhost:5000/api/staff", newStaff)
         .then((response) => {
-          setStaff([...staff, response.data]); // Add to state
-          setNewStaff({ name: "", role: "", contact: "" }); // Reset Form
+          setStaff([...staff, response.data]);
+          setNewStaff({ name: "", role: "", contact: "" });
         })
         .catch((error) => console.error("Error adding staff:", error));
     } else {
@@ -50,50 +50,62 @@ const StaffManagement = () => {
     }
   };
 
+  // Function to refresh the page when clicking the logo
+  const handleRefresh = () => {
+    navigate("/AdminHome");
+    window.location.reload();
+  };
+
   return (
-    <div className="staff-page">
-      {/* Header Section */}
+    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> 
+
+      {/* Top Bar with Menu Icon, Logo, and Title */}
       <div className="top-bar">
-        <div className="logo-container">
-          <img src={logo} alt="logo" className="logo-img" />
-          <span className="logo-text">ForkiFy</span>
-        </div>
-        <h1 className="site-title">Staff Management</h1>
-      </div>
-
-      {/* Staff Management Layout */}
-      <div className="staff-management-container">
-        
-        {/* Staff Form - Placed on Left */}
-        <div className="staff-form-container">
-          <h2>Add New Staff Member</h2>
-          <input type="text" name="name" placeholder="Name" value={newStaff.name} onChange={handleChange} />
-          <input type="text" name="role" placeholder="Role" value={newStaff.role} onChange={handleChange} />
-          <input type="text" name="contact" placeholder="Contact" value={newStaff.contact} onChange={handleChange} />
-          <button onClick={handleAddStaff} className="dashboard-btn">Add Staff</button>
+        {/* Hamburger Menu Icon */}
+        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <FiMenu size={30} color="#FF8303" />
         </div>
 
-        {/* Staff List - Aligned on Right in 3x3 Grid */}
-        <div className="staff-list">
-          {staff.map((member) => (
-            <div key={member._id} className="staff-card">
-              <h2>{member.name}</h2>
-              <p>Role: {member.role}</p>
-              <p>Contact: {member.contact}</p>
-              <button className="dashboard-btn" onClick={() => handleDelete(member._id)}>Delete</button>
-            </div>
-          ))}
+        {/* Logo (Refreshes Page) */}
+        <div className="logo-container" onClick={handleRefresh} style={{ cursor: "pointer" }}>
+          <img src={logo} alt="Forkify Logo" className="logo-img" />
+          <h1 className="logo-text">Forkify Admin</h1>
         </div>
 
+        {/* Title in the center */}
+        <h1 className="page-title">Staff Management</h1>
       </div>
 
-      {/* Back to Dashboard Button */}
-      <div className="back-btn-container">
-        <Link to="/AdminHome" className="back-btn">Back to Dashboard</Link>
+      <div className="main-content">
+        {/* Staff Management Layout */}
+        <div className="staff-management-container">
+          {/* Staff Form - Placed on Left */}
+          <div className="staff-form-container">
+            <h2>Add New Staff Member</h2>
+            <input type="text" name="name" placeholder="Name" value={newStaff.name} onChange={handleChange} />
+            <input type="text" name="role" placeholder="Role" value={newStaff.role} onChange={handleChange} />
+            <input type="text" name="contact" placeholder="Contact" value={newStaff.contact} onChange={handleChange} />
+            <button onClick={handleAddStaff} className="dashboard-btn">Add Staff</button>
+          </div>
+          
+
+          {/* Staff List */}
+          <div className="staff-list">
+            {staff.map((member) => (
+              <div key={member._id} className="staff-card">
+                <h2>{member.name}</h2>
+                <p>Role: {member.role}</p>
+                <p>Contact: {member.contact}</p>
+                <button className="dashboard-btn delete-btn" onClick={() => handleDelete(member._id)}>Delete</button>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
-
 };
 
 export default StaffManagement;

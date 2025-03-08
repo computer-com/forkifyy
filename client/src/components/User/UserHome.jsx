@@ -116,7 +116,7 @@ const UserHome = () => {
       <div className="banner">
         <img src={BannerImage} alt="Banner" />
         <div className="banner-content">
-          <h2>Find Your Perfect Dining Experience</h2>
+          <h2>Find Your Perfect Dining </h2>
           <p>Explore the best restaurants in your area</p>
           <button className="explore-btn" onClick={handleExploreClick}>
             Explore
