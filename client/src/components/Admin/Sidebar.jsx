@@ -17,15 +17,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, }) => {
 
   return (
     <div>
-      {/* Fixed Header with Hamburger Icon & Logo */}
-      <div className="admin-header">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-          <FiMenu size={30} color="#FF8303" />
-        </div>
-        <div className="logo-container" onClick={handleDashboardClick} style={{ cursor: "pointer" }}>
-          <h1 className="logo-text">Forkify Admin</h1>
-        </div>
-      </div>
 
       {/* Sidebar Navigation */}
       <nav className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
@@ -44,3 +35,4 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, }) => {
 };
 
 export default Sidebar;
+

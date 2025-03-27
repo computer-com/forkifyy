@@ -6,6 +6,8 @@ import logo from "../../assets/images/Forkify_Logo.png";
 import axios from "axios";
 import Sidebar from "../Admin/Sidebar"; 
 import Footer from "../Admin/Footer";
+import { FiMenu } from "react-icons/fi";  
+
 
 // Import Feature Card Images
 import reservationsImg from "../../assets/images/Manager_Reservations.jpeg";
@@ -17,7 +19,7 @@ import bannerImg from "../../assets/images/Manager_Banner.png";
 
 const AdminHome = () => {
   const navigate = useNavigate();
-  const [setStats] = useState({
+  const [stats, setStats] = useState({
     totalOrders: 0,
     revenue: 0,
     customers: 0,
@@ -34,21 +36,8 @@ const AdminHome = () => {
         setStats(response.data);
       })
       .catch((error) => console.error("Error fetching statistics:", error));
-
-    axios
-      .get("http://localhost:5000/api/recent-activity")
-      .then((response) => {
-        setRecentActivity(response.data);
-      })
-      .catch((error) => console.error("Error fetching recent activity:", error));
   }, []);
-
-  // Function to Refresh Page
-  const handleRefresh = () => {
-    navigate("/AdminHome");
-    window.location.reload();
-  };
-
+  
   return (
     <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
       {/* Sidebar Component */}
@@ -57,7 +46,7 @@ const AdminHome = () => {
       {/* Top Bar with Logo & Page Title */}
       <div className="top-bar">
         <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-          ☰
+          <FiMenu size={30} color="#FF8303" />
         </div>
         <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
           <img src={logo} alt="Forkify Logo" className="logo-img" />
@@ -95,8 +84,8 @@ const AdminHome = () => {
             </div>
           </div>
         </main>
+        <Footer />        
       </div>
-      <Footer />        
     </div>
   );
 };
