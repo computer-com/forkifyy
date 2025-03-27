@@ -49,6 +49,7 @@
     width: 350px;
     margin-right: 20px; /* Creates separation from inventory */
     margin-left: -80px; /* Move slightly left */
+    margin-top: 18px;
     border-radius: 12px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
@@ -97,6 +98,18 @@
   .inventory-card:hover {
     transform: scale(1.05);
   }
+
+  /* Ensure main content adjusts to sidebar */
+.admin-container.sidebar-open {
+  margin-left: 200px;
+  padding-left: 50px;
+}
+
+.admin-container.sidebar-closed {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
   
   
  /* Responsive Design Added by Viren on 2nd March*/

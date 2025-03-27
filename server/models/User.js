@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('mongoose-bcrypt');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -10,7 +10,5 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-
-userSchema.plugin(bcrypt, { fields: ['password'] });
 
 module.exports = mongoose.model('User', userSchema);

@@ -47,7 +47,8 @@
     padding: 20px;
     width: 350px;
     margin-right: 20px; /* Creates separation from staff list */
-    margin-left: -50px; 
+    margin-left: -70px; 
+    margin-top: 20px;
     border-radius: 12px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
@@ -98,6 +99,7 @@
   .staff-card:hover {
     transform: scale(1.05);
   }
+  
 
   /* Responsive Design Added by Viren on 2nd March*/
 @media (max-width: 1200px) {

@@ -31,6 +31,11 @@ const salesRoutes = require("./routes/salesRoutes");
 const ledgerRoutes = require("./routes/ledgerRoutes");
 const recentActivityRoutes = require("./routes/recentActivityRoutes");
 const dashboardStatsRoutes = require("./routes/dashboardStatsRoutes");
+const menuRoutes = require("./routes/menuRoutes");
+const reservationAdminRoutes = require("./routes/reservationAdminRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
+
+
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
@@ -43,5 +48,10 @@ app.use("/api/sales", salesRoutes);
 app.use("/api/ledger", ledgerRoutes);
 app.use("/api/recent-activity", recentActivityRoutes);
 app.use("/api/stats", dashboardStatsRoutes);
+app.use("/api/menu", menuRoutes);
+app.use("/api/reservations", reservationAdminRoutes);
+app.use("/api/settings", settingsRoutes);
+
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
