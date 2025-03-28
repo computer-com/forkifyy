@@ -11,9 +11,6 @@ const RestaurantHomePage = () => {
     navigate(`/menu?restaurant=${id}`);
   };
 
-  const handleReservationClick = () => {
-    navigate(`/restaurant/${id}/reservation`);
-  };
 
   const restaurants = {
     "sardar-ji": {
@@ -177,7 +174,7 @@ const RestaurantHomePage = () => {
             <button className="action-button-expanded" onClick={handleMenuClick}>
               Full Menu
             </button>
-            <button className="action-button-expanded" onClick={handleReservationClick}>
+            <button>
               Book Table
             </button>
           </div>

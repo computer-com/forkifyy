@@ -17,7 +17,6 @@ import Cafes from "./components/User/categories/Cafes";
 import DineIn from "./components/User/categories/Dine-In";
 import Menu from "./components/Menu/Menu";
 import RestaurantHomePage from "./components/Restaurant/RestaurantHomePage";
-import TableReservation from "./components/User/Reservation/TableReservation";
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,7 +37,6 @@ const App = () => {
         <Route path="/admin/stats" element={<Statistics />} />
         <Route path="/userhome" element={<UserHome />} />
         <Route path="/restaurant/:id" element={<RestaurantHomePage />} />
-        <Route path="/restaurant/:id/reservation" element={<TableReservation />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/bestrestaurants" element={<BestRestaurants />} />
         <Route path="/cafes" element={<Cafes />} />
