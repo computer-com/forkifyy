@@ -17,7 +17,6 @@ import Cafes from "./components/User/categories/Cafes";
 import DineIn from "./components/User/categories/Dine-In";
 import Menu from "./components/Menu/Menu";
 import RestaurantHomePage from "./components/Restaurant/RestaurantHomePage";
-import TableReservation from "./components/User/Reservation/TableReservation";
 import MenuAdmin from "./components/Admin/MenuAdmin";
 import EditMenuItem from "./components/Admin/MenuAdmin";
 import AddMenuItem from "./components/Admin/MenuAdmin";
@@ -51,12 +50,10 @@ const App = () => {
         <Route path="/admin/stats" element={<Statistics />} />
         <Route path="/userhome" element={<UserHome />} />
         <Route path="/restaurant/:id" element={<RestaurantHomePage />} />
-        <Route path="/restaurant/:id/reservation" element={<TableReservation />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/bestrestaurants" element={<BestRestaurants />} />
         <Route path="/cafes" element={<Cafes />} />
         <Route path="/dinein" element={<DineIn />} />
-        <Route path="/make-reservation" element={<TableReservation />} />
         <Route path="/admin/menu" element={<MenuAdmin />} />
         <Route path="/admin/menu" element={<EditMenuItem />} />
         <Route path="/admin/menu" element={<AddMenuItem />} />
