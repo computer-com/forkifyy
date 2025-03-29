@@ -1,51 +1,49 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../assets/css/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap";
 import adminSignIn1 from "../assets/images/adminSignIn1.jpg";
 import adminSignIn2 from "../assets/images/adminSignIn2.jpg";
-
-const user = JSON.parse(localStorage.getItem("user"));
-console.log("Logged-in user ID:", user?._id);
+import axios from "axios";
 
 const ManagerSignIn = () => {
   const navigate = useNavigate();
 
-  // Form state
+  //Hardcoded Authorized Credentials for Manager
+  const AUTHORIZED_MANAGER = {
+    id: "vic",
+    password: "4567",
+  };
+
+  // State for Form Inputs
   const [credentials, setCredentials] = useState({
-    email: "",
+    managerId: "",
     password: "",
   });
-
-  // Error state
+  
+  // State for Error Messages
   const [error, setError] = useState("");
 
-  // Handle form input changes
+  //Handle Input Changes
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  // Handle Form Submission
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", credentials);
-      const { user, token } = response.data;
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", JSON.stringify(token));
 
-      if (user && user.role === "admin") {
-        // Save user in localStorage
-        localStorage.setItem("user", JSON.stringify(user));
-        navigate("/AdminHome");
-      } else {
-        setError("Access Denied: Not an admin.");
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Invalid Email or Password.");
+    // Check if Entered Credentials Match Hardcoded Credentials
+    if (
+      credentials.managerId === AUTHORIZED_MANAGER.id &&
+      credentials.password === AUTHORIZED_MANAGER.password
+    ) {
+      // Redirect to Admin Dashboard (Manager Home)
+      navigate('/AdminHome');
+    } else {
+      // Display Error Message
+      setError("Invalid Manager ID or Password! Please try again.");
     }
   };
 
@@ -56,13 +54,13 @@ const ManagerSignIn = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="managerId">Manager ID</label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your Email"
-              value={credentials.email}
+              type="text"
+              id="managerId"
+              name="managerId"
+              placeholder="Enter your Manager ID"
+              value={credentials.managerId}
               onChange={handleChange}
               required
             />
