@@ -1,0 +1,167 @@
+.page-title {
+    color: #FF8303;
+    font-size: 2.2rem;
+    text-align: center;
+    margin: 0px 0 30px;
+
+  }
+  
+  .charts-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+  }
+  
+  .chart-card {
+    background-color: #1b1212;
+    border: 2px solid #FF8303;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    min-height: 300px;
+    margin-top: 50px;
+  }
+  
+  .managers-section {
+    margin: 30px 0;
+    text-align: center;
+  }
+  
+  .manager-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 10px 30px;
+  }
+  
+  .manager-card {
+    background-color: #1c1c1c;
+    border: 2px solid #FF8303;
+    border-radius: 10px;
+    width: 280px;
+    padding: 20px;
+    color: white;
+    text-align: left;
+  }
+
+  .carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  
+  .scroll-btn {
+    background-color: #FF8303;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .scroll-btn:hover {
+    background-color: #e67300;
+  }
+  
+  .feedback-section {
+    margin: 50px 0;
+    padding: 0 40px;
+    overflow-x: auto;
+    position: relative;
+  }
+  .feedback-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+  }
+  
+.feedback-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /*IE and Edge*/
+  }
+  .feedback-carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  
+  .feedback-card-carousel {
+    flex: 0 0 320px;
+    background-color: #1b1212;
+    border-left: 5px solid #FF8303;
+    padding: 20px;
+    border-radius: 10px;
+    color: #eee;
+    box-shadow: 0 4px 12px rgba(255, 131, 3, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .feedback-card-carousel:hover {
+    transform: scale(1.04);
+    background-color: #2a1a1a;
+  }
+  
+  .see-more-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: transparent;
+    color: #FF8303;
+    border: 1px solid #FF8303;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+  }
+  
+  .see-more-btn:hover {
+    background-color: rgba(255, 131, 3, 0.1);
+  }
+  
+  /* MODAL STYLES */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    background-color: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    color: #fff;
+    border: 2px solid #FF8303;
+    box-shadow: 0 0 20px rgba(255, 131, 3, 0.4);
+    position: relative;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .close-icon {
+    cursor: pointer;
+    color: #FF8303;
+    font-size: 22px;
+  }
+  

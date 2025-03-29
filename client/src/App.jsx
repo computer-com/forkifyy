@@ -6,7 +6,14 @@ import SignIn from "./components/SignIn";
 import Login from "./components/Login";
 import AdminSignIn from "./components/AdminSignIn";  
 import ManagerSignIn from "../src/components/ManagerSignIn"; 
-import OwnerSignIn from "../src/components/OwnerSignIn";  
+import OwnerSignIn from "../src/components/OwnerSignIn";
+import OwnerHome from "../src/components/Owner/OwnerHome";
+import OwnerReports from "../src/components/Owner/OwnerReports";
+import OwnerPerformance from "../src/components/Owner/OwnerPerformance";
+import OwnerSettings from "../src/components/Owner/OwnerSettings";
+import OwnerSupport from "../src/components/Owner/OwnerSupport";
+
+
 import UserHome from "./components/User/UserHome";
 import AdminHome from "./components/Admin/AdminHome";
 import StaffManagement from "./components/Admin/StaffManagement";
@@ -64,6 +71,13 @@ const App = () => {
         <Route path="/admin/settings/password" element={<PasswordSettings />} />
         <Route path="/admin/settings/business" element={<BusinessSettings />} />
         <Route path="/admin/settings/users" element={<UserManagement />} />
+
+        <Route path="/owner/dashboard" element={<OwnerHome />} />
+        <Route path="/owner/reports" element={<OwnerReports />} />
+        <Route path="/owner/performance" element={<OwnerPerformance/>} />
+        <Route path="/owner/settings" element={<OwnerSettings/>} />
+        <Route path="/owner/support" element={<OwnerSupport/>} />
+
 
       </Routes>
     </Router>

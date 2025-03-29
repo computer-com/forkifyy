@@ -1,0 +1,86 @@
+.page-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin: 30px 0;
+    color: #FF8303;
+    margin-top: 20px;
+  }
+  
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    margin-top: 70px;
+  }
+  
+  .filters input,
+  .filters select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #FF8303;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
+  .report-table {
+    width: 95%;
+    margin: 0 auto 50px;
+    border-collapse: collapse;
+    background-color: #1c1c1c;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 131, 3, 0.3);
+  }
+  
+  .report-table th,
+  .report-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+  }
+  
+  .report-table th {
+    background-color: #1B1212;
+    color: #FF8303;
+  }
+  
+  .icon {
+    font-size: 20px;
+  }
+  
+  .pdf {
+    color: red;
+  }
+  
+  .excel {
+    color: #1d9c1d;
+  }
+  
+  .download-icon {
+    color: #FF8303;
+    cursor: pointer;
+  }
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .status.reviewed {
+    background-color: #2e7d32;
+    color: white;
+  }
+  
+  .status.pending {
+    background-color: #ffa726;
+    color: black;
+  }
+  
+  .status.flagged {
+    background-color: #e53935;
+    color: white;
+  }
+  
