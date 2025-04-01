@@ -21,7 +21,6 @@ import OwnerSupport from "../src/components/Owner/OwnerSupport";
 import UserHome from "./components/User/UserHome";
 import BestRestaurants from "./components/User/categories/BestRestaurants";
 import Cafes from "./components/User/categories/Cafes";
-import DineIn from "./components/User/categories/Dine-In";
 import Menu from "./components/User/Menu/Menu";
 import RestaurantHomePage from "./components/User/Restaurant/RestaurantHomePage";
 
