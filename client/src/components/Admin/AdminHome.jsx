@@ -14,7 +14,6 @@ import reservationsImg from "../../assets/images/Manager_Reservations.jpeg";
 import inventoryImg from "../../assets/images/Manager_Inventory.jpeg";
 import menuImg from "../../assets/images/Manager_Menu.jpg";
 import salesReportImg from "../../assets/images/Manager_Sales.jpeg";
-import bannerImg from "../../assets/images/Manager_Banner.png";
 
 
 const AdminHome = () => {
@@ -59,10 +58,7 @@ const AdminHome = () => {
         <main className="admin-home">
           <div className="dashboard-container">
             <div className="features-section">
-              <h1>Choice - Indian Restaurant</h1>
-              <div className="banner-section">
-                <img src={bannerImg} alt="Restaurant Banner" className="banner-img" />
-              </div>
+              <h1>Restaurant Manager Dashboard</h1>
               <div className="features-grid">
                 <Link to="/admin/reservations" className="feature-card">
                   <img src={reservationsImg} alt="Reservations" />

@@ -1,14 +1,24 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, enum: ['admin', 'user'], default: 'user' },
-    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }
-}, {
-    timestamps: true
-});
+    password: { type: String }, // ✅ MUST be here for bcrypt to work
+    phone: { type: String }, // Optional
+    role: {
+      type: String,
+      enum: ['admin', 'user', 'customer', 'manager'],
+      default: 'customer',
+    },
+    restaurantId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Restaurant',
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model('User', userSchema);

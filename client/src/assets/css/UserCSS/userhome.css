@@ -1,0 +1,240 @@
+.user-homepage {
+  font-family: 'Segoe UI', sans-serif;
+  background: #1B1212;
+  color: white;
+  width: 100vw;
+  overflow-x: hidden;
+  margin-top: 88vw; /* Enough to push past sticky topbar overlap */
+   /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.user-homepage::-webkit-scrollbar {
+  display: none;
+}
+/* Top Bar */
+.user-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1B1212;
+  padding: 15px 40px;
+  border-bottom: 2px solid #FF8303;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.user-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-logo img {
+  height: 40px;
+}
+.user-logo h2 {
+  color: #FF8303;
+}
+.search-controls {
+  display: flex;
+  gap: 10px;
+}
+.search-controls input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 250px;
+}
+.search-controls button {
+  padding: 10px 15px;
+  background: #FF8303;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.search-controls button:hover {
+  background-color: #e67300;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: #292121;
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+.hero-banner h1 {
+  font-size: 28px;
+  color: #FF8303;
+}
+.hero-banner p {
+  margin: 10px 0 20px;
+}
+.hero-banner button {
+  background: #FF8303;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+.hero-banner button:hover {
+  background: #e67300;
+}
+
+/* Carousel Section */
+.restaurant-carousel {
+  padding: 40px;
+  width: 100vw;
+}
+.restaurant-carousel h2 {
+  font-size: 24px;
+  color: #FF8303;
+  margin-bottom: 20px;
+}
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Arrows */
+.scroll-btn {
+  position: relative;
+  z-index: 2;
+  background-color: #FF8303;
+  border: none;
+  color: black;
+  font-size: 20px;
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.scroll-btn:hover {
+  background-color: #e67300;
+}
+
+/* Restaurant Cards */
+.restaurant-cards {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding-bottom: 10px;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.restaurant-cards::-webkit-scrollbar {
+  display: none;
+}
+.restaurant-card {
+  min-width: 240px;
+  background: #2D2D2D;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #FF8303;
+  flex-shrink: 0;
+}
+.restaurant-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.restaurant-info {
+  padding: 10px;
+}
+.restaurant-info h3 {
+  color: #FF8303;
+  font-size: 18px;
+  margin: 10px 0;
+}
+.restaurant-info p {
+  margin: 5px 0;
+  color: #ddd;
+}
+.restaurant-info button {
+  margin-top: 10px;
+  margin-right: 10px;
+  background: #FF8303;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.restaurant-info button:hover {
+  background: #e67300;
+}
+
+/* Trending Dishes */
+.trending-section {
+  padding: 40px;
+  width: 100vw;
+}
+.trending-dishes {
+  display: flex;
+  gap: 20px;
+}
+.dish-card {
+  background: #2D2D2D;
+  padding: 10px;
+  border-radius: 10px;
+  width: 160px;
+}
+.dish-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+.dish-card p {
+  text-align: center;
+  margin-top: 10px;
+  color: #FF8303;
+  font-weight: bold;
+}
+
+/* Top Rated Reviews Section */
+.top-rated-reviews {
+  padding: 40px;
+  background: #1b1212;
+}
+.top-rated-reviews h2 {
+  color: #FF8303;
+  margin-bottom: 20px;
+}
+.reviews-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+.reviews-row::-webkit-scrollbar {
+  display: none;
+}
+.review-card {
+  background: #2D2D2D;
+  color: white;
+  padding: 20px;
+  min-width: 280px;
+  border-radius: 10px;
+  border: 1px solid #FF8303;
+  flex-shrink: 0;
+}
+.review-card h4 {
+  color: #FF8303;
+  margin-bottom: 10px;
+}
+.review-card p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.review-card span {
+  font-size: 13px;
+  color: #ccc;
+}
