@@ -63,8 +63,7 @@ router.get('/', async (req, res) => {
             ];
         }
 
-        const restaurants = await Restaurant.find(query)
-            .select('name slug cuisine images address rating');
+        const restaurants = await Restaurant.find(query).select('name slug cuisine image city reviews timeSlots');
         res.send(restaurants);
     } catch (error) {
         res.status(500).send(error);
@@ -72,20 +71,35 @@ router.get('/', async (req, res) => {
 });
 
 // Get restaurant by slug
-router.get('/:slug', async (req, res) => {
+router.get('/slug/:slug', async (req, res) => {
     try {
-        const restaurant = await Restaurant.findOne({ 
-            slug: req.params.slug,
-            isActive: true 
-        });
-        if (!restaurant) {
-            return res.status(404).send();
-        }
-        res.send(restaurant);
+      const restaurant = await Restaurant.findOne({
+        slug: req.params.slug,
+        isActive: true
+      });
+      if (!restaurant) return res.status(404).send();
+      res.send(restaurant);
     } catch (error) {
-        res.status(500).send(error);
+      res.status(500).send(error);
     }
-});
+  });
+  
+
+// GET all restaurants
+router.get("/", async (req, res) => {
+    const restaurants = await Restaurant.find();
+    res.json(restaurants);
+  });
+
+  router.get('/id/:id', async (req, res) => {
+    try {
+      const restaurant = await Restaurant.findById(req.params.id);
+      if (!restaurant) return res.status(404).json({ message: "Restaurant not found" });
+      res.json(restaurant);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
 
 // Update restaurant (admin only)
 router.patch('/:id', auth, isAdmin, upload.array('images'), async (req, res) => {
@@ -256,5 +270,7 @@ router.delete('/:id/images/:imageIndex', auth, isAdmin, async (req, res) => {
         res.status(400).send(error);
     }
 });
+
+
 
 module.exports = router;

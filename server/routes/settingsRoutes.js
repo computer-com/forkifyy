@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Import User model
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const { authenticate } = require('./authRoutes'); // Ensure user is logged in
+const { auth, isAdmin } = require('../middleware/auth');
 
 // Update Profile Information
-router.put('/profile', authenticate, async (req, res) => {
+router.put('/profile', auth, async (req, res) => {
   const { name, email, phone, address } = req.body;
   try {
     const updatedUser = await User.findByIdAndUpdate(
-      req.user.id, 
+      req.user._id, //use req.user._id
       { name, email, phone, address },
       { new: true }
     );
@@ -20,15 +20,14 @@ router.put('/profile', authenticate, async (req, res) => {
 });
 
 // Change Password
-router.put('/password', authenticate, async (req, res) => {
+router.put('/password', auth, async (req, res) => {
   const { currentPassword, newPassword } = req.body;
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user._id);
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) return res.status(400).json({ error: 'Incorrect current password' });
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     await user.save();
     res.json({ message: 'Password updated successfully' });
@@ -37,36 +36,12 @@ router.put('/password', authenticate, async (req, res) => {
   }
 });
 
-router.put('/change-password', async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
-
-  // Replace with actual user ID or extract from session/token
-  const userId = "adminUserIdHere";
-
-  try {
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
-
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) return res.status(401).json({ success: false, message: "Incorrect current password" });
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    await user.save();
-
-    res.json({ success: true });
-  } catch (err) {
-    console.error("Error changing password:", err);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
-});
-
 // Business Information Settings
-router.put('/business', authenticate, async (req, res) => {
+router.put('/business', auth, async (req, res) => {
   const { businessName, businessHours, businessContact } = req.body;
   try {
     const updatedBusiness = await User.findByIdAndUpdate(
-      req.user.id,
+      req.user._id,
       { businessName, businessHours, businessContact },
       { new: true }
     );
@@ -77,10 +52,8 @@ router.put('/business', authenticate, async (req, res) => {
 });
 
 // User Management (Only Admins can manage users)
-router.get('/users', authenticate, async (req, res) => {
+router.get('/users', auth, isAdmin, async (req, res) => {
   try {
-    if (!req.user.isAdmin) return res.status(403).json({ error: 'Access Denied' });
-
     const users = await User.find({});
     res.json(users);
   } catch (error) {

@@ -4,67 +4,95 @@ const User = require('../models/User');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-// Register new user
-router.post('/register', async (req, res) => {
-    try {
-        const user = new User(req.body);
-        await user.save();
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        res.status(200).json({ user: userResponse, token });
-    } catch (error) {
-        res.status(400).send(error);
+// Sign-In or Auto-Register Route (No password)
+router.post('/signin', async (req, res) => {
+  const { firstName, lastName, email, phone, countryCode } = req.body;
+  console.log("📦 Body received:", req.body);
+
+  try {
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Register new user
+      user = new User({
+        name: `${firstName} ${lastName}`,
+        email,
+        phone: `${countryCode}${phone}`,
+        role: 'customer'
+      });
+
+      await user.save();
     }
-});
 
-const authenticate = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Access denied' });
-  
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded; // Must include .id or ._id
-      next();
-    } catch (err) {
-      res.status(400).json({ error: 'Invalid token' });
-    }
-  };
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
-
-// Admin/User Login Route
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      // 1. Find user by email
-      const user = await User.findOne({ email });
-      console.log('Incoming email:', email);
-      
-      if (!user) {
-        return res.status(401).json({ message: 'Invalid Email or Password' });
-      }
-  
-      // 2. Compare password with hashed password in DB
-      const isMatch = await user.authenticate(password);      
-      if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid Email or Password' });
-      }
-
-  
-      // 3. Return safe user object (avoid sending hashed password)
-      const userResponse = {
-        _id: user._id,
+    // Respond with token and basic user info
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role,
-      };
-  
-      res.status(200).json({ user: userResponse});
-    } catch (error) {
-      console.error("Login failed:", error);
-      res.status(500).json({ message: 'Server Error' });
+        phone: user.phone
+      }
+    });
+
+  } catch (err) {
+    console.error('Sign In Error:', err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+router.post('/manager', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log("📩 Incoming login for:", email);
+
+    const manager = await User.findOne({ email, role: 'manager' });
+    if (!manager) {
+      console.log("❌ Manager not found");
+      return res.status(404).json({ error: 'Manager not found' });
     }
-  });
+
+    console.log("✅ Manager found:", manager.email);
+    console.log("🔐 Comparing password...");
+
+    const isMatch = await require('bcrypt').compare(password, manager.password);
+    if (!isMatch) {
+      console.log("❌ Password incorrect");
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const token = require('jsonwebtoken').sign(
+      { userId: manager._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
+    console.log("🎫 JWT token generated");
+
+    res.status(200).json({
+      token,
+      manager: {
+        id: manager._id,
+        name: manager.name,
+        email: manager.email,
+        restaurantId: manager.restaurantId,
+      },
+    });
+
+  } catch (err) {
+    console.error("🔥 Server error in /manager route:", err);
+    res.status(500).json({ error: 'Server error', message: err.message });
+  }
+});
+
+
 
 module.exports = router;
-module.exports.authenticate = authenticate;
-

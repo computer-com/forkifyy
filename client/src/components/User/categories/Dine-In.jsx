@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../../assets/css/userhome.css";
+import "../../../assets/css/UserCSS/userhome.css";
 import RestaurantImage1 from "../../../assets/images/Restaurant_Image_1.png";
 import RestaurantImage2 from "../../../assets/images/Restaurant_Image_1.png";
 
