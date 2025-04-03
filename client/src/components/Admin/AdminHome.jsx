@@ -58,7 +58,6 @@ const AdminHome = () => {
         <main className="admin-home">
           <div className="dashboard-container">
             <div className="features-section">
-              <h1>Restaurant Manager Dashboard</h1>
               <div className="features-grid">
                 <Link to="/admin/reservations" className="feature-card">
                   <img src={reservationsImg} alt="Reservations" />
