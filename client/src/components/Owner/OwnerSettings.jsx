@@ -21,8 +21,8 @@ const OwnerSettings = () => {
             </div>
 
             <div className="logo-container">
-                <img src={logo} alt="Forkify Logo" className="logo-img" />
-                <h1 className="logo-text">Forkify Owner</h1>
+            <a href="/owner/dashboard"><img src={logo} alt="Forkify Logo" className="logo-img" /></a>
+            <h1 className="logo-text">Forkify Owner</h1>
             </div>
 
             <h1 className="page-title">Settings</h1>
@@ -37,7 +37,13 @@ const OwnerSettings = () => {
                         <button className="settings-btn">Edit</button>
                         </Link>
                     </div>
-
+                    <div className="settings-card">
+                        <h2>Add Restaurant</h2> {/* New Card */}
+                        <p>Add a new restaurant to your portfolio.</p>
+                        <Link to="/owner/add-restaurant">
+                        <button className="settings-btn">Add</button>
+                        </Link>
+                    </div>
                     <div className="settings-card">
                         <h2>Report Access</h2>
                         <p>Control access to sales, inventory, and performance data.</p>

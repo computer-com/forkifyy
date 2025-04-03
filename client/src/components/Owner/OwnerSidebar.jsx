@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../assets/css/OwnerCSS/OwnerSidebar.css";
 
-const OwnerSidebar = () => {
+const OwnerSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
       <ul className="sidebar-menu">
         <li><Link to="/owner/dashboard">Dashboard</Link></li>
         <li><Link to="/owner/reports">Manager Reports</Link></li>

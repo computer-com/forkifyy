@@ -1,52 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/UserCSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap";
-import ownerSignIn1 from "../../assets/images/ownerSignIn1.jpg";
-import ownerSignIn2 from "../../assets/images/ownerSignIn2.jpg";
+import ownerSignIn1 from "../../assets/images/adminSignIn1.jpg";
+import ownerSignIn2 from "../../assets/images/adminSignIn2.jpg";
 
 const OwnerSignIn = () => {
   const navigate = useNavigate();
-
-  // Hardcoded Owner Credentials
-  const AUTH_OWNER = {
-    email: "examplexyz@example.com",
-    password: "123",
-  };
-
-  const [formData, setFormData] = useState({
+  
+  const [credentials, setCredentials] = useState({
     email: '',
-    password: '',
+    password: ''
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { email, password } = formData;
+    const { email, password } = credentials;
 
     if (!email || !password) {
-      return setError("Both email and password are required.");
+      setError("Both email and password are required.");
+      return;
     }
 
-    if (
-      email === AUTH_OWNER.email &&
-      password === AUTH_OWNER.password
-    ) {
-      localStorage.setItem("owner", JSON.stringify({ email }));
-      navigate('/owner/dashboard');
-    } else {
-      setError("Invalid Email or Password.");
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/owner", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Invalid credentials");
+      }
+
+      localStorage.setItem("ownerToken", data.token);
+      localStorage.setItem("owner", JSON.stringify(data.owner));
+      navigate("/owner/dashboard");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -57,24 +56,26 @@ const OwnerSignIn = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
+              id="email"
               name="email"
-              placeholder="examplexyz@example.com"
-              value={formData.email}
+              placeholder="Enter your email"
+              value={credentials.email}
               onChange={handleChange}
               required
             />
           </div>
 
           <div className="input-wrapper">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
+              id="password"
               name="password"
-              placeholder="Enter your Password"
-              value={formData.password}
+              placeholder="Enter your password"
+              value={credentials.password}
               onChange={handleChange}
               required
             />
@@ -84,15 +85,19 @@ const OwnerSignIn = () => {
 
           <button type="submit" className="submit-btn">Sign In</button>
         </form>
+
+        <p className="register-link">
+          Don't have an account? <a href="/owner/register">Register as Owner</a>
+        </p>
       </div>
 
       <div className="carousel-container">
         <Carousel>
           <Carousel.Item>
-            <img className="d-block w-100" src={ownerSignIn1} alt="Slide 1" />
+            <img className="d-block w-100" src={ownerSignIn1} alt="First slide" />
           </Carousel.Item>
           <Carousel.Item>
-            <img className="d-block w-100" src={ownerSignIn2} alt="Slide 2" />
+            <img className="d-block w-100" src={ownerSignIn2} alt="Second slide" />
           </Carousel.Item>
         </Carousel>
       </div>

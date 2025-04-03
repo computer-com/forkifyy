@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
     phone: { type: String }, // Optional
     role: {
       type: String,
-      enum: ['admin', 'user', 'customer', 'manager'],
+      enum: ['admin', 'user', 'customer', 'manager', 'owner'],
       default: 'customer',
     },
     restaurantId: {

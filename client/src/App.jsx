@@ -18,7 +18,8 @@ import OwnerReports from "../src/components/Owner/OwnerReports";
 import OwnerPerformance from "../src/components/Owner/OwnerPerformance";
 import OwnerSettings from "../src/components/Owner/OwnerSettings";
 import OwnerSupport from "../src/components/Owner/OwnerSupport";
-
+import AddRestaurant from "./components/Owner/AddRestaurant";
+import OwnerRegister from "./components/Authentication/OwnerRegister";
 
 //User Paths
 import UserHome from "./components/User/UserHome";
@@ -76,6 +77,7 @@ const App = () => {
         <Route path="/adminsignin" element={<AdminSignIn />} />
         <Route path="/manager/signin" element={<ManagerSignIn />} />
         <Route path="/owner/signin" element={<OwnerSignIn />} />
+        <Route path="/owner/register" element={<OwnerRegister />} />
 
         <Route path="/userhome" element={<UserHome />} />
         <Route path="/faq" element={<FAQPage/>} />
@@ -106,6 +108,7 @@ const App = () => {
         <Route path="/owner/reports" element={<OwnerReports />} />
         <Route path="/owner/performance" element={<OwnerPerformance/>} />
         <Route path="/owner/settings" element={<OwnerSettings/>} />
+        <Route path="/owner/add-restaurant" element={<AddRestaurant/>} />
         <Route path="/owner/support" element={<OwnerSupport/>} />
 
         <Route path="/about" element={<AboutUs />} />

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import OwnerSidebar from "./OwnerSidebar";
 import OwnerFooter from "./OwnerFooter";
 import { FiMenu } from "react-icons/fi";
@@ -6,50 +7,65 @@ import logo from "../../assets/images/Forkify_Logo.png";
 import "../../assets/css/OwnerCSS/OwnerDashboard.css";
 
 const OwnerHome = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const restaurants = [
-    { name: "Choice - Indian Restaurant", location: "Toronto", id: 1 },
-    { name: "Spice Junction", location: "Mississauga", id: 2 },
-    { name: "Grill House", location: "Brampton", id: 3 },
-  ];
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [restaurants, setRestaurants] = useState([]);
+  const [error, setError] = useState("");
+
+  const fetchRestaurants = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/restaurants");
+      if (!response.ok) {
+        throw new Error("Failed to fetch restaurants");
+      }
+      const data = await response.json();
+      setRestaurants(data);
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+      setError("Failed to load restaurants. Please try again later.");
+    }
+  };
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
   return (
-    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className={`owner-home-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Top Bar */}
-      <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-          <FiMenu size={30} color="#FF8303" />
-        </div>
-        <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
-          <img src={logo} alt="Forkify Logo" className="logo-img" />
-          <h1 className="logo-text">Forkify Owner</h1>
-        </div>
-      </div>
-
-      {/* Main Content */}
       <div className="main-content">
-        <main className="admin-home">
-          <div className="dashboard-container">
-            <div className="features-section">
-              <h1 className="homepage-title">Welcome, Owner!</h1>
-              <p className="page-subtitle">Here’s a quick glance at all your restaurants</p>
-              {/* Optional: Add more widgets/cards here */}
-
-              <div className="restaurant-grid">
-                {restaurants.map((res) => (
-                <div key={res.id} className="restaurant-card">
-                    <h2>{res.name}</h2>
-                    <p>{res.location}</p>
-                    <button className="dashboard-btn">View Reports</button>
-                </div>
-                ))}
-              </div>
-            </div>
-            
+        <div className="top-bar">
+          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <FiMenu size={30} color="#FF8303" />
           </div>
-        </main>
+          <div className="logo-container">
+            <img src={logo} alt="Forkify Logo" className="logo-img" />
+            <h1 className="logo-text">Forkify Owner</h1>
+          </div>
+          <h1 className="page-title">Owner Dashboard</h1>
+        </div>
+        <div className="content-section">
+          <h2>Your Restaurants</h2>
+          {error && <p className="error">{error}</p>}
+          {restaurants.length === 0 && !error ? (
+            <p>No restaurants found.</p>
+          ) : (
+            <div className="restaurant-grid">
+              {restaurants.map((restaurant) => (
+                <div key={restaurant._id} className="restaurant-card">
+                  <h3>{restaurant.name}</h3>
+                  <p>Cuisine: {restaurant.cuisine}</p>
+                  <p>City: {restaurant.city}</p>
+                  {/* Removed the View Details button */}
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="add-restaurant-container">
+            <Link to="/owner/add-restaurant" className="dashboard-btn">
+              Add New Restaurant
+            </Link>
+          </div>
+        </div>
         <OwnerFooter />
       </div>
     </div>
