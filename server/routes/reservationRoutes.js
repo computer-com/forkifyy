@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Reservation = require('../models/Reservation');
+const Restaurant = require('../models/Restaurant');
 const { auth, isAdmin } = require('../middleware/auth');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-
-// Email setup with environment variables
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -15,25 +15,29 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Create a new reservation with confirmation email
+// POST / — User makes a reservation
 router.post('/', auth, async (req, res) => {
   try {
-    console.log('User making reservation:', req.user.email);
     const { restaurantId, date, time, numberOfGuests, specialRequests, email, name } = req.body;
+
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) return res.status(404).send({ error: 'Restaurant not found' });
 
     const reservation = new Reservation({
       restaurantId,
+      restaurantName: restaurant.name,
       date,
       time,
       numberOfGuests,
       specialRequests,
       userId: req.user._id,
+      name,
+      email,
       status: 'pending',
     });
 
     await reservation.save();
 
-    // Send confirmation email
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -42,56 +46,77 @@ router.post('/', auth, async (req, res) => {
       <div style="font-family: 'Segoe UI', sans-serif; color: #333; padding: 20px;">
         <h2 style="color: #ff6f00;">🍽️ ForkiFy Reservation Confirmed!</h2>
         <p>Hi <strong>${name}</strong>,</p>
-
-        <p>Your table has been successfully booked and we can’t wait to host you!</p>
-
+        <p>Your table at <strong>${restaurant.name}</strong> has been successfully booked.</p>
         <div style="margin: 15px 0; padding: 15px; background: #f9f9f9; border-left: 4px solid #ff6f00;">
           <p><strong>📅 Date:</strong> ${new Date(date).toDateString()}</p>
           <p><strong>⏰ Time:</strong> ${time}</p>
-          <p><strong>👥 Number of Guests:</strong> ${numberOfGuests}</p>
+          <p><strong>👥 Guests:</strong> ${numberOfGuests}</p>
         </div>
-
-        <p>Feel free to dress casual, bring your appetite, and leave the rest to us.</p>
-
-        <p style="margin-top: 20px;">💌 If you have any questions, just reply to this email.</p>
-
-        <p>See you soon,<br/><strong>The ForkiFy Team</strong> 🍴</p>
-
-        <hr style="margin: 20px 0;" />
-
-        <small style="color: #999;">This is a system-generated email. For any support, visit our help center at forkify.support/contact</small>
-      </div>
-    `,
+        <p>Feel free to dress casual and bring your appetite!</p>
+        <p>See you soon,<br/>The ForkiFy Team 🍴</p>
+      </div>`,
     };
 
     await transporter.sendMail(mailOptions);
-
-    res.status(201).send({ message: 'Reservation successful and email sent.', reservation });
+    res.status(201).send({ message: 'Reservation created and email sent.', reservation });
   } catch (error) {
-    console.error("Detailed Error:", error);
-    res.status(400).send({
-      error: 'Reservation failed or email could not be sent.',
-      details: error.message,
-      stack: error.stack
-    });
+    res.status(400).send({ error: 'Failed to create reservation', details: error.message });
   }
 });
 
-// Get all reservations for a restaurant (admin only)
-router.get('/restaurant/:restaurantId', auth, isAdmin, async (req, res) => {
+// Manager/Admin GET all reservations for restaurant
+router.get('/restaurant/:restaurantId', auth, async (req, res) => {
   try {
+    if (req.user.role !== 'manager' && req.user.role !== 'admin') {
+      return res.status(403).send({ error: 'Access denied' });
+    }
+
     const reservations = await Reservation.find({
-      restaurantId: req.params.restaurantId,
+      restaurantId: new mongoose.Types.ObjectId(req.params.restaurantId),
     })
       .populate('userId', 'name email')
       .sort({ date: 1, time: 1 });
+
     res.send(reservations);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({ error: 'Failed to fetch reservations', details: error.message });
   }
 });
 
-// Get user's reservations
+// Manager/Admin manually add reservation (no email)
+router.post('/manual', auth, async (req, res) => {
+  try {
+    if (req.user.role !== 'manager' && req.user.role !== 'admin') {
+      return res.status(403).send({ error: 'Only manager/admin can add reservations manually.' });
+    }
+
+    const { restaurantId, date, time, numberOfGuests, name, email } = req.body;
+    if (!restaurantId || !date || !time || !numberOfGuests || !name || !email) {
+      return res.status(400).send({ error: 'Missing required fields' });
+    }
+
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) return res.status(404).send({ error: 'Restaurant not found' });
+
+    const reservation = new Reservation({
+      restaurantId,
+      restaurantName: restaurant.name,
+      date,
+      time,
+      numberOfGuests,
+      name,
+      email,
+      status: 'pending',
+    });
+
+    await reservation.save();
+    res.status(201).send(reservation);
+  } catch (err) {
+    res.status(500).send({ error: "Manual reservation failed", details: err.message });
+  }
+});
+
+// User gets their reservations
 router.get('/user', auth, async (req, res) => {
   try {
     const reservations = await Reservation.find({ userId: req.user._id })
@@ -119,7 +144,7 @@ router.patch('/:id/status', auth, isAdmin, async (req, res) => {
   }
 });
 
-// Cancel reservation (user can cancel their own reservation)
+// Cancel reservation (user only)
 router.patch('/:id/cancel', auth, async (req, res) => {
   try {
     const reservation = await Reservation.findOne({
@@ -129,7 +154,7 @@ router.patch('/:id/cancel', auth, async (req, res) => {
 
     if (!reservation) return res.status(404).send();
     if (reservation.status === 'cancelled')
-      return res.status(400).send({ error: 'Reservation is already cancelled' });
+      return res.status(400).send({ error: 'Reservation already cancelled' });
 
     reservation.status = 'cancelled';
     await reservation.save();
@@ -139,13 +164,13 @@ router.patch('/:id/cancel', auth, async (req, res) => {
   }
 });
 
-// Get available time slots for a specific date
+// Get available time slots
 router.get('/available-slots/:restaurantId', auth, async (req, res) => {
   try {
     const { date } = req.query;
     if (!date) return res.status(400).send({ error: 'Date is required' });
 
-    const existingReservations = await Reservation.find({
+    const existing = await Reservation.find({
       restaurantId: req.params.restaurantId,
       date: new Date(date),
       status: { $ne: 'cancelled' },
@@ -158,14 +183,45 @@ router.get('/available-slots/:restaurantId', auth, async (req, res) => {
       '20:00', '20:30', '21:00',
     ];
 
-    const availableSlots = timeSlots.filter(time => {
-      const reservationsAtTime = existingReservations.filter(r => r.time === time);
-      return reservationsAtTime.length < 10;
+    const available = timeSlots.filter(slot => {
+      const count = existing.filter(r => r.time === slot).length;
+      return count < 10;
     });
 
-    res.send(availableSlots);
+    res.send(available);
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+// Edit reservation
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const reservation = await Reservation.findById(req.params.id);
+    if (!reservation) return res.status(404).send({ error: "Reservation not found" });
+
+    const allowed = ['name', 'email', 'time', 'date', 'numberOfGuests'];
+    allowed.forEach(field => {
+      if (req.body[field] !== undefined) {
+        reservation[field] = req.body[field];
+      }
+    });
+
+    await reservation.save();
+    res.send(reservation);
+  } catch (err) {
+    res.status(400).send({ error: "Failed to update reservation", details: err.message });
+  }
+});
+
+// Delete reservation
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const deleted = await Reservation.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).send({ error: "Reservation not found" });
+    res.send({ message: "Reservation deleted" });
+  } catch (err) {
+    res.status(500).send({ error: "Failed to delete reservation", details: err.message });
   }
 });
 

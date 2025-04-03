@@ -111,25 +111,16 @@ const Statistics = () => {
             <p>${totalRevenue}</p>
           </div>
         </div>
-
-        {/* Top Selling Items Section */}
-        <div className="top-selling">
-          <h2>Top Selling Items</h2>
-          <ul>
-            {topSellingItems.map((item, index) => (
-              <li key={index}>{item.itemName} - Sold: {item.quantitySold}</li>
-            ))}
-          </ul>
-        </div>
+         {/* Generate Report Button */}
+          <div className="report-btn-container">
+              <button onClick={generatePDFReport} className="dashboard-btn">Generate Report (PDF)</button>
+          </div>
+          {/* Back to Dashboard */}
+          <div className="back-btn-container">
+            <Link to="/AdminHome" className="back-btn">Back to Dashboard</Link>
+          </div>
       </div>
-      {/* Generate Report Button */}
-      <div className="report-btn-container">
-          <button onClick={generatePDFReport} className="dashboard-btn">Generate Report (PDF)</button>
-      </div>
-      {/* Back to Dashboard */}
-      <div className="back-btn-container">
-        <Link to="/AdminHome" className="back-btn">Back to Dashboard</Link>
-      </div>
+     
       <Footer />
     </div>
   );

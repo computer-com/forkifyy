@@ -11,6 +11,8 @@ const RestaurantHomePage = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [activeTab, setActiveTab] = useState("Overview");
+  const [menuItems, setMenuItems] = useState([]);
+  const [loadingMenu, setLoadingMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [formData, setFormData] = useState({
@@ -20,6 +22,7 @@ const RestaurantHomePage = () => {
     dateTime: "",
   });
 
+  // Fetch restaurant details
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
@@ -33,23 +36,39 @@ const RestaurantHomePage = () => {
     fetchRestaurant();
   }, [id]);
 
+  // Fetch menu items for this restaurant
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await axios.get(`/api/menu?restaurantId=${id}`);
+        setMenuItems(res.data);
+      } catch (error) {
+        console.error("Error fetching menu items:", error);
+      } finally {
+        setLoadingMenu(false);
+      }
+    };
+
+    fetchMenu();
+  }, [id]);
+
   const handleReservationSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const token = localStorage.getItem("token");
       const customer = JSON.parse(localStorage.getItem("customer"));
-  
+
       if (!token || !customer) {
         alert("You must be signed in to reserve a table.");
         return;
       }
-  
+
       const date = new Date(formData.dateTime);
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const time = `${hours}:${minutes}`;
-  
+
       const reservationPayload = {
         restaurantId: id,
         numberOfGuests: formData.guests,
@@ -58,31 +77,28 @@ const RestaurantHomePage = () => {
         name: formData.name,
         email: formData.email,
       };
-  
+
       await axios.post("/api/reservation", reservationPayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       setSuccessMsg("Your reservation was successfully placed!");
       setShowModal(false);
       setFormData({ name: "", email: "", guests: 1, dateTime: "" });
-  
+
       setTimeout(() => setSuccessMsg(""), 5000);
     } catch (err) {
       console.error("Reservation failed:", err.response?.data || err.message);
       alert("Failed to reserve. Please try again.");
     }
   };
-  
-  
 
   if (!restaurant) return <div className="loading-text">Loading...</div>;
 
   return (
     <div className="restaurant-page">
-      {/* Topbar */}
       <header className="user-topbar">
         <div className="user-logo">
           <img src={logo} alt="Forkify Logo" />
@@ -90,7 +106,6 @@ const RestaurantHomePage = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="restaurant-hero">
         <img
           className="restaurant-hero-img"
@@ -110,7 +125,6 @@ const RestaurantHomePage = () => {
         </div>
       </section>
 
-      {/* Tabs */}
       <div className="tab-navigation">
         {tabs.map((tab) => (
           <button
@@ -123,7 +137,6 @@ const RestaurantHomePage = () => {
         ))}
       </div>
 
-      {/* Tab Content */}
       <div className="tab-content">
         {activeTab === "Overview" && (
           <div className="overview-section">
@@ -240,13 +253,13 @@ const RestaurantHomePage = () => {
         {activeTab === "Menu" && (
           <div className="menu-section">
             <h2>Menu Highlights</h2>
-            {restaurant.menu && restaurant.menu.length > 0 ? (
+            {loadingMenu ? (
+              <p className="menu-empty">Loading menu...</p>
+            ) : menuItems.length > 0 ? (
               <ul className="menu-items">
-                {restaurant.menu.map((item, idx) => (
-                  <li key={idx} className="menu-item">
-                    <h4>
-                      {item.name} - ${item.price}
-                    </h4>
+                {menuItems.map((item, idx) => (
+                  <li key={item._id || idx} className="menu-item">
+                    <h4>{item.name} - ${item.price}</h4>
                     <p>{item.description}</p>
                   </li>
                 ))}

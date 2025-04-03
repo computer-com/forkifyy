@@ -41,18 +41,18 @@ const AdminHome = () => {
     <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
       {/* Sidebar Component */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
       {/* Top Bar with Logo & Page Title */}
       <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-          <FiMenu size={30} color="#FF8303" />
+          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <FiMenu size={30} color="#FF8303" />
+          </div>
+          <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
+            <img src={logo} alt="Forkify Logo" className="logo-img" />
+            <h1 className="logo-text">Forkify Admin</h1>
+          </div>
+          {/* Page Title */}
+          <h1 className="page-title">Dashboard</h1>
         </div>
-        <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
-          <img src={logo} alt="Forkify Logo" className="logo-img" />
-          <h1 className="logo-text">Forkify Admin</h1>
-        </div>
-      </div>
-
       <div className="main-content">
         {/* Main Content */}
         <main className="admin-home">

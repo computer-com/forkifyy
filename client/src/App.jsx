@@ -42,6 +42,16 @@ import PasswordSettings from "./components/Admin/Settings/PasswordSettings";
 import BusinessSettings from "./components/Admin/Settings/BusinessSettings";
 import UserManagement from "./components/Admin/Settings/UserManagementSettings";
 
+//Footer pages
+import AboutUs from "./components/Admin/FooterPages/AboutUs";
+import Blogs from "./components/Admin/FooterPages/Blogs";
+import Career from "./components/Admin/FooterPages/Career";
+import TrustCenter from "./components/Admin/FooterPages/TrustCenter";
+import Security from "./components/Admin/FooterPages/Security";
+import TermsConditions from "./components/Admin/FooterPages/TermsConditions";
+import Partnerships from "./components/Admin/FooterPages/Partnerships";
+import BusinessOwners from "./components/Admin/FooterPages/BusinessOwners";
+
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -62,9 +72,7 @@ const App = () => {
         <Route path="/menu" element={<Menu />} />
         <Route path="/bestrestaurants" element={<BestRestaurants />} />
         <Route path="/cafes" element={<Cafes />} />
-        <Route path="/dinein" element={<DineIn />} />
-        <Route path="/outdoordinein" element={<OutdoorDinein />} />
-
+        
         <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/admin/staff" element={<StaffManagement />} />
         <Route path="/admin/inventory" element={<InventoryManagement />} />
@@ -85,6 +93,15 @@ const App = () => {
         <Route path="/owner/performance" element={<OwnerPerformance/>} />
         <Route path="/owner/settings" element={<OwnerSettings/>} />
         <Route path="/owner/support" element={<OwnerSupport/>} />
+
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/career" element={<Career />} />
+        <Route path="/trust" element={<TrustCenter />} />
+        <Route path="/security" element={<Security />} />
+        <Route path="/terms" element={<TermsConditions />} />
+        <Route path="/partnerships" element={<Partnerships />} />
+        <Route path="/owners" element={<BusinessOwners />} />
 
 
       </Routes>
