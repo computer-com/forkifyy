@@ -124,8 +124,9 @@ const UserHome = () => {
                     <p>{res.cuisine} • {res.city || "Ontario"}</p>
                     <p>⭐ {res.reviews} reviews</p>
                     {res.timeSlots && res.timeSlots.slice(0, 2).map((slot, i) => (
-                      <button key={i}>{slot}</button>
+                      <h3 key={i}>{slot}</h3>
                     ))}
+                    <button onClick={() => navigate(`/restaurant/${res._id}`)}>Checkout</button>
                   </div>
                 </div>
               ))

@@ -1,65 +1,26 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import "../../../assets/css/UserCSS/userhome.css";
-import RestaurantImage1 from "../../../assets/images/Restaurant_Image_1.png";
-import RestaurantImage2 from "../../../assets/images/Restaurant_Image_1.png";
+import Footer from "../../User/UserFooter";
+import logo from "../../../assets/images/Forkify_Logo.png"; 
+import "../../../assets/css/UserCSS/PageStyles.css";
 
 const DineIn = () => {
-    const navigate = useNavigate();
-
-    const restaurants = [
-        {
-            id: "sardar-ji",
-            name: "Sardar Ji - Kitchener",
-            description: "Authentic Indian cuisine with a modern twist.",
-            image: RestaurantImage1,
-        },
-        {
-            id: "italian-table",
-            name: "The Italian Table",
-            description: "Traditional Italian food with a cozy ambiance.",
-            image: RestaurantImage2,
-        },
-    ];
-
-    const handleViewMenu = (restaurantId) => {
-        navigate(`/menu?restaurant=${restaurantId}`);
-    };
-
-    const handleReservation = () => {
-        navigate('/make-reservation');
-    };
-
-    return (
-        <div className="category-page">
-          <h1 className="page-title">Dine-In</h1>
-          <div className="restaurant-list">
-            {restaurants.map((restaurant) => (
-              <div className="restaurant-card" key={restaurant.id}>
-                <img src={restaurant.image} alt={restaurant.name} />
-                <div className="restaurant-info">
-                  <h3>{restaurant.name}</h3>
-                  <p>{restaurant.description}</p>
-                  <div className="card-buttons">
-                    <button
-                      className="reservation-btn"
-                      onClick={() => handleReservation()}
-                    >
-                      Make Reservation
-                    </button>
-                    <button
-                      className="menu-btn"
-                      onClick={() => handleViewMenu(restaurant.id)}
-                    >
-                      View Menu
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+  return (
+    <div>
+      <header className="user-topbar">
+        <div className="user-logo">
+          <img src={logo} alt="Forkify Logo" />
+          <h2>ForkiFy</h2>
         </div>
-    );
+      </header>
+      <h1 className="title">Dine-In</h1>
+      <section className="page-content">
+        <p>Explore dine-in options at the best restaurants. Enjoy a fine dining experience in a cozy atmosphere with a variety of food choices.</p>
+        <button onClick={() => window.location.href='/UserHome'}>Go to Restaurant Home</button>
+      </section>
+
+      <Footer />
+    </div>
+  );
 };
 
 export default DineIn;

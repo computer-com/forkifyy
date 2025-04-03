@@ -1,0 +1,137 @@
+.user-topbar {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 80px;
+  justify-content: space-between;
+  background-color: #1B1212;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.page-content {
+  padding: 20px;
+  background-color: #121212;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.title{
+  font-size: 2rem;
+  color: #FF8303;
+  padding-top: 10vh;
+  text-align: center;
+}
+
+.page-content p {
+  color: #ccc;
+  margin: 15px 0;
+}
+
+.page-content form {
+  width: 100%;
+  max-width: 600px;
+  border: 2px solid #FF8303;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #1b1212; /* Same background as the page */
+}
+
+
+
+.page-content button {
+  background-color: #FF8303;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.page-content button:hover {
+  background-color: #FF9900;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid #333;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #bbb;
+}
+.title-us{
+  font-size: 2rem;
+  color: #FF8303;
+  padding-top: 40vh;
+  text-align: center;
+}
+.page-content-us {
+  padding: 20px;
+  background-color: #121212;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.page-content-us p{
+  color: #ccc;
+  margin: 15px 0;
+}
+.page-content-us form{ 
+  width: 100%;
+  max-width: 600px;
+  border: 2px solid #FF8303;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #1b1212;
+}
+.page-content-us input,
+.page-content-us textarea {
+  background-color: #2c2c2c; /* Dark background for fields */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.page-content-us textarea {
+  resize: vertical;
+  height: 100px; /* Ensures the text area is large */
+}
+
+.page-content-us input:focus,
+.page-content-us textarea:focus {
+  outline: none;
+  border: 2px solid #FF8303;
+  
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .page-content form {
+    padding: 20px;
+  }
+}

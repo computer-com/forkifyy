@@ -66,14 +66,14 @@ const seedManagers = async () => {
       const restaurant = restaurants.find(r => r.name === manager.restaurantName);
 
       if (!restaurant) {
-        console.warn(`❌ Restaurant "${manager.restaurantName}" not found for manager: ${manager.email}`);
+        console.warn(`Restaurant "${manager.restaurantName}" not found for manager: ${manager.email}`);
         continue;
       }
 
       const existing = await User.findOne({ email: manager.email });
 
       if (existing) {
-        console.log(`⏭️ Manager exists: ${manager.email} -> restaurantId: ${restaurant._id}`);
+        console.log(` Manager exists: ${manager.email} -> restaurantId: ${restaurant._id}`);
         continue;
       }
 
@@ -86,27 +86,15 @@ const seedManagers = async () => {
         restaurantId: restaurant._id,
       });
 
-      console.log(`✅ Manager created: ${manager.email} -> ${restaurant.name} (${restaurant._id})`);
+      console.log(`Manager created: ${manager.email} -> ${restaurant.name} (${restaurant._id})`);
 
-      // ✅ [DEV ONLY] Insert 1 test reservation per manager's restaurant
-      await Reservation.create({
-        name: "Test User",
-        email: "testuser@forkify.com",
-        numberOfGuests: 2,
-        date: new Date(Date.now() + 86400000), // Tomorrow
-        time: "18:00",
-        restaurantId: restaurant._id,
-        restaurantName: restaurant.name,
-        status: "pending"
-      });
-
-      console.log(`📝 Test reservation added for "${restaurant.name}"`);
+      console.log(`Test reservation added for "${restaurant.name}"`);
     }
 
-    console.log("\n🎉 Done: Managers + test reservations seeded correctly!\n");
+    console.log("\n Done: Managers + test reservations seeded correctly!\n");
     process.exit();
   } catch (error) {
-    console.error("❌ Seeding error:", error);
+    console.error(" Seeding error:", error);
     process.exit(1);
   }
 };

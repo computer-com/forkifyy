@@ -1,63 +1,24 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import "../../../assets/css/UserCSS/style.css";
-import RestaurantImage3 from "../../../assets/images/Restaurant_Image_1.png";
-import RestaurantImage4 from "../../../assets/images/Restaurant_Image_1.png";
+import Footer from "../../User/UserFooter";
+import logo from "../../../assets/images/Forkify_Logo.png"; 
+import "../../../assets/css/UserCSS/PageStyles.css";
 
 const Cafes = () => {
-  const navigate = useNavigate();
-
-  const cafes = [
-    {
-      id: "cafe-bliss",
-      name: "Cafe Bliss",
-      description: "Cozy cafe with amazing latte art.",
-      image: RestaurantImage3,
-    },
-    {
-      id: "bean-bar",
-      name: "The Bean Bar",
-      description: "Delicious sandwiches and great coffee.",
-      image: RestaurantImage4,
-    },
-  ];
-
-  const handleViewMenu = (cafeId) => {
-    navigate(`/menu?restaurant=${cafeId}`);
-  };
-
-  const handleReservation = () => {
-    navigate('/make-reservation');
-  };
-
   return (
-    <div className="category-page">
-      <h1 className="page-title">Cafes</h1>
-      <div className="restaurant-list">
-        {cafes.map((cafe) => (
-          <div className="restaurant-card" key={cafe.id}>
-            <img src={cafe.image} alt={cafe.name} />
-            <div className="restaurant-info">
-              <h3>{cafe.name}</h3>
-              <p>{cafe.description}</p>
-              <div className="card-buttons">
-                <button
-                  className="reservation-btn"
-                  onClick={() => handleReservation()}
-                >
-                  Make Reservation
-                </button>
-                <button
-                  className="menu-btn"
-                  onClick={() => handleViewMenu(cafe.id)}
-                >
-                  View Menu
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div>
+      <header className="user-topbar">
+        <div className="user-logo">
+          <img src={logo} alt="Forkify Logo" />
+          <h2>ForkiFy</h2>
+        </div>
+      </header>
+      <h1 className="title">Cafes</h1>
+      <section className="page-content">
+        <p>Discover the best cafes around you for a perfect coffee break. Whether you need a quick espresso or a peaceful place to relax, find the best options here.</p>
+        <button onClick={() => window.location.href='/UserHome'}>Go to Restaurant Home</button>
+      </section>
+
+      <Footer />
     </div>
   );
 };

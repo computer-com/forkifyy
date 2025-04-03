@@ -3,7 +3,7 @@ import Footer from "../../User/UserFooter";
 import logo from "../../../assets/images/Forkify_Logo.png"; 
 import "../../../assets/css/UserCSS/PageStyles.css";
 
-const OutdoorDining = () => {
+const HelpCenterPage = () => {
   return (
     <div>
       <header className="user-topbar">
@@ -12,10 +12,15 @@ const OutdoorDining = () => {
           <h2>ForkiFy</h2>
         </div>
       </header>
-      <h1 className="title">Outdoor Dining</h1>
+      <h1 className="title">Help Center</h1>
+
       <section className="page-content">
-        <p>Discover restaurants with the best outdoor seating. Enjoy your meals in the fresh air with scenic views, perfect for a relaxed experience.</p>
-        <button onClick={() => window.location.href='/UserHome'}>Go to Restaurant Home</button>
+        <p>Welcome to the ForkiFy Help Center. Here, you will find solutions to common issues and helpful guides to enhance your experience with us.</p>
+        <ul>
+          <li><strong>How to make a reservation</strong></li>
+          <li><strong>How to use the ForkiFy app</strong></li>
+          <li><strong>Payment methods</strong></li>
+        </ul>
       </section>
 
       <Footer />
@@ -23,4 +28,4 @@ const OutdoorDining = () => {
   );
 };
 
-export default OutdoorDining;
+export default HelpCenterPage;

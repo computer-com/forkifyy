@@ -46,8 +46,9 @@ router.post('/', auth, async (req, res) => {
       <div style="font-family: 'Segoe UI', sans-serif; color: #333; padding: 20px;">
         <h2 style="color: #ff6f00;">🍽️ ForkiFy Reservation Confirmed!</h2>
         <p>Hi <strong>${name}</strong>,</p>
-        <p>Your table at <strong>${restaurant.name}</strong> has been successfully booked.</p>
+        <p>Your table at has been successfully booked.</p>
         <div style="margin: 15px 0; padding: 15px; background: #f9f9f9; border-left: 4px solid #ff6f00;">
+          <p><strong>🍴 Restaurant Name:</strong>${restaurant.name}</p>
           <p><strong>📅 Date:</strong> ${new Date(date).toDateString()}</p>
           <p><strong>⏰ Time:</strong> ${time}</p>
           <p><strong>👥 Guests:</strong> ${numberOfGuests}</p>
