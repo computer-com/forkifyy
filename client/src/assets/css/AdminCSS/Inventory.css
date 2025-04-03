@@ -100,7 +100,7 @@
   }
 
   /* Ensure main content adjusts to sidebar */
-.admin-container.sidebar-open {
+.admin-container.sidebar-open .top-bar {
   margin-left: 200px;
   padding-left: 50px;
 }

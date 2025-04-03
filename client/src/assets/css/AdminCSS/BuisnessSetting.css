@@ -1,0 +1,106 @@
+/*Business css*/
+.settings-grid{
+  padding-top: 260px;
+}
+
+/* Business Information Card Styling */
+.settings-card {
+  background-color: #1B1212;
+  border-radius: 10px;
+  padding: 40px;
+  width: 80%;
+  max-width: 900px;
+  margin: 30px auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Fields */
+.business-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group label {
+  font-weight: 600;
+  color: #FF8303;
+  margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #FF8303;
+  border-radius: 8px;
+  background-color: #121212;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #e67300;
+  outline: none;
+}
+
+.input-group textarea {
+  resize: vertical;
+  height: 150px;
+}
+
+/* Button Styling */
+.settings-btn {
+  background-color: #FF8303;
+  color: black;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+.settings-btn:hover {
+  background-color: #e67300;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #1B1212;
+  color: #FF8303;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-card {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .input-group label {
+    width: 100%; /* Adjust label width for smaller screens */
+  }
+
+  .input-group input,
+  .input-group textarea {
+    font-size: 0.9rem;
+  }
+}

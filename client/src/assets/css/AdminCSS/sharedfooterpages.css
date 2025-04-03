@@ -1,0 +1,102 @@
+/* sharedfooterpages.css */
+
+/* Overall content area */
+.main-content {
+    padding: 40px 60px;
+    background-color: #111111;
+    color: #ffffff;
+    min-height: 80vh;
+    box-sizing: border-box;
+  }
+  
+  /* Section Styling */
+  .page-section {
+    background-color: #1a1a1a;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(255, 131, 3, 0.3);
+    max-width: 900px;
+    margin: 0 auto;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .page-section h2 {
+    font-size: 2rem;
+    color: #ff8303;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff8303;
+    padding-bottom: 10px;
+  }
+  
+  .page-section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #dddddd;
+  }
+  
+  /* Top bar layout */
+  .top-bar {
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 2px solid #ff8303;
+    box-shadow: 0 2px 6px rgba(255, 131, 3, 0.1);
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .logo-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff8303;
+  }
+  
+  .page-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  /* Sidebar responsive fix */
+  .admin-container.sidebar-open .main-content {
+    margin-left: 250px;
+  }
+  
+  .admin-container.sidebar-closed .main-content {
+    margin-left: 80px;
+  }
+  
+  /* Responsive improvements */
+  @media screen and (max-width: 768px) {
+    .main-content {
+      padding: 20px;
+    }
+  
+    .page-section {
+      padding: 20px;
+    }
+  
+    .top-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .logo-text,
+    .page-title {
+      font-size: 1.2rem;
+    }
+  }
+  

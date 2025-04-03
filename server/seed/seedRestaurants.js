@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Restaurant = require('../models/Restaurant');
+const MenuItem = require('../models/MenuItem');
 
 dotenv.config(); // Load MongoDB URI from .env
 
@@ -440,14 +441,31 @@ const sampleRestaurants = [
 const seedRestaurants = async () => {
   try {
     await Restaurant.deleteMany({});
-    for (let res of sampleRestaurants) {
-        const restaurant = new Restaurant(res);
-        await restaurant.save(); // triggers slug pre-save hook
+    await MenuItem.deleteMany({});
+
+    for (const res of sampleRestaurants) {
+      const { menu, ...restaurantData } = res;
+
+      const newRestaurant = new Restaurant(restaurantData);
+      await newRestaurant.save();
+
+      if (Array.isArray(menu)) {
+        const menuWithRestaurantId = menu.map(item => ({
+          name: item.name,
+          description: item.description || '',
+          price: item.price || 0,
+          category: item.category || 'Uncategorized',
+          restaurantId: newRestaurant._id
+        }));
+        await MenuItem.insertMany(menuWithRestaurantId);
+        console.log(`🍴 Seeded ${menu.length} menu items for "${newRestaurant.name}"`);
       }
-    console.log("🍽️ Restaurant data seeded successfully!");
+    }
+
+    console.log("✅ All restaurants and menus seeded successfully!");
     process.exit();
   } catch (err) {
-    console.error("Error seeding restaurant data:", err);
+    console.error("❌ Error while seeding:", err);
     process.exit(1);
   }
 };

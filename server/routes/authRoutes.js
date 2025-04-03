@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 // Sign-In or Auto-Register Route (No password)
 router.post('/signin', async (req, res) => {
   const { firstName, lastName, email, phone, countryCode } = req.body;
-  console.log("📦 Body received:", req.body);
 
   try {
     // Check if user exists
@@ -52,20 +51,15 @@ router.post('/signin', async (req, res) => {
 router.post('/manager', async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("📩 Incoming login for:", email);
 
     const manager = await User.findOne({ email, role: 'manager' });
     if (!manager) {
-      console.log("❌ Manager not found");
       return res.status(404).json({ error: 'Manager not found' });
     }
 
-    console.log("✅ Manager found:", manager.email);
-    console.log("🔐 Comparing password...");
 
     const isMatch = await require('bcrypt').compare(password, manager.password);
     if (!isMatch) {
-      console.log("❌ Password incorrect");
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
@@ -75,7 +69,6 @@ router.post('/manager', async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    console.log("🎫 JWT token generated");
 
     res.status(200).json({
       token,

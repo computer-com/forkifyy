@@ -25,7 +25,7 @@ const Footer = () => {
         {/* More Section */}
         <div className="footer-column">
           <h3>More</h3>
-          <Link to="/trust-center">Trust Center</Link>
+          <Link to="/trust">Trust Center</Link>
           <Link to="/security">Security</Link>
           <Link to="/terms">Terms and Conditions</Link>
         </div>
@@ -34,7 +34,7 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Business</h3>
           <Link to="/partnerships">Partnerships</Link>
-          <Link to="/business-owners">Business Owners</Link>
+          <Link to="/owners">Business Owners</Link>
         </div>
       </div>
     </footer>

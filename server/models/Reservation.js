@@ -4,12 +4,16 @@ const reservationSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: false
     },
     restaurantId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant',
         required: true
+    },
+    restaurantName: {
+        type: String,
+        required: true // changed from false to true to ensure new reservations must have a name
     },
     date: {
         type: Date,
@@ -23,6 +27,14 @@ const reservationSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 1
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
     },
     status: {
         type: String,
@@ -39,7 +51,6 @@ const reservationSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Create index for querying reservations efficiently
 reservationSchema.index({ restaurantId: 1, date: 1 });
 reservationSchema.index({ userId: 1, status: 1 });
 

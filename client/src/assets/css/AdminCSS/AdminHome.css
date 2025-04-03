@@ -1,3 +1,4 @@
+/* Admin container */
 .admin-container {
   display: flex;
   flex-direction: column;
@@ -7,8 +8,9 @@
   position: relative;
 }
 
+/* Main content */
 .main-content {
-  flex-grow: 1; 
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -18,6 +20,7 @@
   width: 100%;
 }
 
+/* Footer */
 .footer {
   width: 100%;
   position: relative;
@@ -29,12 +32,15 @@
 .admin-header {
   display: flex;
   align-items: center;
-  gap: 15px; 
+  gap: 15px;
   padding: 10px;
   position: fixed;
   top: 10px;
-  left: 10px;
-  z-index: 1000; 
+  left: 0; /* Ensure it starts from the leftmost edge */
+  right: 0; /* Ensure it stretches all the way to the right */
+  z-index: 1000;
+  background-color: #1B1212; /* Fixed background */
+  border-bottom: 2px solid #FF8303;
 }
 
 /* Sidebar Default Hidden */
@@ -43,12 +49,12 @@
   overflow: hidden;
   position: fixed;
   left: 0;
-  top: 70px; 
+  top: 70px; /* Adjust for top bar height */
   height: 100vh;
   background-color: #1B1212;
   border-right: 2px solid #FF8303;
-  transition: width 0.3s ease-in-out;
-  z-index: 1000; 
+  z-index: 999;
+  transition: none; /* No transition */
 }
 
 /* Sidebar Open */
@@ -57,20 +63,19 @@
   padding: 20px;
 }
 
-/* Hide menu options when closed */
+/* Sidebar Closed */
 .sidebar.closed .nav-menu {
   display: none;
 }
-
-/* Ensure main content adjusts to sidebar */
-.admin-container.sidebar-open {
-  margin-left: 150px;
-  padding-left: 50px;
+.admin-container.sidebar-open .top-bar {
+  left: 0;
+  width: 100%;
 }
 
-.admin-container.sidebar-closed {
-  margin-left: 0px;
-  padding-left: 0px;
+/* When sidebar is closed */
+.admin-container.sidebar-closed .top-bar {
+  left: 0;
+  width: 100%;
 }
 
 /* Hamburger Icon */
@@ -81,22 +86,47 @@
   cursor: pointer;
   font-size: 30px;
   color: #FF8303;
-  transition: transform 0.3s ease-in-out;
+  transition: none; /* No transition on icon */
 }
 
-/* Align menu icon correctly */
-.sidebar .menu-icon {
-  position: absolute;
-  top: 10px;
-  left: 15px;
+/* Top Bar */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;  /* Fix the left position */
+  width: 100%;  /* Ensure it stretches across the full width */
+  height: 70px;
+  background-color: #1B1212;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  z-index: 10;
+  /* Remove the transition on left and width so it doesn't move */
+  transition: none;
 }
 
-.logo-container h1 {
+/* Logo Container */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 40px;
+}
+
+.logo-img {
+  height: 60px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 22px;
   color: #FF8303;
-  font-size: 1.8em;
-  margin: 0;
+  font-weight: bold;
 }
 
+/* Navbar Menu */
 .nav-menu {
   list-style: none;
   padding: 0;
@@ -127,12 +157,7 @@
   color: #121212;
 }
 
-.nav-link i {
-  margin-right: 10px;
-  width: 20px;
-  text-align: center;
-}
-
+/* Admin Dashboard Header */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -148,11 +173,7 @@
   color: #FF8303;
 }
 
-.header-actions {
-  display: flex;
-  gap: 15px;
-}
-
+/* Quick Actions */
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -160,6 +181,7 @@
   margin-bottom: 30px;
 }
 
+/* Action Cards */
 .action-card {
   background-color: #1B1212;
   border: 1px solid #FF8303;
@@ -180,8 +202,7 @@
   margin-bottom: 10px;
 }
 
-/*Added by viren on 2nd March*/
-/* Global CSS */
+/* Body and Global Styles */
 body, html {
   margin: 0;
   padding: 0;
@@ -190,168 +211,6 @@ body, html {
   background-color: #121212;
   overflow-x: hidden;
   color: white;
-}
-
-/* Navigation Bar (common)*/
-.top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background-color: #1B1212;
-  border-bottom: 2px solid #FF8303;
-}
-
-/*Search bar(comman)*/
-.header-search {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: 120px;
-}
-.header-search .search-btn {
-  background-color: #FF8303;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-left: 10px;
-  transition: 0.3s;
-}
-.header-search .search-btn:hover {
-  background-color: #e67300;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 131, 3, 0.3);
-}
-/* Logo & Text */
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: 80px;
-}
-
-.logo-img {
-  height: 60px;
-  width: auto;
-  margin-right: 10px;
-}
-
-.logo-text {
-  font-size: 22px;
-  color: #FF8303;
-  font-weight: bold;
-}
-
-/* Updated site title styling(common)*/
-.site-title {
-  font-size: 16px;
-  color: #fff;
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, transform 0.3s ease;
-  margin: 0 auto;
-  white-space: nowrap;
-  text-align: center;
-}
-.site-title:hover {
-  color: #FF8303;
-  transform: scale(1.05);
-  text-shadow: 2px 2px 10px rgba(255, 131, 3, 0.5);
-}
-.page-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  font-weight: bold;
-  color: #FF8303;
-  white-space: nowrap;
-}
-
-/* Buttons css adjusted by Viren on 2nd March*/
-.dashboard-btn {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #FF8303;
-  color: black;
-  font-weight: bold;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.3s;
-  font-size: 16px;
-  margin: 5px;
-}
-
-.delete-btn {
-  background-color: #d9534f;
-}
-
-.delete-btn:hover {
-  background-color: #c9302c;
-}
-
-/* Back to Dashboard Button */
-.back-btn-container {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  width: 100%;
-  margin-top: 0px;
-  padding: 0px 0;
-  position: relative; 
-  bottom: 0; /* Ensures it stays at the bottom of the content */
-  text-align: center;
-}
-
-.back-btn {
-  padding: 12px 20px;
-  background-color: #FF8303;
-  color: black;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 18px;
-  transition: background 0.3s;
-}
-
-.back-btn:hover {
-  background-color: hsl(30, 98%, 15%);
-}
-
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background-color: #FF8303;
-  color: #121212;
-}
-
-.btn-primary:hover {
-  background-color: #ff9933;
-}
-
-.btn-secondary {
-  background-color: transparent;
-  border: 1px solid #FF8303;
-  color: #FF8303;
-}
-
-.btn-secondary:hover {
-  background-color: rgba(255, 131, 3, 0.1);
 }
 
 /* Responsive Design */
@@ -374,18 +233,16 @@ body, html {
   }
 }
 
-/* Admin Home Dashboard Styling */
-.dashboard-container
-.admin-home {
+/* Admin Home Dashboard */
+.dashboard-container.admin-home {
   display: flex;
-  flex-direction: column; /* Stack elements */
+  flex-direction: column;
   align-items: center;
   padding: 20px;
   max-width: 1400px;
-  margin: 10px auto 0; /* Adjusted margin to fit under header */
-  height: calc(100vh - 120px); /* Make it fit within the viewport of webpage*/
+  margin: 10px auto 0;
+  height: calc(100vh - 120px);
 }
-
 .features-section {
   text-align: center;
   width: 100%;
@@ -398,7 +255,6 @@ body, html {
   margin-bottom: 20px;
   text-align: center;
 }
-
 /* Features Grid Layout */
 .features-grid {
   display: grid;
@@ -449,41 +305,10 @@ body, html {
   font-weight: bold;
 }
 
-.banner-section {
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
-}
 
 .banner-img {
   width: 95%; 
   height: auto; 
   max-height: 290px; 
   border-radius: 10px;
-}
-
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr); 
-  }
-
-  .banner-img {
-    width: 90%;
-  }
-}
-
-@media (max-width: 900px) {
-  .features-grid {
-    grid-template-columns: repeat(1, 1fr); /* Stack's feature cards */
-  }
-
-  .feature-card {
-    width: 80%;
-  }
-
-  .banner-img {
-    width: 95%;
-  }
 }
