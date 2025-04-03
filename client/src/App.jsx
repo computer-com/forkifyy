@@ -1,5 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+//icons
+import '@fortawesome/fontawesome-free/css/all.min.css';
 //Authentication Paths
 import LoginOptions from "./components/Authentication/LoginOptions";
 import AdminOptions from "./components/Authentication/AdminOptions";
@@ -19,9 +22,11 @@ import OwnerSupport from "../src/components/Owner/OwnerSupport";
 
 //User Paths
 import UserHome from "./components/User/UserHome";
+//footer pages 
 import BestRestaurants from "./components/User/categories/BestRestaurants";
 import Cafes from "./components/User/categories/Cafes";
-import Menu from "./components/User/Menu/Menu";
+import Dinein from "./components/User/categories/Dine-In";
+import OutdoorDining from "./components/User/categories/Outdoor-Dining";
 import RestaurantHomePage from "./components/User/Restaurant/RestaurantHomePage";
 
 
@@ -52,6 +57,11 @@ import TermsConditions from "./components/Admin/FooterPages/TermsConditions";
 import Partnerships from "./components/Admin/FooterPages/Partnerships";
 import BusinessOwners from "./components/Admin/FooterPages/BusinessOwners";
 
+import FAQPage from "./components/User/categories/FAQPage";
+import ContactUsPage from "./components/User/categories/ContactUsPage";
+import HelpCenterPage from "./components/User/categories/HelpCenterPage";
+
+
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -68,11 +78,15 @@ const App = () => {
         <Route path="/owner/signin" element={<OwnerSignIn />} />
 
         <Route path="/userhome" element={<UserHome />} />
+        <Route path="/faq" element={<FAQPage/>} />
+        <Route path="/contact" element={<ContactUsPage/>} />
+        <Route path="/help" element={<HelpCenterPage/>} />
         <Route path="/restaurant/:id" element={<RestaurantHomePage />} />
-        <Route path="/menu" element={<Menu />} />
         <Route path="/bestrestaurants" element={<BestRestaurants />} />
         <Route path="/cafes" element={<Cafes />} />
-        
+        <Route path="/dine-in" element={<Dinein />} />
+        <Route path="/outdoor-dining" element={<OutdoorDining />} />
+
         <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/admin/staff" element={<StaffManagement />} />
         <Route path="/admin/inventory" element={<InventoryManagement />} />

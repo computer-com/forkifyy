@@ -1,13 +1,20 @@
 import React from "react";
 import "../../assets/css/UserCSS/UserFooter.css";
+import forkifyLogo from "../../assets/images/Forkify_Logo.png"; 
 
 const Footer = () => {
   return (
     <footer className="forkify-footer">
       <div className="footer-container">
+        {/* Forkify Logo Section */}
+        <div className="footer-section logo-section">
+          <div className="logo-container">
+            <img src={forkifyLogo} alt="Forkify Logo" className="footer-logo" />
+          </div>
+        </div>
         <div className="footer-section">
-          <h4>ForkiFy</h4>
-          <p>Discover and reserve the best restaurants near you.</p>
+          <h4 className="title-first">ForkiFy</h4>
+          <p className="first-text">Discover the best restaurants and dining experience's near you. Reserve-order-Have fun!</p>
         </div>
 
         <div className="footer-section">
@@ -41,7 +48,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} ForkiFy. All rights reserved.</p>
+        <p className="footer-last">&copy; {new Date().getFullYear()} ForkiFy. All rights reserved.</p>
       </div>
     </footer>
   );
