@@ -1,127 +1,165 @@
-import React, { useState } from 'react';
-import OwnerSidebar from './OwnerSidebar';
-import OwnerFooter from './OwnerFooter';
-import { FiMenu, FiDownload } from 'react-icons/fi';
-import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
-import logo from '../../assets/images/Forkify_Logo.png';
-import '../../assets/css/OwnerCSS/OwnerReports.css';
+import React, { useState, useEffect } from "react";
+import OwnerSidebar from "./OwnerSidebar";
+import OwnerFooter from "./OwnerFooter";
+import { FiMenu } from "react-icons/fi";
+import logo from "../../assets/images/Forkify_Logo.png";
+import jsPDF from "jspdf";
+import "../../assets/css/OwnerCSS/OwnerReports.css";
 
 const OwnerReports = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState({ restaurant: '', department: '' });
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [reports, setReports] = useState([]);
+  const [error, setError] = useState("");
 
-  const reports = [
-    {
-      restaurant: 'Choice - Indian Restaurant',
-      manager: 'Ravi Sharma',
-      department: 'Inventory',
-      type: 'PDF',
-      date: '2025-03-26',
-      file: '/reports/inventory-ravi.pdf',
-      status: 'Reviewed',
-    },
-    {
-      restaurant: 'Spice Junction',
-      manager: 'Anita Desai',
-      department: 'Sales',
-      type: 'Excel',
-      date: '2025-03-25',
-      file: '/reports/sales-anita.xlsx',
-      status: 'Pending',
-    },
-    {
-      restaurant: 'Grill House',
-      manager: 'Mohit Patel',
-      department: 'Customer Service',
-      type: 'PDF',
-      date: '2025-03-24',
-      file: '/reports/feedback-mohit.pdf',
-      status: 'Flagged',
-    },
-  ];
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const token = localStorage.getItem("ownerToken");
+        const response = await fetch("http://localhost:5000/api/restaurants/owner/reports", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch reports");
+        }
+        const data = await response.json();
+        setReports(data);
+      } catch (err) {
+        console.error("Error fetching reports:", err);
+        setError(err.message);
+      }
+    };
 
-  const filteredReports = reports.filter((report) =>
-    report.manager.toLowerCase().includes(search.toLowerCase()) &&
-    (filter.restaurant === '' || report.restaurant === filter.restaurant) &&
-    (filter.department === '' || report.department === filter.department)
-  );
+    fetchReports();
+  }, []);
+
+  const generatePDF = async (restaurantId, restaurantName) => {
+    try {
+      const token = localStorage.getItem("ownerToken");
+      const response = await fetch(`http://localhost:5000/api/restaurants/owner/report/${restaurantId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch report data");
+        } else {
+          throw new Error("Received an unexpected response from the server");
+        }
+      }
+
+      const reportData = await response.json();
+
+      const doc = new jsPDF();
+      
+      // Set theme colors
+      doc.setFillColor(28, 28, 28); // Dark background similar to #1c1c1c
+      doc.rect(0, 0, 210, 297, "F"); // A4 size background
+
+      // Title
+      doc.setTextColor(255, 131, 3); // #FF8303
+      doc.setFontSize(20);
+      doc.text("Restaurant Report", 20, 20);
+
+      // Restaurant Details
+      doc.setTextColor(255, 255, 255); // White text
+      doc.setFontSize(12);
+      doc.text(`Restaurant Name: ${reportData.restaurantName}`, 20, 40);
+      doc.text(`Cuisine: ${reportData.cuisine}`, 20, 50);
+      doc.text(`City: ${reportData.city}`, 20, 60);
+      doc.text(`Address: ${reportData.address}`, 20, 70);
+      doc.text(`Hours: ${reportData.hours}`, 20, 80);
+      doc.text(`Price Range: ${reportData.priceRange}`, 20, 90);
+
+      // Manager Details
+      doc.setTextColor(255, 131, 3); // #FF8303
+      doc.setFontSize(16);
+      doc.text("Manager Details", 20, 110);
+      doc.setTextColor(255, 255, 255); // White text
+      doc.setFontSize(12);
+      doc.text(`Name: ${reportData.managerName}`, 20, 120);
+      doc.text(`Email: ${reportData.managerEmail}`, 20, 130);
+      doc.text(`Manager ID: ${reportData.managerId}`, 20, 140);
+
+      // Business Statistics
+      doc.setTextColor(255, 131, 3); // #FF8303
+      doc.setFontSize(16);
+      doc.text("Business Statistics", 20, 160);
+      doc.setTextColor(255, 255, 255); // White text
+      doc.setFontSize(12);
+      doc.text(`Item Quantity: ${reportData.itemQuantity}`, 20, 170);
+      doc.text(`Price: ${reportData.price}`, 20, 180);
+      doc.text(`Total Value: ${reportData.totalValue}`, 20, 190);
+      doc.text(`Total Inventory Value: ${reportData.totalInventoryValue}`, 20, 200);
+      doc.text(`Total Stock Available: ${reportData.totalStockAvailable}`, 20, 210);
+      doc.text(`Total Revenue: ${reportData.totalRevenue}`, 20, 220);
+
+      // Save the PDF
+      doc.save(`${reportData.restaurantName}_Report.pdf`);
+    } catch (err) {
+      console.error("Error generating PDF:", err);
+      setError(err.message || "Failed to generate PDF report");
+    }
+  };
 
   return (
-    <div className={`admin-container ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+    <div className={`owner-reports-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-          <FiMenu size={30} color="#FF8303" />
-        </div>
-        <div className="logo-container" onClick={() => window.location.reload()}>
-          <img src={logo} alt="Forkify Logo" className="logo-img" />
-          <h1 className="logo-text">Forkify Owner</h1>
-        </div>
-      </div>
-
       <div className="main-content">
-        <h1 className="page-title">Manager Reports</h1>
-
-        <div className="filters">
-          <input
-            type="text"
-            placeholder="Search manager..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-
-          <select onChange={(e) => setFilter({ ...filter, restaurant: e.target.value })}>
-            <option value="">All Restaurants</option>
-            <option value="Choice - Indian Restaurant">Choice</option>
-            <option value="Spice Junction">Spice Junction</option>
-            <option value="Grill House">Grill House</option>
-          </select>
-
-          <select onChange={(e) => setFilter({ ...filter, department: e.target.value })}>
-            <option value="">All Departments</option>
-            <option value="Sales">Sales</option>
-            <option value="Inventory">Inventory</option>
-            <option value="Customer Service">Customer Service</option>
-          </select>
+        <div className="top-bar">
+          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <FiMenu size={30} color="#FF8303" />
+          </div>
+          <div className="logo-container">
+          <a href="/owner/dashboard"><img src={logo} alt="Forkify Logo" className="logo-img" /></a>
+          <h1 className="logo-text">Forkify Owner</h1>
+          </div>
+          <h1 className="page-title">Manage Reports</h1>
         </div>
-
-        <table className="report-table">
-          <thead>
-            <tr>
-              <th>Restaurant</th>
-              <th>Manager</th>
-              <th>Department</th>
-              <th>Report Type</th>
-              <th>Submitted On</th>
-              <th>File</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredReports.map((report, idx) => (
-              <tr key={idx}>
-                <td>{report.restaurant}</td>
-                <td>{report.manager}</td>
-                <td>{report.department}</td>
-                <td>
-                  {report.type === 'PDF' ? <FaFilePdf className="icon pdf" /> : <FaFileExcel className="icon excel" />}
-                </td>
-                <td>{report.date}</td>
-                <td>
-                  <a href={report.file} download>
-                    <FiDownload className="download-icon" />
-                  </a>
-                </td>
-                <td>
-                  <span className={`status ${report.status.toLowerCase()}`}>{report.status}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
+        <div className="content-section">
+          <h2>Restaurant Reports</h2>
+          {error && <p className="error">{error}</p>}
+          {reports.length === 0 ? (
+            <p>No reports available.</p>
+          ) : (
+            <table className="reports-table">
+              <thead>
+                <tr>
+                  <th>Restaurant</th>
+                  <th>Manager</th>
+                  <th>Department</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reports.map((report, index) => (
+                  <tr key={index}>
+                    <td>{report.restaurant}</td>
+                    <td>{report.manager}</td>
+                    <td>{report.department}</td>
+                    <td>{report.type}</td>
+                    <td>{report.date}</td>
+                    <td>
+                      <button
+                        onClick={() => generatePDF(report.restaurantId, report.restaurant)}
+                        className="download-pdf-btn"
+                      >
+                        Download PDF
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
         <OwnerFooter />
       </div>
     </div>

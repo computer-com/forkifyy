@@ -31,5 +31,11 @@ const isAdmin = async (req, res, next) => {
     }
     next();
 };
+const isOwner = async (req,res,next )=>{
+    if (req.user.role !== 'owner'){
+        return res.status(403).send({ error: 'Access denied. Owner only.' });
+    }
+    next();
+}
 
-module.exports = { auth, isAdmin };
+module.exports = { auth, isAdmin, isOwner };

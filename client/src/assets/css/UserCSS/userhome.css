@@ -1,41 +1,40 @@
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  row-gap: 1em;
-  margin: 0;
-  padding: 0;
-}
-
 /* top bar css*/
 .user-homepage {
   font-family: 'Segoe UI', sans-serif;
   background: #1B1212;
   color: white;
-  width: 100%;
+  overflow: hidden;
+  width: 100vw;
+  overflow-x: hidden;
+  margin-top: 88vw;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
-
+.user-homepage::-webkit-scrollbar {
+  display: none;
+}
 /* Top Bar */
 .user-topbar {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 2px solid #FF8303;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: #1B1212;
-  border-bottom: 2px solid #FF8303;   
-  height: 120px;
 }
 
 .user-logo {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 10px;
 }
 
 .user-logo, a, img {
-  width: 8rem !important;
-  height: auto !important;
+  height: 40px;
 }
 
 .user-logo h2 {
@@ -69,7 +68,7 @@ body {
 .hero-banner {
   background: #292121;
   text-align: center;
-  padding: 20px;
+  padding: 60px 20px 40px;
 }
 
 .hero-banner h1 {
@@ -93,7 +92,7 @@ body {
 
 /* Carousel Section */
 .restaurant-carousel {
-  padding: 30px;
+  padding: 40px;
   width: 100vw;
 }
 .restaurant-carousel h2 {
