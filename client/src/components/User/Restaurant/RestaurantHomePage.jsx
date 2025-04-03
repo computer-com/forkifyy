@@ -101,7 +101,7 @@ const RestaurantHomePage = () => {
     <div className="restaurant-page">
       <header className="user-topbar">
         <div className="user-logo">
-          <img src={logo} alt="Forkify Logo" />
+          <a href="/userhome"><img src={logo} alt="Forkify Logo"/></a>
           <h2>ForkiFy</h2>
         </div>
       </header>

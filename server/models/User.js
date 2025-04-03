@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Restaurant',
     },
+    googleId: String,
+    isGoogleSigned: { type: Boolean, default: false }
   },
   {
     timestamps: true,
