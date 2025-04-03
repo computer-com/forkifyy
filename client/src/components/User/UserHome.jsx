@@ -66,9 +66,9 @@ const UserHome = () => {
 
       {/* Hero Banner */}
       <section className="hero-banner">
-        <h1>Visa Dining Collection</h1>
+        <h1>Explore Restaurants</h1>
         <p>Get exclusive access to primetime reservations and special events at top restaurants.</p>
-        <button>Explore Restaurants</button>
+        <a href="">Explore Now</a>
       </section>
 
       {/* Available for Dinner */}

@@ -8,11 +8,26 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS Configuration
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://localhost:5173'],
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
+
+// Security Headers Middleware
+app.use((req, res, next) => {
+  res.header('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  res.header('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.header('Access-Control-Expose-Headers', 'Authorization');
+  next();
+});
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -35,7 +50,7 @@ const reservationAdminRoutes = require("./routes/reservationAdminRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 
 
-
+// Route Middlewares
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/restaurants', restaurantRoutes);
@@ -50,6 +65,11 @@ app.use("/api/menu", menuRoutes);
 app.use("/api/reservations", reservationAdminRoutes);
 app.use("/api/settings", settingsRoutes);
 
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

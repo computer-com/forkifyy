@@ -3,19 +3,25 @@ const User = require('../models/User');
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded.userId });
+        const token = req.header('Authorization')?.replace('Bearer ', ''); // Optional chaining
+        if (!token) throw new Error('No token provided');
 
-        if (!user) {
-            throw new Error();
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findOne({ 
+            _id: decoded.userId,
+        });
+
+        if (!user) throw new Error('User not found');
+
+        // For Google-signed users
+        if (user.isGoogleSigned) {
         }
 
         req.token = token;
         req.user = user;
         next();
     } catch (error) {
-        res.status(401).send({ error: 'Please authenticate.' });
+        res.status(401).send({ error: error.message || 'Please authenticate.' });
     }
 };
 

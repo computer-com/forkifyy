@@ -3,10 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import "../../assets/css/UserCSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import { Carousel } from "react-bootstrap"; 
-import googleLogo from "../../assets/images/google.png";
 import appleLogo from "../../assets/images/apple.png";
 import Signup1 from "../../assets/images/Signup1.jpg";
 import Signup2 from "../../assets/images/Signup2.jpg";
+import GoogleSSO from './GoogleSSO';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const SignIn = () => {
         return alert(data.message || "Sign In failed");
       }
   
-      // Save token + user info
+      // Save token and user info
       localStorage.setItem("token", data.token);
       localStorage.setItem("customer", JSON.stringify(data.user));
   
@@ -140,10 +140,7 @@ const SignIn = () => {
           <div className="alternative-login">
             <p>Or sign in with</p>
             <div className="social-logins">
-              <button type="button" className="social-btn">
-                <img src={googleLogo} alt="Google" />
-                Google
-              </button>
+              <GoogleSSO />
               <button type="button" className="social-btn">
                 <img src={appleLogo} alt="Apple" />
                 Apple
