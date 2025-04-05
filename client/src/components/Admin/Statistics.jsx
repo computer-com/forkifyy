@@ -8,7 +8,6 @@ import logo from "../../assets/images/Forkify_Logo.png";
 import Sidebar from "../Admin/Sidebar";  
 import { FiMenu } from "react-icons/fi";  
 import Footer from "./Footer";
-import "../../assets/css/AdminCSS/Footer.css";
 
 const Statistics = () => {
   const [inventory, setInventory] = useState([]);
@@ -36,10 +35,10 @@ const Statistics = () => {
   const totalInventoryValue = inventory.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const totalRevenue = sales.reduce((acc, sale) => acc + sale.totalAmount, 0);
 
-  //  Top-Selling Items
+  // Top-Selling Items
   const topSellingItems = [...sales].sort((a, b) => b.quantitySold - a.quantitySold).slice(0, 5);
 
-  //  Generate Business Report as PDF
+  // Generate Business Report as PDF
   const generatePDFReport = () => {
     const doc = new jsPDF();
     doc.text("Business Statistics Report", 20, 10);
@@ -79,49 +78,54 @@ const Statistics = () => {
   };
 
   return (
-    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
-      {/* Sidebar Component */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} handleRefresh={() => window.location.reload()} />  
-
-      {/* Top Bar with Sidebar Toggle & Logo */}
-      <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+    <div className="admin-statistics-container">
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div className="admin-statistics-top-bar">
+        <div className="admin-statistics-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
           <FiMenu size={30} color="#FF8303" />
         </div>
-        <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
-          <img src={logo} alt="Forkify Logo" className="logo-img" />
-          <h1 className="logo-text">Forkify Admin</h1>
+        <div className="admin-statistics-logo-container">
+          <a href="/AdminHome">
+            <img src={logo} alt="Forkify Logo" className="admin-statistics-logo-img" />
+          </a>
+          <h1 className="admin-statistics-logo-text">Forkify Admin</h1>
         </div>
-        <h1 className="page-title">Business Statistics</h1>
+        <h1 className="admin-statistics-page-title">Business Statistics</h1>
       </div>
+      <div className={`admin-statistics-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="admin-statistics-content-section">
+          <div className="statistics-management-container">
+            {/* Stats Overview Section */}
+            <div className="stats-overview">
+              <div className="stats-card">
+                <h3>Total Stock</h3>
+                <p>{totalStock} items</p>
+              </div>
+              <div className="stats-card">
+                <h3>Total Inventory Value</h3>
+                <p>${totalInventoryValue}</p>
+              </div>
+              <div className="stats-card">
+                <h3>Total Revenue</h3>
+                <p>${totalRevenue}</p>
+              </div>
+            </div>
 
-      <div className="main-content">
-        {/*  Stats Overview Section */}
-        <div className="stats-overview">
-          <div className="stats-card">
-            <h3>Total Stock</h3>
-            <p>{totalStock} items</p>
-          </div>
-          <div className="stats-card">
-            <h3>Total Inventory Value</h3>
-            <p>${totalInventoryValue}</p>
-          </div>
-          <div className="stats-card">
-            <h3>Total Revenue</h3>
-            <p>${totalRevenue}</p>
+            {/* Generate Report Button */}
+            <div className="report-btn-container">
+              <button onClick={generatePDFReport} className="dashboard-btn">Generate Report (PDF)</button>
+            </div>
+
+            {/* Back to Dashboard */}
+            <div className="back-btn-container">
+              <Link to="/AdminHome" className="dashboard-btn">Back to Dashboard</Link>
+            </div>
           </div>
         </div>
-         {/* Generate Report Button */}
-          <div className="report-btn-container">
-              <button onClick={generatePDFReport} className="dashboard-btn">Generate Report (PDF)</button>
-          </div>
-          {/* Back to Dashboard */}
-          <div className="back-btn-container">
-            <Link to="/AdminHome" className="back-btn">Back to Dashboard</Link>
-          </div>
       </div>
-     
-      <Footer />
+      <div className="admin-statistics-footer">
+        <Footer />
+      </div>
     </div>
   );
 };

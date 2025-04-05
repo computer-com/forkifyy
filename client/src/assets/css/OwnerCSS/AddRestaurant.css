@@ -1,85 +1,173 @@
-.owner-add-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #121212;
+/* AddRestaurant.css */
+.add-restaurant-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  overflow-x: hidden;
+}
+
+.add-restaurant-top-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #1b1212;
+  border-bottom: 2px solid #FF8303;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+}
+
+.add-restaurant-menu-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.add-restaurant-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-restaurant-logo-img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.add-restaurant-logo-text {
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.add-restaurant-page-title {
+  margin-left: auto;
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.add-restaurant-main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #1c1c1c;
+  margin-top: 1620px; /* Height of topbar */
+  margin-bottom: 200px; /* Height of footer */
+  overflow-y: auto;
+  margin-left: 0; /* No margin when sidebar is closed */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.add-restaurant-main-content.sidebar-open {
+  margin-left: 250px; /* Adjust margin when sidebar is open */
+}
+
+.add-restaurant-content-section {
+  background: #1b1212;
+  padding: 80px 400px;
+  border-radius: 8px;
+  border: 2px solid #FF8303;
+  width: 100%;
+  margin: 0 20px;
+}
+
+.add-restaurant-form {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.add-restaurant-form h2 {
+  font-size: 2rem;
+  color: #FF8303;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-restaurant-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* Increased min width for better spacing */
+  gap: 1.5rem; /* Increased gap for better readability */
+}
+
+.add-restaurant-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-restaurant-form-group.full-width {
+  grid-column: 1 / -1; /* Span full width for certain fields */
+}
+
+.add-restaurant-form-group label {
+  color: #FF8303;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #222;
+  color: white;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.add-restaurant-submit-btn {
+  background-color: #FF8303;
+  color: black;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  margin-top: 20px;
+}
+
+.add-restaurant-submit-btn:hover {
+  background-color: #cc6e02;
+}
+
+.add-restaurant-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1B1212;
+  border-top: 2px solid #FF8303;
+  z-index: 1000;
+}
+
+.add-restaurant-error {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .add-restaurant-form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Smaller fields on mobile */
   }
-  
-  .main-content {
-    flex: 1;
-    margin-left: 240px;
-    transition: margin-left 0.3s ease;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content */
-    justify-content: center; /* Center vertically */
-    overflow-y: auto; /* Enable scrolling */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+
+  .add-restaurant-main-content {
+    padding: 15px 0; /* Further reduce top/bottom padding on smaller screens */
   }
-  
-  .sidebar-closed .main-content {
-    margin-left: 60px;
+
+  .add-restaurant-content-section {
+    padding: 15px 0;
+    margin: 0 15px; /* Smaller margin on mobile */
   }
-  
-  .top-bar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .form-section {
-    width: 100%;
-    max-width: 700px; /* Prevent form from stretching too wide */
-    padding: 1rem;
-  }
-  
+
   .add-restaurant-form {
-    background-color: #1B1212;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 131, 3, 0.3);
-    width: 100%;
+    padding: 0 15px; /* Smaller padding on mobile */
   }
-  
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    color: #FF8303;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  input, textarea {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #222;
-    color: white;
-  }
-  
-  .submit-btn {
-    background-color: #FF8303;
-    color: white;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .submit-btn:hover {
-    background-color: #cc6c00;
-  }
-  
+}

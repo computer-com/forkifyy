@@ -6,7 +6,7 @@ import Footer from "../Footer";
 import "../../../assets/css/AdminCSS/BuisnessSetting.css";
 
 const BusinessInfo = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(true); // Sidebar state
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [businessInfo, setBusinessInfo] = useState({
         name: "",
         hours: "",
@@ -28,26 +28,23 @@ const BusinessInfo = () => {
     };
 
     return (
-        <div className={`settings-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+        <div className="admin-business-container">
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-            <div className="main-content">
-                {/* Top Bar */}
-                <div className="top-bar">
-                    <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                        <FiMenu size={30} color="#FF8303" />
-                    </div>
-
-                    <div className="logo-container">
-                        <img src={logo} alt="Forkify Logo" className="logo-img" />
-                        <h1 className="logo-text">Forkify Admin</h1>
-                    </div>
-                    <h1 className="page-title">Business Information</h1>
+            
+            <div className="admin-business-top-bar">
+                <div className="admin-business-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                    <FiMenu size={30} color="#FF8303" />
                 </div>
+                <div className="admin-business-logo-container">
+                    <img src={logo} alt="Forkify Logo" className="admin-business-logo-img" />
+                    <h1 className="admin-business-logo-text">Forkify Admin</h1>
+                </div>
+                <h1 className="admin-business-page-title">Business Information</h1>
+            </div>
 
-                {/* Business Info Form */}
-                <div className="settings-grid">
-                    <div className="settings-card">
+            <div className={`admin-business-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+                <div className="admin-business-content-section">
+                    <div className="business-form-container">
                         <h2>Update Business Information</h2>
                         <form onSubmit={handleSubmit} className="business-form">
                             <div className="input-group">
@@ -114,15 +111,16 @@ const BusinessInfo = () => {
                                 ></textarea>
                             </div>
 
-                            <button type="submit" className="settings-btn">Update Business Info</button>
+                            <button type="submit" className="dashboard-btn">Update Business Info</button>
                         </form>
                     </div>
                 </div>
-                {/* Footer */}
+            </div>
+
+            <div className="admin-business-footer">
                 <Footer />
             </div>
         </div>
-        
     );
 };
 

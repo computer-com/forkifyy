@@ -1,138 +1,258 @@
-/* === INVENTORY MANAGEMENT PAGE STYLES === */
-.admin-container {
+/* Inventory.css */
+
+/* Ensure body and html have the correct background color */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  color: white;
+}
+
+.admin-inventory-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures it takes full height */
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  width: 100vw;
   position: relative;
 }
-/* Ensure content is positioned properly */
-.main-content {
-  flex: 1; /* Pushes the footer to the bottom */
+
+.admin-inventory-top-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #1b1212;
+  border-bottom: 2px solid #FF8303;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+}
+
+.admin-inventory-menu-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.admin-inventory-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.admin-inventory-logo-img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.admin-inventory-logo-text {
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-inventory-page-title {
+  margin-left: auto;
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-inventory-main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #1c1c1c;
+  margin-top: 220px;
+  margin-bottom: 150px;
+  overflow-y: auto;
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-inventory-main-content.sidebar-open {
+  margin-left: 250px;
+}
+
+.admin-inventory-content-section {
+  background: #1b1212;
+  padding: 40px; /* Increased padding for extra spacing */
+  border-radius: 8px;
+  border: 2px solid #FF8303;
+  width: 100%;
+  min-height: calc(100vh - 280px);
   display: flex;
   flex-direction: column;
+  gap: 40px; /* Extra spacing between child elements */
+}
+
+/* Inventory Management Layout - Unchanged */
+.inventory-management-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 90%;
+  padding: 20px;
+  max-width: 1700px;
+  margin: 0 auto;
+  background-color: #121212;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(255, 131, 3, 0.3);
+}
+
+.form-container {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 350px;
+  margin-right: 20px;
+  margin-left: -80px;
+  margin-top: 18px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.form-container input {
+  width: 90%;
+  padding: 12px;
+  margin: 15px 0;
+  border: 1px solid #FF8303;
+  border-radius: 5px;
+  background-color: #121212;
+  color: white;
+}
+
+.form-container input::placeholder {
+  color: #888;
+}
+
+/* Make Inventory Grid Wider & More Responsive - Unchanged */
+.inventory-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
   justify-content: center;
   align-items: center;
-  padding-top: 80px; /* Space from header */
-  padding-bottom: 100px; /* Space from footer */
+  width: 100%;
+  max-width: 1300px;
+  margin: auto;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 600px;
 }
 
-.Inventory-page {
-    text-align: center;
-    padding: 40px;
-    margin-top: 80px; 
-}
-.Inventory-page h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #FF8303;
-    margin-bottom: 20px;
-}
-  
-  /* Inventory Management Layout */
-  .inventory-management-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 90%;
-    padding: 20px;
-    max-width: 1700px; /* Increased width for better alignment */
-    margin: 0 auto;
-    background-color: #121212;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 131, 3, 0.3);
-  }
-  
-  .form-container {
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    width: 350px;
-    margin-right: 20px; /* Creates separation from inventory */
-    margin-left: -80px; /* Move slightly left */
-    margin-top: 18px;
-    border-radius: 12px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-    text-align: center;
-  }
-  
-  .form-container input {
-    width: 90%;
-    padding: 12px;
-    margin: 15px 0; 
-    border: 1px solid #FF8303;
-    border-radius: 5px;
-    background-color: #121212;
-    color: white;
-  }
-  
-  .form-container input::placeholder {
-    color: #888;
-  }
-  
-  /* Make Inventory Grid Wider & More Responsive */
-  .inventory-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 25px; /* More space between items */
-    justify-content: center;
-    align-items: center;
-    width: 100%; 
-    max-width: 1300px; 
-    margin: auto;
-    padding: 20px;
-    overflow-y: auto; /* Enable's vertical scrolling */
-    max-height: 600px;
-  }
-  
-  /* Inventory Cards */
-  .inventory-card {
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    width: 320px; 
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease-in-out;
-  }
-  .inventory-card:hover {
-    transform: scale(1.05);
-  }
-
-  /* Ensure main content adjusts to sidebar */
-.admin-container.sidebar-open .top-bar {
-  margin-left: 200px;
-  padding-left: 50px;
+/* Inventory Cards - Unchanged */
+.inventory-card {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 320px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
 }
 
-.admin-container.sidebar-closed {
-  margin-left: 0px;
-  padding-left: 0px;
+.inventory-card:hover {
+  transform: scale(1.05);
+}
+.dashboard-btn{
+  padding: 12px 15px;
+
+  background-color: #FF8303;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  text-decoration: none;
+
+}
+.dashboard-btn.delete-btn{
+  background-color: red;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  text-decoration: none;
+}
+/* Back Button - Unchanged */
+.back-btn-container {
+  text-align: center;
+  margin-top: 40px; 
+  margin: auto;/* Increased spacing */
 }
 
-  
-  
- /* Responsive Design Added by Viren on 2nd March*/
+.back-btn {
+  padding: 12px 24px;
+  background-color: #FF8303;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background-color: #e67300;
+}
+
+.admin-inventory-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1B1212;
+  border-top: 2px solid #FF8303;
+  z-index: 1000;
+}
+
+/* Responsive Design */
 @media (max-width: 1200px) {
-    .inventory-container{
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
-    }
+  .inventory-container {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (max-width: 900px) {
-    .inventory-management-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .form-container{
-        margin-left: 0; /* Reset left margin */
-        margin-right: 0;
-    }
+}
+
+@media (max-width: 900px) {
+  .inventory-management-container {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  @media (max-width: 768px) {
-    .inventory-container{
-        grid-template-columns: repeat(1, 1fr); /* 1 column for small screens (ex., Mobile, Tab, etc., )*/
-    }
+  .form-container {
+    margin-left: 0;
+    margin-right: 0;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .admin-inventory-main-content {
+    padding: 20px;
+  }
+
+  .admin-inventory-main-content.sidebar-open,
+  .admin-inventory-main-content {
+    margin-left: 0;
+  }
+
+  .inventory-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .admin-inventory-content-section {
+    min-height: calc(100vh - 260px);
+  }
+}

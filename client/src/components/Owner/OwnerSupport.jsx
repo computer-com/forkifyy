@@ -6,7 +6,7 @@ import logo from "../../assets/images/Forkify_Logo.png";
 import "../../assets/css/OwnerCSS/OwnerSupport.css";
 
 const OwnerSupport = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Default to closed for consistency
   const [activeFAQ, setActiveFAQ] = useState(null);
 
   const faqs = [
@@ -20,22 +20,22 @@ const OwnerSupport = () => {
   };
 
   return (
-    <div className={`owner-support-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className="support-container">
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      <div className="main-content">
-        <div className="top-bar">
-          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            <FiMenu size={30} color="#FF8303" />
-          </div>
-          <div className="logo-container">
-            <img src={logo} alt="Forkify Logo" className="logo-img" />
-            <h1 className="logo-text">Forkify Owner</h1>
-          </div>
-          <h1 className="page-title">Support</h1>
+      <div className="support-top-bar">
+        <div className="support-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <FiMenu size={30} color="#FF8303" />
         </div>
-
-        <div className="support-section">
+        <div className="support-logo-container">
+          <a href="/owner/dashboard">
+            <img src={logo} alt="Forkify Logo" className="support-logo-img" />
+          </a>
+          <h1 className="support-logo-text">Forkify Owner</h1>
+        </div>
+        <h1 className="support-page-title">Support</h1>
+      </div>
+      <div className={`support-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="support-content-section">
           <h2>Need Help?</h2>
           <p className="support-desc">We're here to support your restaurant success. Reach out to our help desk or explore FAQs below.</p>
 
@@ -54,7 +54,7 @@ const OwnerSupport = () => {
             {/* Categories */}
             <div className="support-card">
               <h3>Support Categories</h3>
-              <ul className="category-list">
+              <ul className="support-category-list">
                 <li>Account & Login Issues</li>
                 <li>Billing & Subscriptions</li>
                 <li>Restaurant Setup</li>
@@ -65,21 +65,22 @@ const OwnerSupport = () => {
           </div>
 
           {/* FAQs */}
-          <div className="faq-section">
+          <div className="support-faq-section">
             <h3>Frequently Asked Questions</h3>
             {faqs.map((faq, index) => (
               <div
-                className={`faq-item ${activeFAQ === index ? "active" : ""}`}
+                className={`support-faq-item ${activeFAQ === index ? "active" : ""}`}
                 key={index}
                 onClick={() => toggleFAQ(index)}
               >
-                <div className="faq-question">{faq.question}</div>
-                {activeFAQ === index && <div className="faq-answer">{faq.answer}</div>}
+                <div className="support-faq-question">{faq.question}</div>
+                {activeFAQ === index && <div className="support-faq-answer">{faq.answer}</div>}
               </div>
             ))}
           </div>
         </div>
-
+      </div>
+      <div className="support-footer">
         <OwnerFooter />
       </div>
     </div>

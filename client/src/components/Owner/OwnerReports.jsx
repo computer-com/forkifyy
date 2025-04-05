@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import "../../assets/css/OwnerCSS/OwnerReports.css";
 
 const OwnerReports = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Default to closed for consistency
   const [reports, setReports] = useState([]);
   const [error, setError] = useState("");
 
@@ -108,22 +108,24 @@ const OwnerReports = () => {
   };
 
   return (
-    <div className={`owner-reports-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className="reports-container">
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="main-content">
-        <div className="top-bar">
-          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            <FiMenu size={30} color="#FF8303" />
-          </div>
-          <div className="logo-container">
-          <a href="/owner/dashboard"><img src={logo} alt="Forkify Logo" className="logo-img" /></a>
-          <h1 className="logo-text">Forkify Owner</h1>
-          </div>
-          <h1 className="page-title">Manage Reports</h1>
+      <div className="reports-top-bar">
+        <div className="reports-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <FiMenu size={30} color="#FF8303" />
         </div>
-        <div className="content-section">
+        <div className="reports-logo-container">
+          <a href="/owner/dashboard">
+            <img src={logo} alt="Forkify Logo" className="reports-logo-img" />
+          </a>
+          <h1 className="reports-logo-text">Forkify Owner</h1>
+        </div>
+        <h1 className="reports-page-title">Manage Reports</h1>
+      </div>
+      <div className={`reports-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="reports-content-section">
           <h2>Restaurant Reports</h2>
-          {error && <p className="error">{error}</p>}
+          {error && <p className="reports-error">{error}</p>}
           {reports.length === 0 ? (
             <p>No reports available.</p>
           ) : (
@@ -149,7 +151,7 @@ const OwnerReports = () => {
                     <td>
                       <button
                         onClick={() => generatePDF(report.restaurantId, report.restaurant)}
-                        className="download-pdf-btn"
+                        className="reports-download-btn"
                       >
                         Download PDF
                       </button>
@@ -160,6 +162,8 @@ const OwnerReports = () => {
             </table>
           )}
         </div>
+      </div>
+      <div className="reports-footer">
         <OwnerFooter />
       </div>
     </div>

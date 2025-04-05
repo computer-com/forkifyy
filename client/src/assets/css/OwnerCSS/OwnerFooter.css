@@ -1,23 +1,20 @@
-.owner-footer {
+#owner-footer {
   background-color: #1B1212;
-  padding: 20px 0;
+  padding: 10px 0; /* Reduced padding */
   color: white;
   text-align: center;
   border-top: 2px solid #FF8303;
-  position: relative;
-  bottom: 0px;
-  top: 100px;
   width: 100%;
-  margin-top: auto;
 }
 
-.footer-container {
+#footer-container {
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 30px; /* Reduced gap between columns */
   max-width: 1200px;
   margin: auto;
-  padding: 10px;
+  margin-bottom: 25px;
+  padding: 5px; /* Reduced padding */
 }
 
 .footer-column {
@@ -25,18 +22,17 @@
   flex-direction: column;
 }
 
-
 .footer-column h4 {
   font-size: 18px;
   color: #FF8303;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reduced margin */
 }
 
 .footer-column a {
   color: white;
   text-decoration: none;
   font-size: 14px;
-  margin: 5px 0;
+  margin: 3px 0; /* Reduced margin */
   transition: color 0.3s ease;
 }
 
@@ -46,10 +42,9 @@
 
 /* Responsive Footer */
 @media (max-width: 900px) {
-  .footer-container {
+  #footer-container {
     flex-direction: column;
     text-align: center;
-    gap: 20px;
+    gap: 15px; /* Reduced gap for mobile */
   }
 }
-  

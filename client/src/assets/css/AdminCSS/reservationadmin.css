@@ -1,266 +1,267 @@
-/* === RESERVATION PAGE STYLES === */
-.admin-container {
-    display: flex;
+/* reservationadmin.css */
+.admin-reservations-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  scroll-behavior: auto;
+}
+
+.admin-reservations-top-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #1b1212;
+  border-bottom: 2px solid #FF8303;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+}
+
+.admin-reservations-menu-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.admin-reservations-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.admin-reservations-logo-img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.admin-reservations-logo-text {
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-reservations-page-title {
+  margin-left: auto;
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-reservations-main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #1c1c1c;
+  margin-top: 80px; /* Adjusted to match topbar height */
+  margin-bottom: 150px;
+  overflow-y: auto;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.admin-reservations-main-content.sidebar-open {
+  margin-left: 250px;
+}
+
+.admin-reservations-content-section {
+  background: #1b1212;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #FF8303;
+  width: 100%;
+  min-height: calc(100vh - 280px); /* Ensure it fills the available height */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.admin-reservations-layout {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.admin-reservations-filter-section {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 260px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(255, 131, 3, 0.5);
+  text-align: left;
+}
+
+.admin-reservations-filter-section h3 {
+  color: #FF8303;
+  margin-bottom: 10px;
+}
+
+.admin-reservations-filter-section label {
+  display: block;
+  margin: 5px 0;
+}
+
+.admin-reservations-filter-section input {
+  margin-right: 8px;
+}
+
+.admin-reservations-list {
+  flex-grow: 1;
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 200px 330px; /* Reduced excessive padding */
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 4px 4px 10px rgba(255, 131, 3, 0.5);
+  margin: 0 20px;
+  overflow-y: auto;
+  max-height: 600px;
+  
+}
+
+.admin-reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.admin-reservations-table th,
+.admin-reservations-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+  color: #fff;
+}
+
+.admin-reservations-table th {
+  background-color: #ff6f00;
+  color: #000;
+}
+
+.admin-reservations-table tr:hover {
+  background-color: #2c2c2c;
+}
+
+.admin-reservations-edit-btn,
+.admin-reservations-delete-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.admin-reservations-edit-btn {
+  color: #ffa500;
+}
+
+.admin-reservations-delete-btn {
+  color: #ff3c3c;
+}
+
+.admin-reservations-form {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 400px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 4px 4px 10px rgba(255, 131, 3, 0.5);
+  overflow-y: auto; /* Make the form scrollable */
+  max-height: 500px; /* Limit the height to allow scrolling */
+  position: relative; /* Ensure the calendar can position relative to the form */
+}
+
+.admin-reservations-form input,
+.admin-reservations-date-picker {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #FF8303;
+  border-radius: 5px;
+  background-color: #121212;
+  color: white;
+}
+
+/* Ensure the DatePicker calendar is visible */
+.admin-reservations-date-picker {
+  position: relative;
+  z-index: 1200; /* Ensure the calendar appears above other elements */
+}
+
+.admin-reservations-form .react-datepicker-popper {
+  z-index: 1300; /* Ensure the calendar popup is above other elements */
+}
+
+.admin-reservations-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #FF8303;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.admin-reservations-form button:hover {
+  background-color: #e67300;
+}
+
+.admin-reservations-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1B1212;
+  border-top: 2px solid #FF8303;
+  z-index: 1000;
+}
+
+@media (max-width: 1200px) {
+  .admin-reservations-layout {
     flex-direction: column;
-    min-height: 100vh;
-    position: relative;
-    background-color: #121212;
-    color: white;
+    align-items: center;
   }
 
-  /* Ensure main content adjusts to sidebar */
-  .admin-container.sidebar-open {
-    margin-left: 200px;
-    padding-left: 0px;
-  }
-  
-  .admin-container.sidebar-closed {
-    margin-left: 0px;
-    padding-left: 0px;
-  }
-  
-  
-  /* Top Bar */
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: #1B1212;
-    border-bottom: 2px solid #FF8303;
-  }
-  
-  .page-title {
-    font-size: 24px;
-    color: #FF8303;
-    margin-left: auto;
-    margin-right: 20px;
-  }
-  
-  /* Main Content Layout */
-  .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 50px;
-    padding-bottom: 100px;
-  }
-  
-  /* Layout Sections */
-  .reservation-layout {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1400px;
-    margin-top: 30px;
-  }
-  
-  /* === FILTER SECTION === */
-  .filter-section {
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    width: 260px;
-    border-radius: 12px;
-    box-shadow: 4px 4px 10px rgba(255, 131, 3, 0.5);
-    text-align: left;
-  }
-  
-  .filter-section h3 {
-    color: #FF8303;
-    margin-bottom: 10px;
-  }
-  
-  .filter-section label {
-    display: block;
-    margin: 5px 0;
-  }
-  
-  .filter-section input {
-    margin-right: 8px;
-  }
-  
-  /* === RESERVATION LIST === */
-  .reservation-list {
-    flex-grow: 1;
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 4px 4px 10px rgba(255, 131, 3, 0.5);
-    margin-left: 20px;
-    overflow-y: auto;
-    max-height: 600px;
-  }
-  .reservation-table {
+  .admin-reservations-form {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+    max-width: 350px;
+    margin: 20px 0 0 0;
+    max-height: 400px; /* Adjust for smaller screens */
   }
-  
-  .reservation-table th,
-  .reservation-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #444;
-    color: #fff;
-  }
-  
-  .reservation-table th {
-    background-color: #ff6f00;
-    color: #000;
-  }
-  
-  .reservation-table tr:hover {
-    background-color: #2c2c2c;
-  }
-  
-  .edit-btn, .delete-btn {
-    background: none;
-    border: none;
-    font-size: 12px;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  
-  .edit-btn {
-    color: #ffa500;
-  }
-  
-  .delete-btn {
-    color: #ff3c3c;
-  }
-  
-  
-  .reservation-card {
-    background-color: #282828;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-    border-left: 5px solid #FF8303;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .reservation-card:hover {
-    transform: scale(1.02);
-  }
-  
-  .reservation-card h3 {
-    color: #FF8303;
-  }
-  
-  .reservation-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  .edit-btn,
-  .delete-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .edit-btn {
-    background-color: #FF8303;
-    color: black;
-  }
-  
-  .delete-btn {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-  }
-  
-  .edit-btn:hover {
-    background-color: #e67300;
-  }
-  
-  .delete-btn:hover {
-    background-color: #c9302c;
-  }
-  
-  /* === RESERVATION FORM === */
-  .reservation-form {
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    width: 400px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 4px 4px 10px rgba(255, 131, 3, 0.5);
-    margin-left: 20px;
-  }
-  
-  .reservation-form input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #FF8303;
-    border-radius: 5px;
-    background-color: #121212;
-    color: white;
-  }
-  
-  .reservation-form button {
+
+  .admin-reservations-list {
+    margin: 20px 0;
     width: 100%;
-    padding: 10px;
-    background-color: #FF8303;
-    color: black;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
   }
-  
-  .reservation-form button:hover {
-    background-color: #e67300;
+}
+
+@media (max-width: 768px) {
+  .admin-reservations-main-content {
+    padding: 20px;
   }
-  
-  .cancel-btn {
-    background-color: #d9534f;
-    margin-top: 10px;
+
+  .admin-reservations-main-content.sidebar-open,
+  .admin-reservations-main-content {
+    margin-left: 0;
   }
-  
-  .cancel-btn:hover {
-    background-color: #c9302c;
+
+  .admin-reservations-filter-section {
+    width: 100%;
+    margin-bottom: 20px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 1200px) {
-    .reservation-layout {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .reservation-form {
-      width: 100%;
-      max-width: 350px;
-      margin-left: 0;
-    }
-  
-    .reservation-list {
-      margin-left: 0;
-      width: 100%;
-    }
+
+  .admin-reservations-list {
+    width: 100%;
   }
-  
-  @media (max-width: 768px) {
-    .filter-section {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-  
-    .reservation-list {
-      width: 100%;
-    }
+
+  .admin-reservations-content-section {
+    min-height: calc(100vh - 260px); /* Adjust for smaller screens */
   }
-  
+}

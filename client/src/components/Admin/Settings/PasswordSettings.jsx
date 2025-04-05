@@ -1,14 +1,13 @@
-// PasswordSettings.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Footer from '../Footer';
 import { FiMenu } from 'react-icons/fi';
 import logo from '../../../assets/images/Forkify_Logo.png';
-import '../../../assets/css/AdminCSS/Settings.css';
+import '../../../assets/css/AdminCSS/AdminPasswordSetting.css';
 
 const PasswordSettings = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,9 +27,8 @@ const PasswordSettings = () => {
         newPassword,
       }, {
         headers: {
-            Authorization: `Bearer ${token}`  // Optional if using JWT
+            Authorization: `Bearer ${token}`
         }
-        
       });
 
       if (response.data.success) {
@@ -48,23 +46,23 @@ const PasswordSettings = () => {
   };
 
   return (
-    <div className={`settings-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className="admin-password-container">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      <div className="main-content">
-        <div className="top-bar">
-          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            <FiMenu size={30} color="#FF8303" />
-          </div>
-          <div className="logo-container">
-            <img src={logo} alt="Logo" className="logo-img" />
-            <h1 className="logo-text">Forkify Admin</h1>
-          </div>
-          <h1 className="page-title">Change Password</h1>
+      
+      <div className="admin-password-top-bar">
+        <div className="admin-password-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <FiMenu size={30} color="#FF8303" />
         </div>
+        <div className="admin-password-logo-container">
+          <img src={logo} alt="Forkify Logo" className="admin-password-logo-img" />
+          <h1 className="admin-password-logo-text">Forkify Admin</h1>
+        </div>
+        <h1 className="admin-password-page-title">Change Password</h1>
+      </div>
 
-        <div className="settings-grid">
-          <form onSubmit={handlePasswordChange} className="settings-card" style={{ width: '100%' }}>
+      <div className={`admin-password-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="admin-password-content-section">
+          <form onSubmit={handlePasswordChange} className="password-form-container">
             <h2>Update Your Password</h2>
 
             <input
@@ -73,7 +71,6 @@ const PasswordSettings = () => {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
-              style={{ marginBottom: '10px', padding: '10px', width: '100%' }}
             />
             <input
               type="password"
@@ -81,7 +78,6 @@ const PasswordSettings = () => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
-              style={{ marginBottom: '10px', padding: '10px', width: '100%' }}
             />
             <input
               type="password"
@@ -89,15 +85,16 @@ const PasswordSettings = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              style={{ marginBottom: '10px', padding: '10px', width: '100%' }}
             />
 
-            <button type="submit" className="settings-btn">Update Password</button>
+            <button type="submit" className="dashboard-btn">Update Password</button>
 
-            {message && <p style={{ marginTop: '10px', color: '#FF8303' }}>{message}</p>}
+            {message && <p className="message">{message}</p>}
           </form>
         </div>
+      </div>
 
+      <div className="admin-password-footer">
         <Footer />
       </div>
     </div>

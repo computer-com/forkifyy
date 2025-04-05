@@ -29,7 +29,6 @@ const MenuAdmin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Fetching menu for restaurantId:", restaurantId);
       setMenu(response.data);
     } catch (error) {
       console.error("Error fetching menu:", error);
@@ -97,60 +96,100 @@ const MenuAdmin = () => {
   
 
   return (
-    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className="admin-menu-container">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      
-      <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <div className="admin-menu-top-bar">
+        <div className="admin-menu-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
           <FiMenu size={30} color="#FF8303" />
         </div>
-        <div className="logo-container">
-          <img src={logo} alt="Forkify Logo" className="logo-img" />
-          <h1 className="logo-text">Forkify Admin</h1>
+        <div className="admin-menu-logo-container">
+          <a href="/AdminHome">
+            <img src={logo} alt="Forkify Logo" className="admin-menu-logo-img" />
+          </a>
+          <h1 className="admin-menu-logo-text">Forkify Admin</h1>
         </div>
-        <h1 className="page-title">Menu Management</h1>
+        <h1 className="admin-menu-page-title">Menu Management</h1>
       </div>
+      <div className={`admin-menu-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="admin-menu-content-section">
+          <div className="menu-management-container">
+            {/* Menu Form - Placed on Left */}
+            <div className="menu-form-container">
+              <h2>{isEditing ? "Edit Menu Item" : "Add New Item"}</h2>
+              <form onSubmit={isEditing ? handleSaveEdit : handleAddItem}>
+                <input
+                  type="text"
+                  placeholder="Item Name"
+                  value={isEditing ? editItem.name : newItem.name}
+                  onChange={(e) => isEditing ? setEditItem({ ...editItem, name: e.target.value }) : setNewItem({ ...newItem, name: e.target.value })}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Category"
+                  value={isEditing ? editItem.category : newItem.category}
+                  onChange={(e) => isEditing ? setEditItem({ ...editItem, category: e.target.value }) : setNewItem({ ...newItem, category: e.target.value })}
+                  required
+                />
+                <input
+                  type="number"
+                  placeholder="Price"
+                  value={isEditing ? editItem.price : newItem.price}
+                  onChange={(e) => isEditing ? setEditItem({ ...editItem, price: e.target.value }) : setNewItem({ ...newItem, price: e.target.value })}
+                  required
+                />
+                <textarea
+                  placeholder="Description"
+                  value={isEditing ? editItem.description : newItem.description}
+                  onChange={(e) => isEditing ? setEditItem({ ...editItem, description: e.target.value }) : setNewItem({ ...newItem, description: e.target.value })}
+                  required
+                />
+                <button type="submit" className="dashboard-btn">
+                  {isEditing ? "Save Changes" : "Add Item"}
+                </button>
+                {isEditing && (
+                  <button 
+                    className="dashboard-btn delete-btn"
+                    onClick={() => { setIsEditing(false); setEditItem(null); }}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </form>
+            </div>
 
-      <div className="main-content">
-        <div className="menu-layout">
-          <div className="menu-form">
-            <h2>{isEditing ? "Edit Menu Item" : "Add New Item"}</h2>
-            <form onSubmit={isEditing ? handleSaveEdit : handleAddItem}>
-              <input type="text" placeholder="Item Name" value={isEditing ? editItem.name : newItem.name} 
-                onChange={(e) => isEditing ? setEditItem({ ...editItem, name: e.target.value }) : setNewItem({ ...newItem, name: e.target.value })} required />
-              <input type="text" placeholder="Category" value={isEditing ? editItem.category : newItem.category} 
-                onChange={(e) => isEditing ? setEditItem({ ...editItem, category: e.target.value }) : setNewItem({ ...newItem, category: e.target.value })} required />
-              <input type="number" placeholder="Price" value={isEditing ? editItem.price : newItem.price} 
-                onChange={(e) => isEditing ? setEditItem({ ...editItem, price: e.target.value }) : setNewItem({ ...newItem, price: e.target.value })} required />
-              <textarea placeholder="Description" value={isEditing ? editItem.description : newItem.description} 
-                onChange={(e) => isEditing ? setEditItem({ ...editItem, description: e.target.value }) : setNewItem({ ...newItem, description: e.target.value })} required />
-              <button type="submit" className="save-btn">{isEditing ? "Save Changes" : "Add Item"}</button>
-              {isEditing && <button className="cancel-btn" onClick={() => { setIsEditing(false); setEditItem(null); }}>Cancel</button>}
-            </form>
-          </div>
-
-          <div className="menu-grid">
-            {menu.length === 0 ? (
-              <p>No menu items found.</p>
-            ) : (
-              menu.map(item => (
-                <div key={item._id} className="menu-card">
-                  <h2>{item.name}</h2>
-                  <p><strong>Price:</strong> ${item.price}</p>
-                  <p><strong>Category:</strong> {item.category}</p>
-                  <p><strong>Description:</strong> {item.description}</p>
-                  <div className="menu-card-actions">
-                    <button className="edit-btn" onClick={() => handleEditItem(item)}>Edit</button>
-                    <button className="delete-btn" onClick={() => handleDelete(item._id)}>Delete</button>
+            {/* Menu List */}
+            <div className="menu-list">
+              {menu.length === 0 ? (
+                <p>No menu items found.</p>
+              ) : (
+                menu.map(item => (
+                  <div key={item._id} className="menu-card">
+                    <h2>{item.name}</h2>
+                    <p><strong>Price:</strong> ${item.price}</p>
+                    <p><strong>Category:</strong> {item.category}</p>
+                    <p><strong>Description:</strong> {item.description}</p>
+                    <div className="menu-card-actions">
+                      <button className="dashboard-btn" onClick={() => handleEditItem(item)}>
+                        Edit
+                      </button>
+                      <button 
+                        className="dashboard-btn delete-btn" 
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-      <Footer />
+      <div className="admin-menu-footer">
+        <Footer />
+      </div>
     </div>
   );
 };
