@@ -1,5 +1,3 @@
-Below is a README for your ForkiFy project on GitHub, written without code blocks or technical syntax like "bash," keeping it simple and descriptive.
-
 ForkiFy - Restaurant Management System
 Welcome to ForkiFy, a user-friendly restaurant management system we created to make life easier for restaurant owners, managers, and customers. Owners can add restaurants and check detailed reports. Managers can handle reservations, inventory, and menus—adding, editing, or removing items for their assigned locations. Customers can explore restaurants, visit their pages, book tables, and order food with a cart and checkout feature. We built this using React for the frontend, Node.js for the backend, and MongoDB for the database.
 
