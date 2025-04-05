@@ -6,7 +6,7 @@ import logo from "../../assets/images/Forkify_Logo.png";
 import "../../assets/css/OwnerCSS/OwnerPerformance.css";
 
 const OwnerPerformance = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Default to closed for consistency
 
   // Performance data based on seed managers
   const managerStats = [
@@ -108,112 +108,116 @@ const OwnerPerformance = () => {
   ];
 
   return (
-    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className="performance-container">
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <div className="performance-top-bar">
+        <div className="performance-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
           <FiMenu size={30} color="#FF8303" />
         </div>
-        <div className="logo-container" onClick={() => window.location.reload()} style={{ cursor: "pointer" }}>
-          <a href="/owner/dashboard"><img src={logo} alt="Forkify Logo" className="logo-img" /></a>
-          <h1 className="logo-text">Forkify Owner</h1>
+        <div className="performance-logo-container">
+          <a href="/owner/dashboard">
+            <img src={logo} alt="Forkify Logo" className="performance-logo-img" />
+          </a>
+          <h1 className="performance-logo-text">Forkify Owner</h1>
         </div>
-        <h1 className="page-title">Performance Overview</h1>
+        <h1 className="performance-page-title">Performance Overview</h1>
       </div>
+      <div className={`performance-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="performance-content-section">
+          {/* Summary Cards */}
+          <div className="performance-summary-cards">
+            <div className="performance-summary-card">
+              <h3>Total Monthly Sales</h3>
+              <p className="performance-summary-value">$68,700</p>
+              <p className="performance-summary-change positive">+12% from last month</p>
+            </div>
+            <div className="performance-summary-card">
+              <h3>Average Rating</h3>
+              <p className="performance-summary-value">4.4 ⭐</p>
+              <p className="performance-summary-change positive">+0.2 from last month</p>
+            </div>
+            <div className="performance-summary-card">
+              <h3>Inventory Accuracy</h3>
+              <p className="performance-summary-value">91.4%</p>
+              <p className="performance-summary-change positive">+1.5% from last month</p>
+            </div>
+            <div className="performance-summary-card">
+              <h3>Labor Cost</h3>
+              <p className="performance-summary-value">24.7%</p>
+              <p className="performance-summary-change negative">+0.8% from last month</p>
+            </div>
+          </div>
 
-      <div className="main-content">
-        {/* Summary Cards */}
-        <div className="summary-cards">
-          <div className="summary-card">
-            <h3>Total Monthly Sales</h3>
-            <p className="summary-value">$68,700</p>
-            <p className="summary-change positive">+12% from last month</p>
-          </div>
-          <div className="summary-card">
-            <h3>Average Rating</h3>
-            <p className="summary-value">4.4 ⭐</p>
-            <p className="summary-change positive">+0.2 from last month</p>
-          </div>
-          <div className="summary-card">
-            <h3>Inventory Accuracy</h3>
-            <p className="summary-value">91.4%</p>
-            <p className="summary-change positive">+1.5% from last month</p>
-          </div>
-          <div className="summary-card">
-            <h3>Labor Cost</h3>
-            <p className="summary-value">24.7%</p>
-            <p className="summary-change negative">+0.8% from last month</p>
-          </div>
-        </div>
-
-        {/* Restaurant Performance */}
-        <div className="restaurant-performance">
-          <h2>Restaurant Performance</h2>
-          <div className="restaurant-cards">
-            {restaurantPerformance.map((restaurant, index) => (
-              <div className="restaurant-card" key={index}>
-                <h3>{restaurant.name}</h3>
-                <div className="performance-metrics">
-                  <div>
-                    <p className="metric-label">Monthly Sales</p>
-                    <p className="metric-value">${restaurant.monthlySales}</p>
-                    <p className={`metric-change ${restaurant.monthlyGrowth.includes('+') ? 'positive' : 'negative'}`}>
-                      {restaurant.monthlyGrowth}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="metric-label">Popular Items</p>
-                    <p className="metric-value">{restaurant.popularItems.join(', ')}</p>
-                  </div>
-                  <div>
-                    <p className="metric-label">Table Turnover</p>
-                    <p className="metric-value">{restaurant.tableTurnover}</p>
+          {/* Restaurant Performance */}
+          <div className="performance-restaurant-section">
+            <h2>Restaurant Performance</h2>
+            <div className="performance-restaurant-cards">
+              {restaurantPerformance.map((restaurant, index) => (
+                <div className="performance-restaurant-card" key={index}>
+                  <h3>{restaurant.name}</h3>
+                  <div className="performance-metrics">
+                    <div>
+                      <p className="performance-metric-label">Monthly Sales</p>
+                      <p className="performance-metric-value">${restaurant.monthlySales}</p>
+                      <p className={`performance-metric-change ${restaurant.monthlyGrowth.includes('+') ? 'positive' : 'negative'}`}>
+                        {restaurant.monthlyGrowth}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="performance-metric-label">Popular Items</p>
+                      <p className="performance-metric-value">{restaurant.popularItems.join(', ')}</p>
+                    </div>
+                    <div>
+                      <p className="performance-metric-label">Table Turnover</p>
+                      <p className="performance-metric-value">{restaurant.tableTurnover}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Manager Cards */}
-        <div className="managers-section">
-          <h2>Manager Performance</h2>
-          <div className="manager-cards">
-            {managerStats.map((mgr, index) => (
-              <div className="manager-card" key={index}>
-                <h3>{mgr.name}</h3>
-                <p><strong>Restaurant:</strong> {mgr.restaurant}</p>
-                <p><strong>Role:</strong> {mgr.role}</p>
-                <div className="performance-grid">
-                  <div>
-                    <p className="metric-label">Sales</p>
-                    <p className="metric-value">${mgr.sales}</p>
+          {/* Manager Cards */}
+          <div className="performance-managers-section">
+            <h2>Manager Performance</h2>
+            <div className="performance-manager-cards">
+              {managerStats.map((mgr, index) => (
+                <div className="performance-manager-card" key={index}>
+                  <h3>{mgr.name}</h3>
+                  <p><strong>Restaurant:</strong> {mgr.restaurant}</p>
+                  <p><strong>Role:</strong> {mgr.role}</p>
+                  <div className="performance-grid">
+                    <div>
+                      <p className="performance-metric-label">Sales</p>
+                      <p className="performance-metric-value">${mgr.sales}</p>
+                    </div>
+                    <div>
+                      <p className="performance-metric-label">Inventory</p>
+                      <p className="performance-metric-value">{mgr.inventory}</p>
+                    </div>
+                    <div>
+                      <p className="performance-metric-label">Labor Cost</p>
+                      <p className="performance-metric-value">{mgr.laborCost}</p>
+                    </div>
+                    <div>
+                      <p className="performance-metric-label">Satisfaction</p>
+                      <p className="performance-metric-value">{mgr.customerSatisfaction} ⭐</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="metric-label">Inventory</p>
-                    <p className="metric-value">{mgr.inventory}</p>
-                  </div>
-                  <div>
-                    <p className="metric-label">Labor Cost</p>
-                    <p className="metric-value">{mgr.laborCost}</p>
-                  </div>
-                  <div>
-                    <p className="metric-label">Satisfaction</p>
-                    <p className="metric-value">{mgr.customerSatisfaction} ⭐</p>
+                  <div className="performance-efficiency-bar">
+                    <div className="performance-efficiency-label">Efficiency:</div>
+                    <div className="performance-efficiency-fill" style={{ width: mgr.efficiency }}></div>
+                    <div className="performance-efficiency-value">{mgr.efficiency}</div>
                   </div>
                 </div>
-                <div className="efficiency-bar">
-                  <div className="efficiency-label">Efficiency:</div>
-                  <div className="efficiency-fill" style={{ width: mgr.efficiency }}></div>
-                  <div className="efficiency-value">{mgr.efficiency}</div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <OwnerFooter />
+      <div className="performance-footer">
+        <OwnerFooter />
+      </div>
     </div>
   );
 };

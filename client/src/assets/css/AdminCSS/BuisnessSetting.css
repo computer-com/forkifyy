@@ -1,28 +1,120 @@
-/*Business css*/
-.settings-grid{
-  padding-top: 260px;
+/* AdminBusinessSetting.css */
+
+/* Base Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  color: white;
 }
 
-/* Business Information Card Styling */
-.settings-card {
-  background-color: #1B1212;
-  border-radius: 10px;
-  padding: 40px;
-  width: 80%;
-  max-width: 900px;
-  margin: 30px auto;
-  text-align: left;
+.admin-business-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  width: 100vw;
+  position: relative;
 }
 
-/* Form Fields */
+/* Top Bar - Fixed Position */
+.admin-business-top-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #1b1212;
+  border-bottom: 2px solid #FF8303;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+}
+
+.admin-business-menu-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.admin-business-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.admin-business-logo-img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.admin-business-logo-text {
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-business-page-title {
+  margin-left: auto;
+  font-size: 24px;
+  color: #FF8303;
+}
+
+/* Main Content Area */
+.admin-business-main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #1c1c1c;
+  margin-top: 325px;
+  margin-bottom: 150px;
+  overflow-y: auto;
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-business-main-content.sidebar-open {
+  margin-left: 250px;
+}
+
+/* Content Section */
+.admin-business-content-section {
+  background: #1b1212;
+  padding: 40px;
+  border-radius: 8px;
+  border: 2px solid #FF8303;
+  width: 100%;
+  min-height: calc(100vh - 280px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Business Form */
+.business-form-container {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.business-form-container h2 {
+  color: #FF8303;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 .business-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
 .input-group {
@@ -34,73 +126,70 @@
 .input-group label {
   font-weight: 600;
   color: #FF8303;
-  margin-bottom: 5px;
 }
 
 .input-group input,
 .input-group textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #FF8303;
-  border-radius: 8px;
+  border: 1px solid #FF8303;
+  border-radius: 5px;
   background-color: #121212;
   color: white;
   font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.input-group input:focus,
-.input-group textarea:focus {
-  border-color: #e67300;
-  outline: none;
 }
 
 .input-group textarea {
+  min-height: 150px;
   resize: vertical;
-  height: 150px;
 }
 
-/* Button Styling */
-.settings-btn {
+.dashboard-btn {
+  padding: 12px 20px;
   background-color: #FF8303;
   color: black;
+  font-weight: bold;
   border: none;
-  padding: 12px 20px;
-  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 5px;
-  width: 100%;
   transition: 0.3s;
+  width: 100%;
   margin-top: 20px;
 }
 
-.settings-btn:hover {
+.dashboard-btn:hover {
   background-color: #e67300;
 }
 
-/* Footer Styling */
-.footer {
+/* Footer */
+.admin-business-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: #1B1212;
-  color: #FF8303;
-  padding: 10px;
-  text-align: center;
-  margin-top: 20px;
-  width: 100%;
+  border-top: 2px solid #FF8303;
+  z-index: 1000;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .settings-card {
-    width: 90%;
+  .admin-business-main-content {
     padding: 20px;
   }
 
-  .input-group label {
-    width: 100%; /* Adjust label width for smaller screens */
+  .admin-business-main-content.sidebar-open,
+  .admin-business-main-content {
+    margin-left: 0;
   }
 
-  .input-group input,
-  .input-group textarea {
-    font-size: 0.9rem;
+  .admin-business-content-section {
+    padding: 20px;
+    min-height: calc(100vh - 240px);
+  }
+
+  .business-form-container {
+    padding: 30px 20px;
+    width: 90%;
   }
 }

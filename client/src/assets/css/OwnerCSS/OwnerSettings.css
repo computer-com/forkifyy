@@ -1,71 +1,89 @@
-/* ===== OwnerSettings.css - Full Page Layout ===== */
-.owner-settings-container {
+/* OwnerSettings.css */
+.settings-container {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background-color: #121212;
+  background-color: #111;
   color: white;
 }
 
-.main-content {
-  flex-grow: 1;
-  padding: 100px 40px 60px; /* Adjusted padding */
-  transition: margin-left 0.3s ease;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.sidebar-open .main-content {
-  margin-left: 240px;
-  width: calc(100% - 240px);
-}
-
-.sidebar-closed .main-content {
-  margin-left: 60px;
-  width: calc(100% - 60px);
-}
-
-/* Top Bar */
-.top-bar {
+.settings-top-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #1b1212;
+  border-bottom: 2px solid #FF8303;
+  padding: 0 20px;
   position: fixed;
   top: 0;
-  left: 240px;
-  width: calc(100% - 240px);
-  height: 70px;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+}
+
+.settings-menu-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.settings-logo-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 40px;
-  background-color: #1B1212;
-  border-bottom: 2px solid #FF8303;
-  z-index: 100;
-  transition: all 0.3s ease;
 }
 
-.sidebar-closed .top-bar {
-  left: 60px;
-  width: calc(100% - 60px);
+.settings-logo-img {
+  width: 40px;
+  margin-right: 10px;
 }
 
-/* Settings Grid Container */
-.settings-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
+.settings-logo-text {
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.settings-page-title {
+  margin-left: auto;
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.settings-main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #1c1c1c;
+  margin-top: 280px; /* Height of topbar */
+  margin-bottom: 200px; /* Height of footer */
+  overflow-y: auto;
+  margin-left: 0; /* No margin when sidebar is closed */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.settings-main-content.sidebar-open {
+  margin-left: 250px;
+  margin-top: 320px; /* Adjust margin when sidebar is open */
+}
+
+.settings-content-section {
+  background: #1b1212;
+  padding: 120px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-radius: 8px;
+  border: 2px solid #FF8303;
 }
 
 .settings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  gap: 20px;
   width: 100%;
 }
 
-/* Settings Card */
 .settings-card {
   background-color: #1B1212;
-  border: 1px solid #FF8303;
+  border: 2px solid #FF8303;
   border-radius: 12px;
-  padding: 30px;
+  padding: 10px;
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -111,6 +129,16 @@
   transform: translateY(-2px);
 }
 
+.settings-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1B1212;
+  border-top: 2px solid #FF8303;
+  z-index: 1000;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 1500px) {
   .settings-grid {
@@ -125,25 +153,18 @@
 }
 
 @media (max-width: 768px) {
-  .main-content {
-    padding: 100px 20px 60px;
+  .settings-main-content {
+    padding: 20px;
   }
-  
+
   .settings-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
-  .sidebar-open .main-content,
-  .sidebar-closed .main-content {
+
+  .settings-main-content.sidebar-open,
+  .settings-main-content {
     margin-left: 0;
-    width: 100%;
-  }
-  
-  .top-bar {
-    left: 0;
-    width: 100%;
-    padding: 10px 20px;
   }
 }
 
@@ -151,11 +172,11 @@
   .settings-card {
     padding: 25px 20px;
   }
-  
+
   .settings-card h2 {
     font-size: 1.3rem;
   }
-  
+
   .settings-card p {
     font-size: 0.9rem;
   }

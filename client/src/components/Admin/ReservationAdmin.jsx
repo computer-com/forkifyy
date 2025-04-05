@@ -156,7 +156,6 @@ const ReservationAdmin = () => {
       setEditItem(null);
       await fetchReservations();
       applyFilterAndSort(reservations);
-
     } catch (error) {
       console.error("Error updating reservation:", error);
     }
@@ -180,149 +179,187 @@ const ReservationAdmin = () => {
     }
   };
 
-  return (
-    <div className={`admin-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+  // Popper modifiers to prevent calendar clipping
+  const popperModifiers = [
+    {
+      name: "offset",
+      options: {
+        offset: [0, 10], // Add some space between the input and the calendar
+      },
+    },
+    {
+      name: "preventOverflow",
+      options: {
+        boundariesElement: "viewport", // Ensure the calendar stays within the viewport
+        padding: 10,
+      },
+    },
+    {
+      name: "flip",
+      options: {
+        behavior: ["top", "bottom"], // Prefer flipping to top if there's not enough space below
+      },
+    },
+  ];
 
-      <div className="top-bar">
-        <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+  return (
+    <div className="admin-reservations-container">
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div className="admin-reservations-top-bar">
+        <div className="admin-reservations-menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
           <FiMenu size={30} color="#FF8303" />
         </div>
-        <div className="logo-container">
-          <img src={logo} alt="Forkify Logo" className="logo-img" />
-          <h1 className="logo-text">Forkify Admin</h1>
+        <div className="admin-reservations-logo-container">
+          <a href="/AdminHome">
+            <img src={logo} alt="Forkify Logo" className="admin-reservations-logo-img" />
+          </a>
+          <h1 className="admin-reservations-logo-text">Forkify Admin</h1>
         </div>
-        <h1 className="page-title">Reservations</h1>
+        <h1 className="admin-reservations-page-title">Reservations</h1>
       </div>
-
-      <div className="main-content">
-        <div className="reservation-layout">
-          <div className="filter-section">
-            <h3>Filters</h3>
-            {["All", "Today", "Tomorrow", "ThisWeek"].map((label) => (
-              <label key={label}>
-                <input
-                  type="radio"
-                  name="filter"
-                  checked={filterType === label}
-                  onChange={() => setFilterType(label)}
-                /> {label}
-              </label>
-            ))}
-            <h3>Sort By</h3>
-            {["Time", "Name"].map((label) => (
-              <label key={label}>
-                <input
-                  type="radio"
-                  name="sort"
-                  checked={sortBy === label}
-                  onChange={() => setSortBy(label)}
-                /> {label}
-              </label>
-            ))}
-          </div>
-
-          <div className="reservation-list">
-            <h2>Reservations</h2>
-            {filteredReservations.length === 0 ? (
-              <p>No reservations found.</p>
-            ) : (
-              <table className="reservation-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Guests</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredReservations.map((res) => (
-                    <tr key={res._id}>
-                      <td>{res.name || res.userId?.name || "Guest"}</td>
-                      <td>{res.email || res.userId?.email || "N/A"}</td>
-                      <td>{new Date(res.date).toLocaleDateString()}</td>
-                      <td>{res.time}</td>
-                      <td>{res.numberOfGuests}</td>
-                      <td>{res.status}</td>
-                      <td>
-                        <button className="edit-btn" onClick={() => handleEditReservation(res)}>✏️</button>
-                        <button className="delete-btn" onClick={() => handleDelete(res._id)}>🗑️</button>
-                      </td>
+      <div className={`admin-reservations-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="admin-reservations-content-section">
+          <div className="admin-reservations-layout">
+            <div className="admin-reservations-filter-section">
+              <h3>Filters</h3>
+              {["All", "Today", "Tomorrow", "ThisWeek"].map((label) => (
+                <label key={label}>
+                  <input
+                    type="radio"
+                    name="filter"
+                    checked={filterType === label}
+                    onChange={() => setFilterType(label)}
+                  />{" "}
+                  {label}
+                </label>
+              ))}
+              <h3>Sort By</h3>
+              {["Time", "Name"].map((label) => (
+                <label key={label}>
+                  <input
+                    type="radio"
+                    name="sort"
+                    checked={sortBy === label}
+                    onChange={() => setSortBy(label)}
+                  />{" "}
+                  {label}
+                </label>
+              ))}
+            </div>
+            <div className="admin-reservations-list">
+              <h2>Reservations</h2>
+              {filteredReservations.length === 0 ? (
+                <p>No reservations found.</p>
+              ) : (
+                <table className="admin-reservations-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Guests</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
-
-          <div className="reservation-form">
-            <h2>{isEditing ? "Edit Reservation" : "Add New Reservation"}</h2>
-            <form onSubmit={isEditing ? handleSaveEdit : handleAddReservation}>
-              <input
-                type="text"
-                placeholder="Name"
-                value={isEditing ? editItem.name : newReservation.name}
-                onChange={(e) =>
-                  isEditing
-                    ? setEditItem({ ...editItem, name: e.target.value })
-                    : setNewReservation({ ...newReservation, name: e.target.value })
-                }
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={isEditing ? editItem.email : newReservation.email}
-                onChange={(e) =>
-                  isEditing
-                    ? setEditItem({ ...editItem, email: e.target.value })
-                    : setNewReservation({ ...newReservation, email: e.target.value })
-                }
-                required
-              />
-              <input
-                type="number"
-                placeholder="Number of Guests"
-                value={isEditing ? editItem.numberOfGuests : newReservation.numberOfGuests}
-                onChange={(e) =>
-                  isEditing
-                    ? setEditItem({ ...editItem, numberOfGuests: e.target.value })
-                    : setNewReservation({ ...newReservation, numberOfGuests: e.target.value })
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Time (e.g. 18:00)"
-                value={isEditing ? editItem.time : newReservation.time}
-                onChange={(e) =>
-                  isEditing
-                    ? setEditItem({ ...editItem, time: e.target.value })
-                    : setNewReservation({ ...newReservation, time: e.target.value })
-                }
-                required
-              />
-              <DatePicker
-                selected={isEditing ? editItem.date : newReservation.date}
-                onChange={(date) =>
-                  isEditing
-                    ? setEditItem({ ...editItem, date })
-                    : setNewReservation({ ...newReservation, date })
-                }
-                dateFormat="yyyy-MM-dd"
-                className="date-picker"
-              />
-              <button type="submit">{isEditing ? "Save Changes" : "Confirm Booking"}</button>
-            </form>
+                  </thead>
+                  <tbody>
+                    {filteredReservations.map((res) => (
+                      <tr key={res._id}>
+                        <td>{res.name || res.userId?.name || "Guest"}</td>
+                        <td>{res.email || res.userId?.email || "N/A"}</td>
+                        <td>{new Date(res.date).toLocaleDateString()}</td>
+                        <td>{res.time}</td>
+                        <td>{res.numberOfGuests}</td>
+                        <td>{res.status}</td>
+                        <td>
+                          <button
+                            className="admin-reservations-edit-btn"
+                            onClick={() => handleEditReservation(res)}
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            className="admin-reservations-delete-btn"
+                            onClick={() => handleDelete(res._id)}
+                          >
+                            🗑️
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            <div className="admin-reservations-form">
+              <h2>{isEditing ? "Edit Reservation" : "Add New Reservation"}</h2>
+              <form onSubmit={isEditing ? handleSaveEdit : handleAddReservation}>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={isEditing ? editItem.name : newReservation.name}
+                  onChange={(e) =>
+                    isEditing
+                      ? setEditItem({ ...editItem, name: e.target.value })
+                      : setNewReservation({ ...newReservation, name: e.target.value })
+                  }
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={isEditing ? editItem.email : newReservation.email}
+                  onChange={(e) =>
+                    isEditing
+                      ? setEditItem({ ...editItem, email: e.target.value })
+                      : setNewReservation({ ...newReservation, email: e.target.value })
+                  }
+                  required
+                />
+                <input
+                  type="number"
+                  placeholder="Number of Guests"
+                  value={isEditing ? editItem.numberOfGuests : newReservation.numberOfGuests}
+                  onChange={(e) =>
+                    isEditing
+                      ? setEditItem({ ...editItem, numberOfGuests: e.target.value })
+                      : setNewReservation({ ...newReservation, numberOfGuests: e.target.value })
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Time (e.g. 18:00)"
+                  value={isEditing ? editItem.time : newReservation.time}
+                  onChange={(e) =>
+                    isEditing
+                      ? setEditItem({ ...editItem, time: e.target.value })
+                      : setNewReservation({ ...newReservation, time: e.target.value })
+                  }
+                  required
+                />
+                <DatePicker
+                  selected={isEditing ? editItem.date : newReservation.date}
+                  onChange={(date) =>
+                    isEditing
+                      ? setEditItem({ ...editItem, date })
+                      : setNewReservation({ ...newReservation, date })
+                  }
+                  dateFormat="yyyy-MM-dd"
+                  className="admin-reservations-date-picker"
+                  popperModifiers={popperModifiers} // Add popper modifiers to prevent clipping
+                  popperPlacement="top-start" // Prefer top-start placement
+                />
+                <button type="submit">{isEditing ? "Save Changes" : "Confirm Booking"}</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-
-      <Footer />
+      <div className="admin-reservations-footer">
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -7,16 +7,14 @@ import logo from "../../assets/images/Forkify_Logo.png";
 import "../../assets/css/OwnerCSS/OwnerDashboard.css";
 
 const OwnerHome = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [restaurants, setRestaurants] = useState([]);
   const [error, setError] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const fetchRestaurants = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/restaurants");
-      if (!response.ok) {
-        throw new Error("Failed to fetch restaurants");
-      }
+      if (!response.ok) throw new Error("Failed to fetch restaurants");
       const data = await response.json();
       setRestaurants(data);
     } catch (error) {
@@ -30,42 +28,46 @@ const OwnerHome = () => {
   }, []);
 
   return (
-    <div className={`owner-home-container ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className="owner-dashboard-container">
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="main-content">
-        <div className="top-bar">
-          <div className="menu-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            <FiMenu size={30} color="#FF8303" />
-          </div>
-          <div className="logo-container">
-            <img src={logo} alt="Forkify Logo" className="logo-img" />
-            <h1 className="logo-text">Forkify Owner</h1>
-          </div>
-          <h1 className="page-title">Owner Dashboard</h1>
+      <div className="owner-top-bar">
+        <div 
+          className="owner-menu-icon" 
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <FiMenu size={30} color="#FF8303" />
         </div>
-        <div className="content-section">
+        <div className="owner-logo-container">
+          <img src={logo} alt="Forkify Logo" className="owner-logo-img" />
+          <h1 className="owner-logo-text">Forkify Owner</h1>
+        </div>
+        <h1 className="owner-page-title">Owner Dashboard</h1>
+      </div>
+      <div className={`owner-main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
+        <div className="owner-content-section">
           <h2>Your Restaurants</h2>
-          {error && <p className="error">{error}</p>}
+          {error && <p className="owner-error">{error}</p>}
           {restaurants.length === 0 && !error ? (
             <p>No restaurants found.</p>
           ) : (
-            <div className="restaurant-grid">
+            <div className="owner-restaurant-grid">
               {restaurants.map((restaurant) => (
-                <div key={restaurant._id} className="restaurant-card">
+                <div key={restaurant._id} className="owner-restaurant-card">
                   <h3>{restaurant.name}</h3>
                   <p>Cuisine: {restaurant.cuisine}</p>
                   <p>City: {restaurant.city}</p>
-                  {/* Removed the View Details button */}
                 </div>
               ))}
             </div>
           )}
-          <div className="add-restaurant-container">
-            <Link to="/owner/add-restaurant" className="dashboard-btn">
+          <div className="owner-add-restaurant-container">
+            <Link to="/owner/add-restaurant" className="owner-dashboard-btn">
               Add New Restaurant
             </Link>
           </div>
         </div>
+      </div>
+      <div className={`owner-footer ${sidebarOpen ? "sidebar-open" : ""}`}>
         <OwnerFooter />
       </div>
     </div>

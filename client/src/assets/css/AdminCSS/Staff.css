@@ -1,127 +1,212 @@
-/* === STAFF MANAGEMENT PAGE STYLES === */
-.admin-container {
+/* Staff.css */
+
+/* Ensure body and html have the correct background color */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  color: white;
+}
+
+.admin-staff-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures it takes full height */
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  width: 100vw;
+  position: relative;
 }
 
-.staff-page {
-    text-align: center;
-    padding: 40px;
-    margin-top: 80px;
-  }
-  
-  .staff-page h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #FF8303;
-    margin-bottom: 20px;
-  }
-  
-  /* Staff Management Layout */
-  .staff-management-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
-    max-width: 1300px; /* Increased width for better alignment */
-    margin: 0 auto;
-    width: 90%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 131, 3, 0.3);
-    background-color: #121212;
-  }
-  .main-content {
-    flex: 1; /* Pushes content in between header and footer */
-    padding-top: 100px; 
-    padding-bottom: 50px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.admin-staff-top-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #1b1212;
+  border-bottom: 2px solid #FF8303;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
 }
-  
-  /* Staff Form */
-  .staff-form-container {
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    width: 350px;
-    margin-right: 20px; /* Creates separation from staff list */
-    margin-left: -70px; 
-    margin-top: 20px;
-    border-radius: 12px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-    text-align: center;
-  }
-  
-  /* Staff Form Inputs */
-  .staff-form-container input {
-    width: 90%;
-    padding: 12px;
-    margin: 15px 0; 
-    border: 1px solid #FF8303;
-    border-radius: 5px;
-    background-color: #121212;
-    color: white;
-  }
-  
-  .staff-form-container input::placeholder {
-    color: #888;
-  }
-  
-  /* Staff List Grid */
-  .staff-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 25px; 
-    justify-content: center;
-    align-items: center;
-    width: 100%; 
-    max-width: 1300px; 
-    margin: auto;
-    padding: 20px;
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 600px;
-  }
-  
-  /* Staff Cards */
-  .staff-card {
-    background-color: #1B1212;
-    border: 2px solid #FF8303;
-    padding: 20px;
-    width: 320px; 
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .staff-card:hover {
-    transform: scale(1.05);
-  }
-  
 
-  /* Responsive Design Added by Viren on 2nd March*/
+.admin-staff-menu-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.admin-staff-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.admin-staff-logo-img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.admin-staff-logo-text {
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-staff-page-title {
+  margin-left: auto;
+  font-size: 24px;
+  color: #FF8303;
+}
+
+.admin-staff-main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #1c1c1c;
+  margin-top: 80px;
+  margin-bottom: 150px;
+  overflow-y: auto;
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-staff-main-content.sidebar-open {
+  margin-left: 250px;
+}
+
+.admin-staff-content-section {
+  background: #1b1212;
+  padding: 40px; /* Increased padding for extra spacing */
+  border-radius: 8px;
+  border: 2px solid #FF8303;
+  width: 100%;
+  min-height: calc(100vh - 280px);
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Extra spacing between child elements */
+}
+
+/* Staff Management Layout - Unchanged */
+.staff-management-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 90%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(255, 131, 3, 0.3);
+  background-color: #121212;
+}
+
+/* Staff Form - Unchanged */
+.staff-form-container {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 350px;
+  margin-right: 20px;
+  margin-left: -70px;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Staff Form Inputs - Unchanged */
+.staff-form-container input {
+  width: 90%;
+  padding: 12px;
+  margin: 15px 0;
+  border: 1px solid #FF8303;
+  border-radius: 5px;
+  background-color: #121212;
+  color: white;
+}
+
+.staff-form-container input::placeholder {
+  color: #888;
+}
+
+/* Staff List Grid - Unchanged */
+.staff-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1300px;
+  margin: auto;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+/* Staff Cards - Unchanged */
+.staff-card {
+  background-color: #1B1212;
+  border: 2px solid #FF8303;
+  padding: 20px;
+  width: 320px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+.staff-card:hover {
+  transform: scale(1.05);
+}
+
+.admin-staff-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1B1212;
+  border-top: 2px solid #FF8303;
+  z-index: 1000;
+}
+
+/* Responsive Design */
 @media (max-width: 1200px) {
-    .staff-list {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
-    }
+  .staff-list {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (max-width: 900px) {
-    .staff-management-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .staff-form-container {
-        margin-left: 0; /* Reset left margin */
-        margin-right: 0;
-    }
+}
+
+@media (max-width: 900px) {
+  .staff-management-container {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  @media (max-width: 768px) {
-    .staff-list {
-        grid-template-columns: repeat(1, 1fr); /* 1 column for small screens (ex., Mobile, Tab, etc., ) */
-    }
+  .staff-form-container {
+    margin-left: 0;
+    margin-right: 0;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .admin-staff-main-content {
+    padding: 20px;
+  }
+
+  .admin-staff-main-content.sidebar-open,
+  .admin-staff-main-content {
+    margin-left: 0;
+  }
+
+  .staff-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .admin-staff-content-section {
+    min-height: calc(100vh - 260px);
+  }
+}
