@@ -33,8 +33,11 @@ const ManagerSignIn = () => {
       });
   
       // Save token and manager info
-      localStorage.setItem("managerToken", res.data.token);
-      localStorage.setItem("manager", JSON.stringify(res.data.manager));
+      if (res.data?.token && res.data?.manager) {
+        localStorage.setItem("managerToken", res.data.token);
+        localStorage.setItem("manager", JSON.stringify(res.data.manager));
+      }
+      
   
       navigate('/AdminHome'); // Manager Dashboard
     } catch (err) {

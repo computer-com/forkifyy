@@ -54,23 +54,21 @@ const RestaurantHomePage = () => {
 
   const handleReservationSubmit = async (e) => {
     e.preventDefault();
-
+ 
     try {
-      const token = localStorage.getItem("token");
-      const customer = JSON.parse(localStorage.getItem("customer"));
-
-      if (!token || !customer) {
+      const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+      if (!token) {
         alert("You must be signed in to reserve a table.");
         return;
       }
-
+ 
       const date = new Date(formData.dateTime);
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const time = `${hours}:${minutes}`;
-
+ 
       const reservationPayload = {
-        restaurantId: id,
+        restaurantId: restaurant._id,
         numberOfGuests: formData.guests,
         date: date.toISOString(),
         time: time,
@@ -78,22 +76,25 @@ const RestaurantHomePage = () => {
         email: formData.email,
       };
 
-      await axios.post("/api/reservation", reservationPayload, {
+      console.log("Reservation Payload:", reservationPayload);  // Log the payload
+
+      await axios.post(`/api/reservation`, reservationPayload, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Send the token in headers
         },
       });
-
+ 
       setSuccessMsg("Your reservation was successfully placed!");
       setShowModal(false);
       setFormData({ name: "", email: "", guests: 1, dateTime: "" });
-
+ 
       setTimeout(() => setSuccessMsg(""), 5000);
     } catch (err) {
       console.error("Reservation failed:", err.response?.data || err.message);
-      alert("Failed to reserve. Please try again.");
+      alert(err.response?.data?.error || "Login failed. Please try again.");
     }
   };
+ 
 
   if (!restaurant) return <div className="loading-text">Loading...</div>;
 
@@ -107,31 +108,18 @@ const RestaurantHomePage = () => {
       </header>
 
       <section className="restaurant-hero">
-        <img
-          className="restaurant-hero-img"
-          src={restaurant.image}
-          alt={restaurant.name}
-        />
+        <img className="restaurant-hero-img" src={restaurant.image} alt={restaurant.name} />
         <div className="restaurant-overview">
           <h1>{restaurant.name}</h1>
-          <p className="restaurant-meta">
-            {restaurant.cuisine} • {restaurant.city}
-          </p>
+          <p className="restaurant-meta">{restaurant.cuisine} • {restaurant.city}</p>
           <p className="restaurant-reviews">⭐ {restaurant.reviews} Reviews</p>
-          <p className="restaurant-desc">
-            {restaurant.description ||
-              "A wonderful dining experience awaits you."}
-          </p>
+          <p className="restaurant-desc">{restaurant.description || "A wonderful dining experience awaits you."}</p>
         </div>
       </section>
 
       <div className="tab-navigation">
         {tabs.map((tab) => (
-          <button
-            key={tab}
-            className={`tab-btn ${activeTab === tab ? "active" : ""}`}
-            onClick={() => setActiveTab(tab)}
-          >
+          <button key={tab} className={`tab-btn ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)}>
             {tab}
           </button>
         ))}
@@ -139,113 +127,77 @@ const RestaurantHomePage = () => {
 
       <div className="tab-content">
         {activeTab === "Overview" && (
-          <div className="overview-section">
-            <h3>Reserve a Table</h3>
-            <button className="reserve-btn" onClick={() => setShowModal(true)}>
-              Make a Reservation
-            </button>
-
-            {successMsg && (
-              <p style={{ color: "#4CAF50", marginTop: "10px" }}>
-                {successMsg}
-              </p>
-            )}
-
-            {showModal && (
-              <div className="reservation-modal">
-                <div className="reservation-content">
-                  <h3>Book a Table</h3>
-                  <form onSubmit={handleReservationSubmit}>
-                    <input
-                      type="text"
-                      placeholder="Your Name"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                    />
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                    />
-                    <input
-                      type="number"
-                      placeholder="Number of Guests"
-                      min="1"
-                      required
-                      value={formData.guests || ""}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          guests: e.target.value ? parseInt(e.target.value) : "",
-                        })
-                      }
-                    />
-                    <input
-                      type="datetime-local"
-                      required
-                      value={formData.dateTime}
-                      onChange={(e) =>
-                        setFormData({ ...formData, dateTime: e.target.value })
-                      }
-                    />
-                    <button type="submit">Confirm Reservation</button>
-                  </form>
-                  <button
-                    className="close-btn"
-                    onClick={() => setShowModal(false)}
-                  >
-                    X
-                  </button>
-                </div>
+          <div className="overview-enhanced-container">
+            <div className="overview-left-panel">
+              <div className="stat-strip">
+                <div className="stat-card">📅 Bookings Today: {restaurant.bookedTimes || 0}</div>
+                <div className="stat-card">💰 Price: CAN$31–CAN$50</div>
+                <div className="stat-card">🍽 Style: Casual Elegant</div>
               </div>
-            )}
-
-            <div className="time-slots">
-              {restaurant.timeSlots.length > 0 ? (
-                restaurant.timeSlots.map((slot, i) => (
-                  <button key={i} className="time-btn">
-                    {slot}
-                  </button>
-                ))
-              ) : (
-                <p>Currently unavailable</p>
-              )}
+              <div className="info-cards">
+                <div className="info-card">🎽 Dress Code: Casual</div>
+                <div className="info-card">🏙️ Neighborhood: {restaurant.city}</div>
+                <div className="info-card">🕒 Hours: Mon–Thu 11:30am–9pm, Fri–Sat 11:30am–10pm</div>
+                <div className="info-card">🅿️ Parking: Private Lot</div>
+                <div className="info-card">💳 Payment: Visa, Mastercard</div>
+              </div>
             </div>
 
-            <div className="additional-details">
-              <p>
-                <strong>Bookings Today:</strong>{" "}
-                {restaurant.bookedTimes || 0}
-              </p>
-              <p>
-                <strong>Price Range:</strong> CAN$31–CAN$50
-              </p>
-              <p>
-                <strong>Dining Style:</strong> Casual Elegant
-              </p>
-              <p>
-                <strong>Dress Code:</strong> Casual
-              </p>
-              <p>
-                <strong>Neighborhood:</strong> {restaurant.city}
-              </p>
-              <p>
-                <strong>Hours:</strong> Mon–Thu 11:30am–9pm, Fri–Sat
-                11:30am–10pm
-              </p>
-              <p>
-                <strong>Parking:</strong> Private Lot
-              </p>
-              <p>
-                <strong>Payment Options:</strong> Visa, Mastercard
-              </p>
+            <div className="overview-right-panel">
+              <h3>Reserve a Table</h3>
+              <button className="reserve-btn" onClick={() => setShowModal(true)}>Make a Reservation</button>
+              {successMsg && <p style={{ color: "#4CAF50", marginTop: "10px" }}>{successMsg}</p>}
+              {showModal && (
+                <div className="reservation-modal">
+                  <div className="reservation-content">
+                    <h3>Book a Table</h3>
+                    <form onSubmit={handleReservationSubmit}>
+                      <input type="text" placeholder="Your Name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                      <input type="email" placeholder="Email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                      <input type="number" placeholder="Number of Guests" min="1" required value={formData.guests || ""} onChange={(e) => setFormData({ ...formData, guests: e.target.value ? parseInt(e.target.value) : "" })} />
+                      <input type="datetime-local" required value={formData.dateTime} onChange={(e) => setFormData({ ...formData, dateTime: e.target.value })} />
+                      <button type="submit">Confirm Reservation</button>
+                    </form>
+                    <button className="close-btn" onClick={() => setShowModal(false)}>X</button>
+                  </div>
+                </div>
+              )}
+              {/* Chef Quote */}
+              <div className="chef-quote">
+                <p>“We source locally, craft passionately, and serve with love.”</p>
+                <span>- Chef {restaurant.chef || "Our Head Chef"}</span>
+              </div>
+
+              {/* Signature Dishes */}
+              {restaurant.signatureDishes && restaurant.signatureDishes.length > 0 && (
+                <div className="signature-dishes">
+                  <h4>Signature Dishes</h4>
+                  <div className="signature-grid">
+                    {restaurant.signatureDishes.map((dish, i) => (
+                      <div className="signature-card" key={i}>
+                        <img
+                          src={dish.image}
+                          alt={dish.name}
+                          className="signature-img"
+                        />
+                        <p>{dish.name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Feature Tags */}
+              {restaurant.tags?.length > 0 && (
+                <div className="tag-list">
+                  <h4>Features</h4>
+                  <div className="tag-badges">
+                    {restaurant.tags.map((tag, idx) => (
+                      <span className="tag-badge" key={idx}>#{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -272,14 +224,36 @@ const RestaurantHomePage = () => {
 
         {activeTab === "Reviews" && (
           <div className="reviews-section">
-            <h2>What people are saying</h2>
-            <p>⭐ 4.4 average rating based on 1,323 reviews</p>
-            <p>Food: 4.4 | Service: 4.4 | Ambience: 4.1 | Value: 4.1</p>
-            <p>Noise Level: Moderate</p>
-            <p>
-              Only verified diners can leave a review. This section will be
-              dynamically enhanced in future.
-            </p>
+            <h2>What People Are Saying</h2>
+
+            {restaurant.ratingBreakdown && (
+              <>
+                <p className="review-summary">
+                  ⭐ {restaurant.ratingBreakdown.food.toFixed(1)} avg based on {restaurant.reviews} reviews
+                </p>
+                <p className="review-summary">
+                  Food: {restaurant.ratingBreakdown.food} | Service: {restaurant.ratingBreakdown.service} | Ambience: {restaurant.ratingBreakdown.ambience} | Value: {restaurant.ratingBreakdown.value}
+                </p>
+                <p className="review-summary">Noise Level: {restaurant.ratingBreakdown.noise}</p>
+              </>
+            )}
+
+            {restaurant.reviewsList && restaurant.reviewsList.length > 0 ? (
+              <div className="review-cards-container">
+                {restaurant.reviewsList.map((review, index) => (
+                  <div className="review-card" key={index}>
+                    <div className="reviewer">
+                      <span>{review.name}</span>
+                      <span className="rating">⭐ {review.rating}</span>
+                    </div>
+                    <div className="comment">“{review.comment}”</div>
+                    <div className="date">{new Date(review.date).toLocaleDateString()}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="menu-empty">No reviews available yet.</p>
+            )}
           </div>
         )}
       </div>

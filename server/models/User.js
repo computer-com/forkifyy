@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String }, // ✅ MUST be here for bcrypt to work
-    phone: { type: String }, // Optional
+    password: { type: String }, 
+    phone: { type: String }, 
     role: {
       type: String,
       enum: ['admin', 'user', 'customer', 'manager', 'owner'],

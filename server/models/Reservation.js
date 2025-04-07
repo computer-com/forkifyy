@@ -13,7 +13,7 @@ const reservationSchema = new mongoose.Schema({
     },
     restaurantName: {
         type: String,
-        required: true // changed from false to true to ensure new reservations must have a name
+        required: true
     },
     date: {
         type: Date,
