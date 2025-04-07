@@ -18,11 +18,12 @@ const transporter = nodemailer.createTransport({
 // POST / — User makes a reservation
 router.post('/', auth, async (req, res) => {
   try {
-    const { restaurantId, date, time, numberOfGuests, specialRequests, email, name } = req.body;
+    const { restaurantId, date, time, numberOfGuests, specialRequests, name } = req.body;
+    const email = req.user.email;
 
     const restaurant = await Restaurant.findById(restaurantId);
     if (!restaurant) return res.status(404).send({ error: 'Restaurant not found' });
-
+  
     const reservation = new Reservation({
       restaurantId,
       restaurantName: restaurant.name,
@@ -37,6 +38,8 @@ router.post('/', auth, async (req, res) => {
     });
 
     await reservation.save();
+    console.log(" Reservation saved in DB:", reservation); 
+
 
     const mailOptions = {
       from: process.env.EMAIL_USER,

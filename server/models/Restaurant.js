@@ -5,7 +5,7 @@ const menuItemSchema = new mongoose.Schema({
   name: String,
   description: String,
   price: Number,
-  category: String, // e.g. 'Pizza', 'Salads'
+  category: String, 
 });
 
 const restaurantSchema = new mongoose.Schema({
@@ -19,10 +19,22 @@ const restaurantSchema = new mongoose.Schema({
   description: String,
   slug: { type: String, unique: true },
   isActive: { type: Boolean, default: true },
+  reviewsList: [
+    {
+      name: String,
+      rating: Number,
+      comment: String,
+      date: Date,
+    },
+  ], 
+  signatureDishes: [
+    {
+      name: { type: String, required: true },
+      image: { type: String, required: true }
+    }
+  ],
   menu: [menuItemSchema],
-
-  // NEW FIELDS for OpenTable-style content
-  tags: [String], // ["Lively", "Child-friendly"]
+  tags: [String], 
   ratingBreakdown: {
     food: Number,
     service: Number,
@@ -38,7 +50,7 @@ const restaurantSchema = new mongoose.Schema({
   parking: String,
   paymentOptions: String,
   chef: String,
-  extraInfo: [String], // e.g., ["BYO Wine", "Gluten-Free", "Cocktails"]
+  extraInfo: [String], 
 });
 
 restaurantSchema.pre('save', function (next) {

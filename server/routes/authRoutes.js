@@ -3,6 +3,10 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 router.post('/manager', async (req, res) => {
   try {
@@ -127,4 +131,40 @@ router.post('/owner', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// Manual Sign In for Customers
+router.post('/signin', async (req, res) => {
+  try {
+    const { firstName, lastName, email, phone, countryCode } = req.body;
+
+    if (!email || !firstName || !lastName || !phone) {
+      return res.status(400).json({ message: 'Required fields missing' });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create new user
+      user = new User({
+        name: `${firstName} ${lastName}`,
+        email,
+        phone,
+        countryCode,
+        isGoogleSigned: false,
+      });
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
+    res.status(200).json({ token, user });
+  } catch (err) {
+    console.error("🔥 Manual sign-in error:", err.message);
+    res.status(500).json({ message: 'Sign in failed', error: err.message });
+  }
+});
+
 module.exports = router;
