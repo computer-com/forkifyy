@@ -149,12 +149,12 @@ const UserHome = () => {
           <div className="review-card">
             <h4>Pearl</h4>
             <p>"Service was the BEST. Our server was very attentive and even accommodated special requests!"</p>
-            <span>⭐ 4.8 • Milestones Grill • Waterloo</span>
+            <span>⭐ 4.2 • Milestones Grill • Waterloo</span>
           </div>
           <div className="review-card">
             <h4>Jan</h4>
             <p>"Great service and meal. We will definitely be back for another one. Thank you!"</p>
-            <span>⭐ 4.7 • State & Main • Waterloo</span>
+            <span>⭐ 4.5 • State & Main • Waterloo</span>
           </div>
         </div>
       </section>
