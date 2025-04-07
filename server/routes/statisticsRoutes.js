@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Ledger = require("../models/Ledger");
 
-// Add a Credit (Income) Transaction ✅ KEEP THIS
+// Add a Credit (Income) Transaction
 router.post("/ledger/credit", async (req, res) => {
   try {
     const { item, amount } = req.body;
@@ -14,7 +14,7 @@ router.post("/ledger/credit", async (req, res) => {
   }
 });
 
-// Add a Debit (Expense) Transaction ✅ KEEP THIS
+// Add a Debit (Expense) Transaction 
 router.post("/ledger/debit", async (req, res) => {
   try {
     const { item, amount } = req.body;

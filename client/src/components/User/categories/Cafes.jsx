@@ -14,7 +14,7 @@ const Cafes = () => {
       </header>
       <h1 className="title">Cafes</h1>
       <section className="page-content">
-        <p>Discover the best cafes around you for a perfect coffee break. Whether you need a quick espresso or a peaceful place to relax, find the best options here.</p>
+        <p>Discover the best cafes around you for a perfect coffee/snack break. Whether you need a quick espresso or a peaceful place to relax, find the best options here.</p>
         <button onClick={() => window.location.href='/UserHome'}>Go to Restaurant Home</button>
       </section>
 

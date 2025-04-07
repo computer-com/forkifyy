@@ -38,12 +38,9 @@ const ReservationAdmin = () => {
     try {
       const token = localStorage.getItem("managerToken");
       const manager = JSON.parse(localStorage.getItem("manager"));
-      console.log("📌 [RES-ADMIN] Loaded manager:", manager?.email);
-      console.log("📌 [RES-ADMIN] Manager Restaurant ID:", manager?.restaurantId);
       const restaurantId = manager?.restaurantId;
 
       if (!token || !restaurantId) return;
-      console.log("📌 [ADMIN UI] Fetched from localStorage => restaurantId:", restaurantId);
 
       const response = await axios.get(
         `http://localhost:5000/api/reservation/restaurant/${restaurantId}`,

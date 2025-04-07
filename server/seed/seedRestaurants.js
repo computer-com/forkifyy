@@ -626,7 +626,7 @@ const seedRestaurants = async () => {
           restaurantId: newRestaurant._id
         }));
         await MenuItem.insertMany(menuWithRestaurantId);
-        console.log(`🍴 Seeded ${menu.length} menu items for "${newRestaurant.name}"`);
+        console.log(`Seeded ${menu.length} menu items for "${newRestaurant.name}"`);
       }
     }
 

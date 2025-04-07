@@ -3,10 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 router.post('/manager', async (req, res) => {
   try {
@@ -41,7 +37,7 @@ router.post('/manager', async (req, res) => {
     });
 
   } catch (err) {
-    console.error("🔥 Server error in /manager route:", err);
+    console.error("Server error in /manager route:", err);
     res.status(500).json({ error: 'Server error', message: err.message });
   }
 });
@@ -49,16 +45,13 @@ router.post('/manager', async (req, res) => {
 router.post('/owner/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    console.log("📩 Incoming owner registration:", { name, email }); // Debug log
 
     if (!name || !email || !password) {
-      console.log("❌ Missing required fields");
       return res.status(400).json({ error: "Name, email, and password are required" });
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      console.log("❌ Email already in use:", email);
       return res.status(400).json({ error: "Email already in use" });
     }
 
@@ -70,7 +63,7 @@ router.post('/owner/register', async (req, res) => {
       role: 'owner',
     });
     await owner.save();
-    console.log("✅ Owner registered:", owner.email);
+    console.log("Owner registered:", owner.email);
 
     const token = jwt.sign(
       { userId: owner._id, role: owner.role }, // Include role in token for consistency
@@ -87,7 +80,7 @@ router.post('/owner/register', async (req, res) => {
       }
     });
   } catch (error) {
-    console.error("🔥 Error in owner registration:", error);
+    console.error(" Error in owner registration:", error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -96,17 +89,14 @@ router.post('/owner/register', async (req, res) => {
 router.post('/owner', async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("📩 Incoming owner login:", email);
 
     const owner = await User.findOne({ email, role: 'owner' });
     if (!owner) {
-      console.log("❌ Owner not found");
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, owner.password);
     if (!isMatch) {
-      console.log("❌ Password incorrect");
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
@@ -116,7 +106,7 @@ router.post('/owner', async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    console.log("🎫 JWT token generated for owner");
+    console.log("JWT token generated for owner");
 
     res.json({
       token,
@@ -127,7 +117,7 @@ router.post('/owner', async (req, res) => {
       }
     });
   } catch (error) {
-    console.error("🔥 Error in owner login:", error);
+    console.error("Error in owner login:", error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -162,7 +152,7 @@ router.post('/signin', async (req, res) => {
 
     res.status(200).json({ token, user });
   } catch (err) {
-    console.error("🔥 Manual sign-in error:", err.message);
+    console.error(" Manual sign-in error:", err.message);
     res.status(500).json({ message: 'Sign in failed', error: err.message });
   }
 });

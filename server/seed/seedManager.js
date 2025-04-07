@@ -14,7 +14,7 @@ const seedManagers = async () => {
 
     const restaurants = await Restaurant.find();
     if (restaurants.length !== 7) {
-      console.warn("⚠️ Expected 7 restaurants, found:", restaurants.length);
+      console.warn(" Expected 7 restaurants, found:", restaurants.length);
     }
 
     const managers = [

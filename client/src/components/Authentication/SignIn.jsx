@@ -6,10 +6,7 @@ import { Carousel } from "react-bootstrap";
 import appleLogo from "../../assets/images/apple.png";
 import Signup1 from "../../assets/images/Signup1.jpg";
 import Signup2 from "../../assets/images/Signup2.jpg";
-<<<<<<< Updated upstream
-=======
 import googleLogo from "../../assets/images/google.png";
->>>>>>> Stashed changes
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -142,14 +139,11 @@ const SignIn = () => {
           <div className="alternative-login">
             <p>Or sign in with</p>
             <div className="social-logins">
-<<<<<<< Updated upstream
-=======
               <button type="button" className="social-btn">
                 <img src={googleLogo} alt="Google" />
                 Google
               </button>
               
->>>>>>> Stashed changes
               <button type="button" className="social-btn">
                 <img src={appleLogo} alt="Apple" />
                 Apple
