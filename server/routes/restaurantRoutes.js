@@ -241,7 +241,7 @@ router.get('/owner/report/:restaurantId', auth, isOwner, async (req, res) => {
       res.json(reportData);
     } catch (error) {
       console.error("Error generating owner report:", error);
-      res.status(500).json({ message: "Failed to generate report" });
+      res.status(500).json({ message: "Failed to generate report something went wrong!" });
     }
   });
   
