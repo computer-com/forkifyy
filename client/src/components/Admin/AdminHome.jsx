@@ -26,7 +26,7 @@ const AdminHome = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/stats")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/stats`)
       .then((response) => {
         setStats(response.data);
       })

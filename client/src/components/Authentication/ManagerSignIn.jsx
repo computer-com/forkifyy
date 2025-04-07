@@ -27,7 +27,7 @@ const ManagerSignIn = () => {
     e.preventDefault();
   
     try {
-      const res = await axios.post('/api/auth/manager', {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/manager`, {
         email: credentials.managerId,
         password: credentials.password,
       });

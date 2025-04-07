@@ -29,7 +29,7 @@ const seedData = async () => {
   try {
     console.log("Connecting to MongoDB...");
     await mongoose.connect(MONGO_URI);
-    console.log("✅ Connected to MongoDB Atlas.");
+    console.log(" Connected to MongoDB Atlas.");
 
     await Staff.deleteMany({});
     await Inventory.deleteMany({});
@@ -56,13 +56,13 @@ const seedData = async () => {
         });
       }
 
-      console.log(`✅ Seeded cards for: ${restaurant.name}`);
+      console.log(` Seeded cards for: ${restaurant.name}`);
     }
 
-    console.log("\n🎉 All restaurants seeded successfully.");
+    console.log("\n All restaurants seeded successfully.");
     process.exit(0);
   } catch (err) {
-    console.error("❌ Error while seeding default data:", err.message);
+    console.error(" Error while seeding default data:", err.message);
     process.exit(1);
   }
 };

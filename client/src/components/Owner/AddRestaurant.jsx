@@ -65,7 +65,7 @@ const AddRestaurant = () => {
       console.log("Form data being sent:", formData);
       console.log("Manager Name specifically:", formData.managerName);
 
-      const response = await fetch("http://localhost:5000/api/restaurants/owner", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/restaurants/owner`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

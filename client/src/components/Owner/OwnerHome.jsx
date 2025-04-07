@@ -13,7 +13,7 @@ const OwnerHome = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/restaurants");
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/restaurants`);
       if (!response.ok) throw new Error("Failed to fetch restaurants");
       const data = await response.json();
       setRestaurants(data);
