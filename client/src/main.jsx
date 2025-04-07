@@ -7,10 +7,6 @@ const root = createRoot(document.getElementById('root'));
 
 root.render(
   <StrictMode>
-<<<<<<< Updated upstream
       <App />
-=======
-    <App />
->>>>>>> Stashed changes
   </StrictMode>
 );
