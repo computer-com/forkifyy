@@ -33,9 +33,9 @@ app.use((req, res, next) => {
 });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+mongoose.connect(process.env.MONGO_URI || process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB Atlas connected'))
+  .catch(err => console.error('Mongo DB Atlas Connection failed' ,err));
 
 // Routes
 const userRoutes = require('./routes/userRoutes');

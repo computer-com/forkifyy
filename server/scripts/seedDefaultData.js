@@ -5,7 +5,7 @@ const Staff = require("../models/Staff");
 const Restaurant = require("../models/Restaurant");
 
 dotenv.config();
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/Forkify";
+const MONGO_URI = process.env.MONGODB_URI || process.env.MONGO_URI;
 
 const defaultInventoryItems = [
   { name: "Cheese", quantity: 20, price: 10, category: "Dairy" },
@@ -27,45 +27,45 @@ const baseStaffMembers = [
 
 const seedData = async () => {
   try {
+    console.log("Connecting to MongoDB...");
     await mongoose.connect(MONGO_URI);
+    console.log("✅ Connected to MongoDB Atlas.");
+
+    await Staff.deleteMany({});
+    await Inventory.deleteMany({});
     const restaurants = await Restaurant.find();
 
     for (let i = 0; i < restaurants.length; i++) {
       const restaurant = restaurants[i];
-      console.log(`\n Seeding for: ${restaurant.name}`);
+      console.log(`\n🔸 Seeding for: ${restaurant.name}`);
 
       // Seed Inventory Items
       for (const item of defaultInventoryItems) {
-        const exists = await Inventory.findOne({ name: item.name, restaurantId: restaurant._id });
-        if (!exists) {
-          await Inventory.create({ ...item, restaurantId: restaurant._id });
-        }
+        await Inventory.create({ ...item, restaurantId: restaurant._id });
       }
 
-      // Seed Staff Members with UNIQUE contact numbers
+      // Seed Staff Members
       for (let j = 0; j < baseStaffMembers.length; j++) {
         const base = baseStaffMembers[j];
-        const contact = `999-000-${i}${j}1`; // Unique per restaurant & member
-        const exists = await Staff.findOne({ contact });
+        const contact = `999-000-${i}${j}1`; // Guaranteed unique
 
-        if (!exists) {
-          await Staff.create({
-            ...base,
-            contact,
-            restaurantId: restaurant._id,
-          });
-        }
+        await Staff.create({
+          ...base,
+          contact,
+          restaurantId: restaurant._id,
+        });
       }
 
-      console.log(` Seeded cards for: ${restaurant.name}`);
+      console.log(`✅ Seeded cards for: ${restaurant.name}`);
     }
 
-    console.log("\n All restaurants seeded successfully.");
+    console.log("\n🎉 All restaurants seeded successfully.");
     process.exit(0);
   } catch (err) {
-    console.error(" Error while seeding default data:", err.message);
+    console.error("❌ Error while seeding default data:", err.message);
     process.exit(1);
   }
 };
 
+// Run the function
 seedData();
