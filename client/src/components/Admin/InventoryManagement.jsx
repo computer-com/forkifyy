@@ -18,7 +18,7 @@ const InventoryManagement = () => {
   // Fetch Inventory Data
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/inventory")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/inventory`)
       .then((response) => setInventory(response.data))
       .catch((error) => console.error("Error fetching inventory:", error));
   }, []);
@@ -32,7 +32,7 @@ const InventoryManagement = () => {
   const handleAddItem = () => {
     if (newItem.name && newItem.quantity && newItem.price && newItem.category) {
       axios
-        .post("http://localhost:5000/api/inventory", newItem)
+        .post(`${import.meta.env.VITE_API_BASE_URL}/api/inventory`, newItem)
         .then((response) => {
           setInventory([...inventory, response.data]);
           setNewItem({ name: "", quantity: "", price: "", category: "" });
@@ -46,7 +46,7 @@ const InventoryManagement = () => {
   // Delete Inventory Item
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/api/inventory/${id}`)
+      .delete(`${import.meta.env.VITE_API_BASE_URL}/api/inventory/${id}`)
       .then(() => setInventory(inventory.filter((item) => item._id !== id)))
       .catch((error) => console.error("Error deleting item:", error));
   };
@@ -68,7 +68,7 @@ const InventoryManagement = () => {
     }
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/inventory/${editMode}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/inventory/${editMode}`,
         editItem,
         {
           headers: { "Content-Type": "application/json" },

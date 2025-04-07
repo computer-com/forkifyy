@@ -43,7 +43,7 @@ const ReservationAdmin = () => {
       if (!token || !restaurantId) return;
 
       const response = await axios.get(
-        `http://localhost:5000/api/reservation/restaurant/${restaurantId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/reservation/restaurant/${restaurantId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ const ReservationAdmin = () => {
       const restaurantId = manager?.restaurantId;
 
       const response = await axios.post(
-        "http://localhost:5000/api/reservation/manual",
+        `${import.meta.env.VITE_API_BASE_URL}/api/reservation/manual`,
         {
           ...newReservation,
           date: formattedDate,
@@ -142,7 +142,7 @@ const ReservationAdmin = () => {
       const formattedDate = editItem.date.toISOString().split("T")[0];
       const token = localStorage.getItem("managerToken");
       await axios.put(
-        `http://localhost:5000/api/reservation/${editItem._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/reservation/${editItem._id}`,
         { ...editItem, date: formattedDate },
         {
           headers: {
@@ -165,7 +165,7 @@ const ReservationAdmin = () => {
     if (window.confirm("Are you sure you want to delete this reservation?")) {
       try {
         const token = localStorage.getItem("managerToken");
-        await axios.delete(`http://localhost:5000/api/reservation/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/reservation/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

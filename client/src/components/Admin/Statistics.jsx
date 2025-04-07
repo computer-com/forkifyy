@@ -17,15 +17,15 @@ const Statistics = () => {
 
   // Fetch Inventory & Sales Data
   useEffect(() => {
-    axios.get("http://localhost:5000/api/inventory")
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/inventory`)
       .then(response => setInventory(response.data))
       .catch(error => console.error("Error fetching inventory:", error));
 
-    axios.get("http://localhost:5000/api/sales")
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/sales`)
       .then(response => setSales(response.data))
       .catch(error => console.error("Error fetching sales:", error));
 
-    axios.get("http://localhost:5000/api/ledger")
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/ledger`)
       .then(response => setLedger(response.data))
       .catch(error => console.error("Error fetching ledger:", error));
   }, []);

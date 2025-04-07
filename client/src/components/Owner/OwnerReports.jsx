@@ -15,7 +15,7 @@ const OwnerReports = () => {
     const fetchReports = async () => {
       try {
         const token = localStorage.getItem("ownerToken");
-        const response = await fetch("http://localhost:5000/api/restaurants/owner/reports", {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/restaurants/owner/reports`, {
           headers: {
             "Authorization": `Bearer ${token}`,
           },

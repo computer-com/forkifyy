@@ -24,7 +24,7 @@ const MenuAdmin = () => {
   const fetchMenuItems = async () => {
     try {
       const token = localStorage.getItem("managerToken");
-      const response = await axios.get(`http://localhost:5000/api/menu?restaurantId=${restaurantId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/menu?restaurantId=${restaurantId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const MenuAdmin = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("managerToken");
-      const response = await axios.post("http://localhost:5000/api/menu", {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/menu`, {
         ...newItem,
         restaurantId,
       }, {
@@ -63,7 +63,7 @@ const MenuAdmin = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("managerToken");
-      await axios.put(`http://localhost:5000/api/menu/${editItem._id}`, editItem, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/menu/${editItem._id}`, editItem, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -82,7 +82,7 @@ const MenuAdmin = () => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
         const token = localStorage.getItem("managerToken");
-        await axios.delete(`http://localhost:5000/api/menu/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/menu/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

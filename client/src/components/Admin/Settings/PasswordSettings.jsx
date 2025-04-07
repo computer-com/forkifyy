@@ -22,7 +22,7 @@ const PasswordSettings = () => {
 
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      const response = await axios.put('http://localhost:5000/api/settings/password', {
+      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/settings/password`, {
         currentPassword,
         newPassword,
       }, {

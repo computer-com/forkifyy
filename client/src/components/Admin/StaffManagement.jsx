@@ -15,7 +15,7 @@ const StaffManagement = () => {
   // Fetch Staff Data from API
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/staff")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/staff`)
       .then((response) => setStaff(response.data))
       .catch((error) => console.error("Error fetching staff:", error));
   }, []);
@@ -23,7 +23,7 @@ const StaffManagement = () => {
   // Delete Staff Member
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/api/staff/${id}`)
+      .delete(`${import.meta.env.VITE_API_BASE_URL}/api/staff/${id}`)
       .then(() => setStaff(staff.filter((member) => member._id !== id)))
       .catch((error) => console.error("Error deleting staff:", error));
   };
@@ -37,7 +37,7 @@ const StaffManagement = () => {
   const handleAddStaff = () => {
     if (newStaff.name && newStaff.role && newStaff.contact) {
       axios
-        .post("http://localhost:5000/api/staff", newStaff)
+        .post(`${import.meta.env.VITE_API_BASE_URL}/api/staff`, newStaff)
         .then((response) => {
           setStaff([...staff, response.data]);
           setNewStaff({ name: "", role: "", contact: "" });

@@ -17,7 +17,7 @@ const UserHome = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const res = await axios.get("/api/restaurants");
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/restaurants`);
         setRestaurants(Array.isArray(res.data) ? res.data : []);
         console.log("Fetched data:", res.data);
       } catch (error) {
