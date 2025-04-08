@@ -29,7 +29,7 @@ const OwnerSettings = () => {
           <div className="settings-grid">
             <div className="settings-card">
               <h2>Business Details</h2>
-              <p>Edit restaurant names, hours, contact, and logos.</p>
+              <p>Edit restaurant names, hours, contact, and important information.</p>
               <Link to="/owner/settings/business">
                 <button className="settings-btn">Edit</button>
               </Link>
