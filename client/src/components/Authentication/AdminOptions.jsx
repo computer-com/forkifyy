@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap"; 
 import managerLogo from "../../assets/images/manager_logo.png";
 import ownerLogo from "../../assets/images/owner_logo.png";
-import Admin1 from "../../assets/images/Admin1.jpg";
-import Admin2 from "../../assets/images/Admin2.jpg";
+import Admin1 from "../../assets/images/admin1.jpg";
+import Admin2 from "../../assets/images/admin2.jpg";
 
 const AdminOptions = () => {
   const [selectedOption, setSelectedOption] = useState(null);

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "../../assets/css/UserCSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap";
-import adminSignIn1 from "../../assets/images/adminSignIn1.jpg";
-import adminSignIn2 from "../../assets/images/adminSignIn2.jpg";
+import adminSignIn1 from "../../assets/images/adminsignin1.jpg";
+import adminSignIn2 from "../../assets/images/adminsignin2.jpg";
 import axios from "axios";
 
 const ManagerSignIn = () => {

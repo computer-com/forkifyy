@@ -4,8 +4,8 @@ import "../../assets/css/UserCSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import { Carousel } from "react-bootstrap"; 
 import appleLogo from "../../assets/images/apple.png";
-import Signup1 from "../../assets/images/Signup1.jpg";
-import Signup2 from "../../assets/images/Signup2.jpg";
+import Signup1 from "../../assets/images/signup1.jpg";
+import Signup2 from "../../assets/images/signup2.jpg";
 import googleLogo from "../../assets/images/google.png";
 
 const SignIn = () => {

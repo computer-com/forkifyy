@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "../../assets/css/UserCSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap";
-import ownerSignIn1 from "../../assets/images/adminSignIn1.jpg";
-import ownerSignIn2 from "../../assets/images/adminSignIn2.jpg";
+import ownerSignIn1 from "../../assets/images/adminsignin1.jpg";
+import ownerSignIn2 from "../../assets/images/adminsignin2.jpg";
 
 const OwnerSignIn = () => {
   const navigate = useNavigate();

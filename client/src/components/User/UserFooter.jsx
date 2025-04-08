@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/css/UserCSS/UserFooter.css";
-import forkifyLogo from "../../assets/images/Forkify_Logo.png"; 
+import forkifyLogo from "../../assets/images/forkify_logo.png"; 
 
 const Footer = () => {
   return (
