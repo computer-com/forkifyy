@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/css/AdminCSS/AdminHome.css";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import axios from "axios";
 import Sidebar from "../Admin/Sidebar";
 import Footer from "../Admin/Footer";
 import { FiMenu } from "react-icons/fi";
 
 // Import Feature Card Images
-import reservationsImg from "../../assets/images/Manager_Reservations.jpeg";
-import inventoryImg from "../../assets/images/Manager_Inventory.jpeg";
-import menuImg from "../../assets/images/Manager_Menu.jpg";
-import salesReportImg from "../../assets/images/Manager_Sales.jpeg";
+import reservationsImg from "../../assets/images/manager_reservations.jpeg";
+import inventoryImg from "../../assets/images/manager_inventory.jpeg";
+import menuImg from "../../assets/images/manager_menu.jpg";
+import salesReportImg from "../../assets/images/manager_sales.jpeg";
 
 const AdminHome = () => {
   const navigate = useNavigate();

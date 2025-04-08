@@ -3,7 +3,7 @@ import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Footer from '../Footer';
 import { FiMenu } from 'react-icons/fi';
-import logo from '../../../assets/images/Forkify_Logo.png';
+import logo from '../../../assets/images/forkify_logo.png';
 import '../../../assets/css/AdminCSS/AdminPasswordSetting.css';
 
 const PasswordSettings = () => {

@@ -3,7 +3,7 @@ import OwnerSidebar from "./OwnerSidebar";
 import OwnerFooter from "./OwnerFooter";
 import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import "../../assets/css/OwnerCSS/OwnerSettings.css";
 
 const OwnerSettings = () => {

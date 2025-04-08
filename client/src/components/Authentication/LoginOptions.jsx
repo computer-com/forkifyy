@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap"; 
 import userLogo from "../../assets/images/user_logo.png";
 import adminLogo from "../../assets/images/admin_logo.png";
-import Login1 from "../../assets/images/Login1.jpg";
-import Login2 from "../../assets/images/Login2.jpg";
+import Login1 from "../../assets/images/login1.jpg";
+import Login2 from "../../assets/images/login2.jpg";
 
 
 const LoginOptions = () => {

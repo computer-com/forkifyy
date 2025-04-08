@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import OwnerSidebar from "./OwnerSidebar";
 import OwnerFooter from "./OwnerFooter";
 import { FiMenu } from "react-icons/fi";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import "../../assets/css/OwnerCSS/AddRestaurant.css";
 
 const AddRestaurant = () => {

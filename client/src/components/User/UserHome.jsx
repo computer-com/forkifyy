@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../assets/css/UserCSS/UserHome.css";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import Footer from "./UserFooter";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../../assets/css/AdminCSS/menuadmin.css";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import axios from "axios";
 import { FiMenu } from "react-icons/fi"; 
 

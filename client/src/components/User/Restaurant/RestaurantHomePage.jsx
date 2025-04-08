@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import logo from "../../../assets/images/Forkify_Logo.png";
+import logo from "../../../assets/images/forkify_logo.png";
 import Footer from "../UserFooter";
 import "../../../assets/css/UserCSS/restauranthome.css";
 

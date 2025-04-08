@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../../assets/css/AdminCSS/Inventory.css";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import Sidebar from "../Admin/Sidebar";
 import Footer from "../Admin/Footer";
 import { FiMenu } from "react-icons/fi";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import Sidebar from "../Sidebar";
-import logo from "../../../assets/images/Forkify_Logo.png";
+import logo from "../../../assets/images/forkify_logo.png";
 import Footer from "../Footer";
 import "../../../assets/css/AdminCSS/BuisnessSetting.css";
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import OwnerSidebar from "./OwnerSidebar";
 import OwnerFooter from "./OwnerFooter";
 import { FiMenu } from "react-icons/fi";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import jsPDF from "jspdf";
 import "../../assets/css/OwnerCSS/OwnerReports.css";
 

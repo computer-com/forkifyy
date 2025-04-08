@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";  
 import autoTable from "jspdf-autotable";  
 import "../../assets/css/AdminCSS/Statistics.css";
-import logo from "../../assets/images/Forkify_Logo.png";
+import logo from "../../assets/images/forkify_logo.png";
 import Sidebar from "../Admin/Sidebar";  
 import { FiMenu } from "react-icons/fi";  
 import Footer from "./Footer";

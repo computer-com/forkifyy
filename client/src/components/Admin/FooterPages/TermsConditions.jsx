@@ -3,7 +3,7 @@
 import React from "react";
 import Sidebar from "../../Admin/Sidebar";
 import Footer from "../../Admin/Footer";
-import logo from "../../../assets/images/Forkify_Logo.png";
+import logo from "../../../assets/images/forkify_logo.png";
 import { FiMenu } from "react-icons/fi";
 import "../../../assets/css/AdminCSS/sharedfooterpages.css";
 

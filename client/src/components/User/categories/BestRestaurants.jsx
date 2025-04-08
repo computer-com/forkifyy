@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../../User/UserFooter";
-import logo from "../../../assets/images/Forkify_Logo.png"; 
+import logo from "../../../assets/images/forkify_logo.png"; 
 import "../../../assets/css/UserCSS/PageStyles.css";
 
 const BestRestaurants = () => {
